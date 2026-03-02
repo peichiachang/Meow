@@ -55,15 +55,15 @@ export function MainPage({
           ))}
         </div>
 
-        {canAddCat && (
-          <button
-            type="button"
-            className="main-add-cat"
-            onClick={onAddCat}
-          >
-            + 新增貓咪
-          </button>
-        )}
+        <button
+          type="button"
+          className="main-add-cat"
+          onClick={onAddCat}
+          disabled={!canAddCat}
+          title={canAddCat ? '新增一隻貓咪' : '已達貓咪數量上限'}
+        >
+          + 新增貓咪
+        </button>
       </main>
     </div>
   );

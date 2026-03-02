@@ -127,3 +127,13 @@
   background: #fffbeb;
   color: #1c1917;
 }
+
+.main-add-cat:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.main-add-cat:disabled:hover {
+  background: none;
+  color: #78716c;
+}
