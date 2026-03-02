@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { getOpeningLine } from '../data/openingLines';
+import { getKeywordCannedReply } from '../data/keywordCannedMessages';
 import { sendChatMessage } from '../services/chatService';
 import { triggerMemorySummarize } from '../services/memoryService';
 import type { Cat } from '../types/database';
@@ -81,7 +82,8 @@ export function ChatPage({
       await onAddMessage('user', text);
       await onIncrementCount();
 
-      const reply = await sendChatMessage(
+      const cannedReply = getKeywordCannedReply(text, selectedCat.personality);
+      const reply = cannedReply ?? await sendChatMessage(
         selectedCat,
         text,
         recentBefore,
@@ -95,10 +97,13 @@ export function ChatPage({
         triggerMemorySummarize(selectedCat.id);
       }
     } catch (err) {
-      await onAddMessage(
-        'assistant',
-        '喵...出錯了，請稍後再試～'
-      );
+      // API 失敗時改顯示隨機罐頭訊息，避免整頁都是錯誤提示
+      const fallback = getOpeningLine(selectedCat.cat_name, {
+        hour: new Date().getHours(),
+        hoursSinceLastOpen: null,
+        personality: selectedCat.personality,
+      });
+      await onAddMessage('assistant', fallback);
     } finally {
       setLoading(false);
       inputRef.current?.focus();

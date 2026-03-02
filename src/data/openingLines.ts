@@ -1,29 +1,13 @@
 /**
  * SDD 4.2 開場白設計
- * 100 組罐頭訊息（依個性匹配）+ 預設庫（時間、等待、行為）
+ * 開場白僅用時間、等待、行為庫（罐頭改由關鍵字匹配用在對話回覆）
  */
-
-import { CANNED_MESSAGES } from './cannedMessages';
 
 export type OpeningContext = {
   hour: number;
   hoursSinceLastOpen: number | null; // 距離上次開啟的小時數，null 表示首次
   personality?: string[];
 };
-
-function getPersonalityMatchedLines(personality: string[]): string[] {
-  if (!personality || personality.length === 0) return [];
-
-  const matched: string[] = [];
-  const catPersonalitySet = new Set(personality);
-  for (const msg of CANNED_MESSAGES) {
-    const allMatch = msg.personalities.every((p) => catPersonalitySet.has(p));
-    if (allMatch && msg.personalities.length > 0) {
-      matched.push(msg.text);
-    }
-  }
-  return matched;
-}
 
 function getTimeBasedLines(hour: number): string[] {
   if (hour >= 22 || hour < 6) {
@@ -96,15 +80,6 @@ export function getOpeningLine(
   catName: string,
   context: OpeningContext
 ): string {
-  // 有個性匹配的罐頭訊息時，優先 100% 使用
-  if (context.personality?.length) {
-    const personalityLines = getPersonalityMatchedLines(context.personality);
-    if (personalityLines.length > 0) {
-      return personalityLines[Math.floor(Math.random() * personalityLines.length)];
-    }
-  }
-
-  // 無匹配時使用預設庫
   const fallbackLines: string[] = [
     `...（${catName} 抬頭看了你一眼）`,
     ...getTimeBasedLines(context.hour),
