@@ -110,6 +110,7 @@ function App() {
         onSubmit={async (data) => {
           const cat = await createCat(data);
           handleCatCreated(cat);
+          return cat;
         }}
         maxCats={maxCats}
         currentCount={0}
@@ -124,6 +125,7 @@ function App() {
         onSubmit={async (data) => {
           const cat = await createCat(data);
           handleCatCreated(cat);
+          return cat;
         }}
         onBack={() => {
           setEditingCatId(null);

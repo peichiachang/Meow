@@ -1,3 +1,4 @@
+import { getCatDisplayAvatar } from '../services/localAvatarService';
 import type { Cat } from '../types/database';
 import './MainPage.css';
 
@@ -61,11 +62,14 @@ export function MainPage({
               }}
             >
               <span className="main-cat-avatar">
-                {cat.avatar_url ? (
-                  <img src={cat.avatar_url} alt={cat.cat_name} />
-                ) : (
-                  <span className="main-cat-avatar-placeholder">🐱</span>
-                )}
+                {(() => {
+                  const avatarUrl = getCatDisplayAvatar(cat);
+                  return avatarUrl ? (
+                    <img src={avatarUrl} alt={cat.cat_name} />
+                  ) : (
+                    <span className="main-cat-avatar-placeholder">🐱</span>
+                  );
+                })()}
               </span>
               <span className="main-cat-name">{cat.cat_name}</span>
               <span className="main-cat-action">和 {cat.cat_name} 聊天</span>

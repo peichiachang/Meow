@@ -1,13 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PERSONALITY_LABELS } from '../data/personalities';
+import {
+  getCatAvatarLocal,
+  saveCatAvatarLocal,
+  removeCatAvatarLocal,
+  fileToDataUrl,
+} from '../services/localAvatarService';
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
 export type CatSetupFormData = Omit<CatInsert, 'user_id'>;
 
-
 interface Props {
-  onSubmit: (data: CatSetupFormData) => Promise<void>;
+  /** 新增時送出，需回傳建立的 Cat（供頭像存本機時寫入用） */
+  onSubmit: (data: CatSetupFormData) => Promise<Cat>;
   onBack?: () => void;
   onUpdate?: (id: string, data: CatSetupFormData) => Promise<void>;
   initialCat?: Cat | null;
@@ -15,7 +21,14 @@ interface Props {
   currentCount: number;
 }
 
-export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, currentCount }: Props) {
+export function CatSetupPage({
+  onSubmit,
+  onBack,
+  onUpdate,
+  initialCat,
+  maxCats,
+  currentCount,
+}: Props) {
   const [catName, setCatName] = useState('');
   const [breed, setBreed] = useState('');
   const [age, setAge] = useState<number | ''>('');
@@ -25,8 +38,11 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
   const [habits, setHabits] = useState('');
   const [selfRef, setSelfRef] = useState('');
   const [customPersonality, setCustomPersonality] = useState('');
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isEditMode = !!initialCat;
 
@@ -40,9 +56,35 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
       setDislikes(initialCat.dislikes ?? '');
       setHabits(initialCat.habits ?? '');
       setSelfRef(initialCat.self_ref ?? '');
+      setAvatarPreviewUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
       setCustomPersonality('');
     }
   }, [initialCat]);
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setError('請選擇圖片檔（JPG、PNG、WebP 或 GIF）');
+      return;
+    }
+    setError('');
+    setAvatarFile(file);
+    setAvatarPreviewUrl((prev) => {
+      if (prev?.startsWith('blob:')) URL.revokeObjectURL(prev);
+      return URL.createObjectURL(file);
+    });
+  };
+
+  const clearAvatar = () => {
+    setAvatarFile(null);
+    if (initialCat) removeCatAvatarLocal(initialCat.id);
+    setAvatarPreviewUrl((prev) => {
+      if (prev?.startsWith('blob:')) URL.revokeObjectURL(prev);
+      return initialCat ? getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null : null;
+    });
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   const togglePersonality = (p: string) => {
     setPersonality((prev) =>
@@ -76,15 +118,25 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
       dislikes: dislikes.trim() || null,
       habits: habits.trim() || null,
       self_ref: selfRef.trim() || null,
+      avatar_url: initialCat?.avatar_url ?? null,
     };
 
     setLoading(true);
     try {
       if (isEditMode && onUpdate && initialCat) {
+        if (avatarFile) {
+          const dataUrl = await fileToDataUrl(avatarFile);
+          saveCatAvatarLocal(initialCat.id, dataUrl);
+        }
         await onUpdate(initialCat.id, payload);
         onBack?.();
       } else {
-        await onSubmit(payload);
+        const created = await onSubmit(payload);
+        if (avatarFile) {
+          const dataUrl = await fileToDataUrl(avatarFile);
+          saveCatAvatarLocal(created.id, dataUrl);
+        }
+        onBack?.();
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : '儲存失敗');
@@ -120,6 +172,42 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
         <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
 
         <form onSubmit={handleSubmit} className="cat-setup-form">
+          <div className="form-group cat-avatar-upload">
+            <span>貓咪照片</span>
+            <div className="cat-avatar-upload-area">
+              <div className="cat-avatar-preview">
+                {avatarPreviewUrl ? (
+                  <img src={avatarPreviewUrl} alt="預覽" />
+                ) : (
+                  <span className="cat-avatar-preview-placeholder">🐱</span>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onChange={handleAvatarChange}
+                className="cat-avatar-input"
+                aria-label="上傳貓咪照片"
+              />
+              <div className="cat-avatar-actions">
+                <button
+                  type="button"
+                  className="cat-avatar-btn-secondary"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  {avatarPreviewUrl ? '更換圖片' : '選擇圖片'}
+                </button>
+                {avatarPreviewUrl && (
+                  <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
+                    移除
+                  </button>
+                )}
+              </div>
+            </div>
+            <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內</p>
+          </div>
+
           <label>
             <span>貓咪名字 *</span>
             <input

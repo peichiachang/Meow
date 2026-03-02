@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { getOpeningLine } from '../data/openingLines';
 import { getKeywordCannedReply } from '../data/keywordCannedMessages';
+import { getCatDisplayAvatar } from '../services/localAvatarService';
 import { sendChatMessage } from '../services/chatService';
 import { triggerMemorySummarize } from '../services/memoryService';
 import type { Cat } from '../types/database';
@@ -155,11 +156,14 @@ export function ChatPage({
               title={c.cat_name}
             >
               <span className="cat-avatar">
-                {c.avatar_url ? (
-                  <img src={c.avatar_url} alt={c.cat_name} />
-                ) : (
-                  <span className="cat-avatar-placeholder">🐱</span>
-                )}
+                {(() => {
+                  const avatarUrl = getCatDisplayAvatar(c);
+                  return avatarUrl ? (
+                    <img src={avatarUrl} alt={c.cat_name} />
+                  ) : (
+                    <span className="cat-avatar-placeholder">🐱</span>
+                  );
+                })()}
               </span>
               <span className="cat-name">{c.cat_name}</span>
             </button>

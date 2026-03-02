@@ -39,6 +39,76 @@
   color: #78716c;
 }
 
+.cat-avatar-upload {
+  margin-bottom: 1.25rem;
+}
+
+.cat-avatar-upload-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cat-avatar-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f5f5f4;
+  border: 2px solid #e7e5e4;
+  flex-shrink: 0;
+}
+
+.cat-avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cat-avatar-preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+}
+
+.cat-avatar-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cat-avatar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cat-avatar-btn-secondary {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  color: #78716c;
+  background: #f5f5f4;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.cat-avatar-btn-secondary:hover {
+  border-color: #fed7aa;
+  color: #1c1917;
+}
+
+.cat-avatar-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  color: #78716c;
+}
+
 .cat-setup-form label,
 .cat-setup-form .form-group {
   display: block;
