@@ -73,6 +73,38 @@
   transition: background 0.2s, border-color 0.2s;
 }
 
+.main-cat-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.main-cat-btn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e7e5e4;
+  background: #fff;
+  color: #57534e;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.main-cat-btn:hover {
+  background: #f5f5f4;
+}
+
+.main-cat-btn-edit:hover {
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+
+.main-cat-btn-delete:hover {
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
 .main-cat-card:hover {
   background: #fffbeb;
   border-color: #fdba74;

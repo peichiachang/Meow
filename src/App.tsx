@@ -18,11 +18,12 @@ function App() {
   const [authError, setAuthError] = useState<string | null>(null);
   const { user, loading: authLoading, signInWithEmail, signUpWithEmail, signInWithGoogle, signOut } = useAuth();
   const { plan } = useProfile(user?.id);
-  const { cats, loading: catsLoading, createCat } = useCats(user?.id);
+  const { cats, loading: catsLoading, createCat, updateCat, deleteCat } = useCats(user?.id);
   const maxCats = plan === 'paid' ? PAID_MAX_CATS : FREE_MAX_CATS;
 
   const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
   const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
+  const [editingCatId, setEditingCatId] = useState<string | null>(null);
 
   const currentCatForMessages = selectedCat ?? cats[0];
   const { messages, addMessage, getRecentForContext } = useMessages(currentCatForMessages?.id);
@@ -117,13 +118,27 @@ function App() {
   }
 
   if (view === 'setup') {
+    const editingCat = editingCatId ? cats.find((c) => c.id === editingCatId) ?? null : null;
     return (
       <CatSetupPage
         onSubmit={async (data) => {
           const cat = await createCat(data);
           handleCatCreated(cat);
         }}
-        onBack={() => setView('main')}
+        onBack={() => {
+          setEditingCatId(null);
+          setView('main');
+        }}
+        onUpdate={
+          editingCat
+            ? async (id, data) => {
+                await updateCat(id, data);
+                setEditingCatId(null);
+                setView('main');
+              }
+            : undefined
+        }
+        initialCat={editingCat}
         maxCats={maxCats}
         currentCount={cats.length}
       />
@@ -139,7 +154,21 @@ function App() {
           setSelectedCat(cat);
           setView('chat');
         }}
-        onAddCat={() => setView('setup')}
+        onAddCat={() => {
+          setEditingCatId(null);
+          setView('setup');
+        }}
+        onEditCat={(cat) => {
+          setEditingCatId(cat.id);
+          setView('setup');
+        }}
+        onDeleteCat={(cat) => {
+          deleteCat(cat.id);
+          if (selectedCat?.id === cat.id) {
+            const rest = cats.filter((c) => c.id !== cat.id);
+            setSelectedCat(rest[0] ?? null);
+          }
+        }}
         onSignOut={signOut}
       />
     );

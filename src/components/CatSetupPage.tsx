@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PERSONALITY_LABELS } from '../data/personalities';
-import type { CatInsert } from '../types/database';
+import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
+export type CatSetupFormData = Omit<CatInsert, 'user_id'>;
+
 interface Props {
-  onSubmit: (data: Omit<CatInsert, 'user_id'>) => Promise<void>;
+  onSubmit: (data: CatSetupFormData) => Promise<void>;
   onBack?: () => void;
+  onUpdate?: (id: string, data: CatSetupFormData) => Promise<void>;
+  initialCat?: Cat | null;
   maxCats: number;
   currentCount: number;
 }
 
-export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props) {
+export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, currentCount }: Props) {
   const [catName, setCatName] = useState('');
   const [breed, setBreed] = useState('');
   const [age, setAge] = useState<number | ''>('');
@@ -22,6 +26,22 @@ export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props)
   const [customPersonality, setCustomPersonality] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const isEditMode = !!initialCat;
+
+  useEffect(() => {
+    if (initialCat) {
+      setCatName(initialCat.cat_name);
+      setBreed(initialCat.breed ?? '');
+      setAge(initialCat.age ?? '');
+      setPersonality(initialCat.personality ?? []);
+      setPreferences(initialCat.preferences ?? '');
+      setDislikes(initialCat.dislikes ?? '');
+      setHabits(initialCat.habits ?? '');
+      setSelfRef(initialCat.self_ref ?? '我');
+      setCustomPersonality('');
+    }
+  }, [initialCat]);
 
   const togglePersonality = (p: string) => {
     setPersonality((prev) =>
@@ -46,18 +66,25 @@ export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props)
       return;
     }
 
+    const payload: CatSetupFormData = {
+      cat_name: catName.trim(),
+      breed: breed.trim() || null,
+      age: age === '' ? null : Number(age),
+      personality: personalityList,
+      preferences: preferences.trim() || null,
+      dislikes: dislikes.trim() || null,
+      habits: habits.trim() || null,
+      self_ref: selfRef.trim() || '我',
+    };
+
     setLoading(true);
     try {
-      await onSubmit({
-        cat_name: catName.trim(),
-        breed: breed.trim() || null,
-        age: age === '' ? null : Number(age),
-        personality: personalityList,
-        preferences: preferences.trim() || null,
-        dislikes: dislikes.trim() || null,
-        habits: habits.trim() || null,
-        self_ref: selfRef.trim() || '我',
-      });
+      if (isEditMode && onUpdate && initialCat) {
+        await onUpdate(initialCat.id, payload);
+        onBack?.();
+      } else {
+        await onSubmit(payload);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : '儲存失敗');
     } finally {
@@ -65,7 +92,7 @@ export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props)
     }
   };
 
-  if (currentCount >= maxCats) {
+  if (!isEditMode && currentCount >= maxCats) {
     return (
       <div className="cat-setup-page">
         <div className="cat-setup-card">
@@ -88,7 +115,7 @@ export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props)
             ← 返回
           </button>
         )}
-        <h1>設定你的貓咪</h1>
+        <h1>{isEditMode ? '編輯貓咪' : '設定你的貓咪'}</h1>
         <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
 
         <form onSubmit={handleSubmit} className="cat-setup-form">
@@ -189,7 +216,7 @@ export function CatSetupPage({ onSubmit, onBack, maxCats, currentCount }: Props)
           {error && <p className="form-error">{error}</p>}
 
           <button type="submit" disabled={loading}>
-            {loading ? '儲存中...' : '完成'}
+            {loading ? '儲存中...' : isEditMode ? '儲存' : '完成'}
           </button>
         </form>
       </div>

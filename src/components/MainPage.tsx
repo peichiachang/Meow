@@ -6,6 +6,8 @@ interface Props {
   maxCats: number;
   onSelectCat: (cat: Cat) => void;
   onAddCat: () => void;
+  onEditCat: (cat: Cat) => void;
+  onDeleteCat: (cat: Cat) => void;
   onSignOut: () => void;
 }
 
@@ -14,9 +16,18 @@ export function MainPage({
   maxCats,
   onSelectCat,
   onAddCat,
+  onEditCat,
+  onDeleteCat,
   onSignOut,
 }: Props) {
   const canAddCat = cats.length < maxCats;
+
+  const handleDelete = (e: React.MouseEvent, cat: Cat) => {
+    e.stopPropagation();
+    if (window.confirm(`確定要刪除「${cat.cat_name}」嗎？此操作無法復原。`)) {
+      onDeleteCat(cat);
+    }
+  };
 
   return (
     <div className="main-page">
@@ -36,11 +47,18 @@ export function MainPage({
       <main className="main-content">
         <div className="main-cats">
           {cats.map((cat) => (
-            <button
+            <div
               key={cat.id}
-              type="button"
+              role="button"
+              tabIndex={0}
               className="main-cat-card"
               onClick={() => onSelectCat(cat)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectCat(cat);
+                }
+              }}
             >
               <span className="main-cat-avatar">
                 {cat.avatar_url ? (
@@ -51,7 +69,28 @@ export function MainPage({
               </span>
               <span className="main-cat-name">{cat.cat_name}</span>
               <span className="main-cat-action">和 {cat.cat_name} 聊天</span>
-            </button>
+              <div className="main-cat-card-actions">
+                <button
+                  type="button"
+                  className="main-cat-btn main-cat-btn-edit"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditCat(cat);
+                  }}
+                  title="編輯"
+                >
+                  編輯
+                </button>
+                <button
+                  type="button"
+                  className="main-cat-btn main-cat-btn-delete"
+                  onClick={(e) => handleDelete(e, cat)}
+                  title="刪除"
+                >
+                  刪除
+                </button>
+              </div>
+            </div>
           ))}
         </div>
 
