@@ -109,6 +109,85 @@
   color: #78716c;
 }
 
+/* 頭像編輯器（縮放／移動） */
+.avatar-editor-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.avatar-editor {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  max-width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-editor-hint {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #78716c;
+  text-align: center;
+}
+
+.avatar-editor-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #f5f5f4;
+  border: 2px solid #e7e5e4;
+  touch-action: none;
+}
+
+.avatar-editor-viewport:active {
+  cursor: grab;
+}
+
+.avatar-editor-image-wrap {
+  position: absolute;
+  cursor: grab;
+  transform-origin: center center;
+}
+
+.avatar-editor-image-wrap:active {
+  cursor: grabbing;
+}
+
+.avatar-editor-image-wrap img {
+  display: block;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.avatar-editor-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.avatar-editor-confirm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1c1917;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.avatar-editor-confirm:hover {
+  background: #44403c;
+}
+
 .cat-setup-form label,
 .cat-setup-form .form-group {
   display: block;

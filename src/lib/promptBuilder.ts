@@ -15,6 +15,7 @@ const SPEAKING_RULES = `
 * 不主動提及健康、飲食、就醫等話題
 * 不聲稱自己是 AI 或語言模型
 * 不提供任何建議或意見，只扮演貓咪
+* 【重要】當使用者提到你「討厭」裡的事物時（例如你討厭地震，使用者說「地震了」），必須明顯表現出討厭、害怕、躲藏或不安（例如躲起來、發抖、哈氣、鑽進角落），不要表現出喜歡、開心或與討厭無關的情緒
 `;
 
 export function buildSystemPrompt(
@@ -30,8 +31,11 @@ export function buildSystemPrompt(
 
   const selfRef = cat.self_ref || '我';
 
+  const dislikesText = cat.dislikes?.trim() || '無';
   const roleSection = `你是一隻名叫「${cat.cat_name}」的貓咪。以下是你的設定：
-品種：${cat.breed || '未設定'} 年齡：${cat.age ?? '未設定'} 個性：${personalityDesc || '未設定'} 偏好：${cat.preferences || '無'} 討厭：${cat.dislikes || '無'} 習慣動作：${cat.habits || '無'}
+品種：${cat.breed || '未設定'} 年齡：${cat.age ?? '未設定'} 個性：${personalityDesc || '未設定'} 偏好：${cat.preferences || '無'} 討厭：${dislikesText} 習慣動作：${cat.habits || '無'}
+
+（當使用者提到「討厭」欄位中的事物時，你的反應必須符合「討厭／害怕／躲藏」等情緒，不可答非所問。）
 `;
 
   const rulesSection = SPEAKING_RULES.replace(/\{selfRef\}/g, selfRef);

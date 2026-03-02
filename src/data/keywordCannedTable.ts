@@ -25,7 +25,8 @@ const MASTER_KEYWORDS = [
   '午安', '下午',
   '謝謝', '感謝',
   '對不起', '抱歉', '不好意思',
-  '怕', '嚇', '可怕', '嚇到', '雷聲', '打雷', '怪獸', '吸塵器', '黑影', '躲', '紙箱', '沙發下', '被窩',
+  '地震了', '地震',
+  '怕', '嚇', '可怕', '嚇到', '雷聲', '打雷', '怪獸', '吸塵器', '黑影', '躲', '紙箱', '沙發下', '被窩', '發抖', '搖晃',
   '累', '辛苦', '好累', '好累喔', '累累', '很累', '想睡了', '睏了', '無聊死了',
   '地盤', '不准', '我的', '獵物', '佔領',
   '陪我', '理我', '理一下', '看看我', '注意我', '理我一下', '可愛', '萌萌', '萌', '翻滾', '表演',
@@ -104,6 +105,8 @@ const USER_KEYWORD_TO_CONTENT: Record<string, string[]> = {
   '冷死了': ['冷', '毯子', '取暖'],
   '拍照照': ['拍照', '手機', '拍'],
   '看鏡頭': ['拍照', '手機'],
+  '地震了': ['發抖', '躲', '嚇到', '打雷', '搖晃'],
+  '地震': ['發抖', '躲', '嚇到', '打雷', '搖晃'],
 };
 
 /** 關鍵字 → 罐頭索引[]（內容關鍵字＋使用者詞對應到內容關鍵字後的聯集） */
@@ -136,6 +139,26 @@ const NEGATIVE_FEEDBACK_KEYWORDS = [
   '敲碗', '抓壞', '推落', '咬住', '撞倒', '無視', '背對', '撥弄', '踢翻', '啃食', '抓爛', '推倒', '炸毛',
 ];
 
+/** 討厭詞 → 罐頭內文可能出現的相關關鍵字（用來找「對應到的負面句子」） */
+const DISLIKE_TO_CONTENT_KEYWORDS: Record<string, string[]> = {
+  地震: ['發抖', '搖晃', '打雷', '躲', '嚇到', '嚇死', '地震'],
+  打雷: ['打雷', '雷聲', '躲', '嚇', '閃電'],
+  洗澡: ['洗澡', '有水', '洗香香'],
+  吸塵器: ['吸塵器', '怪獸', '躲', '吵'],
+};
+
+/** 喜歡詞 → 罐頭內文可能出現的相關關鍵字（用來找「對應到的句子」） */
+const PREFERENCE_TO_CONTENT_KEYWORDS: Record<string, string[]> = {
+  罐頭: ['罐頭', '罐罐', '開飯', '碗', '餵', '餓', '肉泥', '零食'],
+  罐罐: ['罐頭', '罐罐', '開飯', '碗', '餵', '餓'],
+  摸: ['摸', '抱', '撸', '擼', '蹭', '摸摸', '抱抱'],
+  抱: ['摸', '抱', '蹭', '抱抱', '擼貓'],
+  曬太陽: ['太陽', '曬', '窗戶', '窗台'],
+  太陽: ['太陽', '曬', '窗戶', '窗台'],
+  零食: ['零食', '罐頭', '餵', '點心'],
+  玩: ['玩', '遊戲', '逗貓', '逗貓棒', '球', '躲貓貓'],
+};
+
 /** 取得「使用者訊息中出現」的關鍵字（依 MASTER_KEYWORDS 長度優先匹配） */
 export function getMatchedKeywords(userMessage: string): string[] {
   const trimmed = userMessage.trim();
@@ -145,6 +168,42 @@ export function getMatchedKeywords(userMessage: string): string[] {
     if (trimmed.includes(kw)) matched.push(kw);
   }
   return matched;
+}
+
+/**
+ * 當使用者提到喜歡內容時，找出「對應到的句子」：
+ * 罐頭內文包含任一喜歡詞或該喜歡的相關內容關鍵字。
+ */
+function getCorrespondingPreferencePool(preferencePhrases: string[]): number[] {
+  const contentKeywords = new Set<string>();
+  for (const p of preferencePhrases) {
+    contentKeywords.add(p);
+    const related = PREFERENCE_TO_CONTENT_KEYWORDS[p];
+    if (related) related.forEach((k) => contentKeywords.add(k));
+  }
+  return Array.from({ length: CANNED_MESSAGES.length }, (_, i) => i).filter((i) => {
+    const text = CANNED_MESSAGES[i].text;
+    return [...contentKeywords].some((kw) => text.includes(kw));
+  });
+}
+
+/**
+ * 當使用者提到討厭內容時，找出「對應到的負面句子」：
+ * 罐頭為負面語氣，且內文包含任一討厭詞或該討厭的相關內容關鍵字。
+ */
+function getCorrespondingNegativePool(dislikePhrases: string[]): number[] {
+  const contentKeywords = new Set<string>();
+  for (const p of dislikePhrases) {
+    contentKeywords.add(p);
+    const related = DISLIKE_TO_CONTENT_KEYWORDS[p];
+    if (related) related.forEach((k) => contentKeywords.add(k));
+  }
+  return Array.from({ length: CANNED_MESSAGES.length }, (_, i) => i).filter((i) => {
+    const text = CANNED_MESSAGES[i].text;
+    const isNegative = NEGATIVE_FEEDBACK_KEYWORDS.some((kw) => text.includes(kw));
+    if (!isNegative) return false;
+    return [...contentKeywords].some((kw) => text.includes(kw));
+  });
 }
 
 /**
@@ -164,24 +223,72 @@ export function pickCannedByKeywordAndPersonality(
   preferences?: string | null,
   dislikes?: string | null
 ): string | null {
+  const preferencePhrases = parsePhrases(preferences);
   const dislikePhrases = parsePhrases(dislikes);
+  const userMentionedPreference =
+    preferencePhrases.length > 0 &&
+    preferencePhrases.some((p) => userMessage.includes(p));
   const userMentionedDislike =
     dislikePhrases.length > 0 &&
     dislikePhrases.some((p) => userMessage.includes(p));
 
   const catSet = personality?.length ? new Set(personality) : null;
-  let pool: number[];
+  let pool: number[] = [];
 
-  if (userMentionedDislike) {
-    pool = Array.from({ length: CANNED_MESSAGES.length }, (_, i) => i).filter((i) => {
-      const msg = CANNED_MESSAGES[i];
-      const text = msg.text;
-      if (!NEGATIVE_FEEDBACK_KEYWORDS.some((kw) => text.includes(kw))) return false;
-      if (!msg.personalities.length) return true;
-      if (!catSet) return true;
-      return msg.personalities.every((p) => catSet.has(p));
-    });
-  } else {
+  // 1) 喜歡：有提到喜歡內容時，優先從「對應到的句子」中選（多則則隨機）
+  if (userMentionedPreference) {
+    const correspondingPreference = getCorrespondingPreferencePool(preferencePhrases);
+    if (correspondingPreference.length > 0) {
+      pool = correspondingPreference.filter((i) => {
+        const msg = CANNED_MESSAGES[i];
+        if (!msg.personalities.length) return true;
+        if (!catSet) return true;
+        return msg.personalities.every((p) => catSet.has(p));
+      });
+      if (pool.length === 0) pool = correspondingPreference;
+    }
+  }
+
+  // 2) 討厭：沒有喜歡對應句時，若提到討厭內容則用對應負面句或一般邏輯
+  if (pool.length === 0 && userMentionedDislike) {
+    const correspondingNegative = getCorrespondingNegativePool(dislikePhrases);
+    if (correspondingNegative.length > 0) {
+      pool = correspondingNegative.filter((i) => {
+        const msg = CANNED_MESSAGES[i];
+        if (!msg.personalities.length) return true;
+        if (!catSet) return true;
+        return msg.personalities.every((p) => catSet.has(p));
+      });
+      if (pool.length === 0) pool = correspondingNegative;
+    } else {
+      const keywords = getMatchedKeywords(userMessage);
+      if (keywords.length === 0) return null;
+      const candidateIndices = new Set<number>();
+      for (const kw of keywords) {
+        const indices = KEYWORD_TO_CANNED_INDICES.get(kw);
+        if (indices) indices.forEach((i) => candidateIndices.add(i));
+      }
+      if (candidateIndices.size === 0) return null;
+      const filtered = Array.from(candidateIndices).filter((i) => {
+        const msg = CANNED_MESSAGES[i];
+        if (!msg.personalities.length) return true;
+        if (!catSet) return true;
+        return msg.personalities.every((p) => catSet.has(p));
+      });
+      pool = filtered.length > 0 ? filtered : (catSet ? [] : Array.from(candidateIndices));
+      if (pool.length === 0) return null;
+      if (dislikePhrases.length > 0) {
+        const withoutDislikes = pool.filter((i) => {
+          const text = CANNED_MESSAGES[i].text;
+          return !dislikePhrases.some((p) => text.includes(p));
+        });
+        if (withoutDislikes.length > 0) pool = withoutDislikes;
+      }
+    }
+  }
+
+  // 3) 一般：依關鍵字＋個性篩選
+  if (pool.length === 0) {
     const keywords = getMatchedKeywords(userMessage);
     if (keywords.length === 0) return null;
     const candidateIndices = new Set<number>();
@@ -215,7 +322,6 @@ export function pickCannedByKeywordAndPersonality(
     if (withoutRecent.length > 0) pool = withoutRecent;
   }
 
-  const preferencePhrases = parsePhrases(preferences);
   if (preferencePhrases.length > 0) {
     const boosted: number[] = [];
     for (const i of pool) {

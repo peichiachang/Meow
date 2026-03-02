@@ -1,13 +1,168 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { PERSONALITY_LABELS } from '../data/personalities';
 import {
   getCatAvatarLocal,
   saveCatAvatarLocal,
   removeCatAvatarLocal,
-  fileToDataUrl,
 } from '../services/localAvatarService';
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
+
+const AVATAR_VIEWPORT_SIZE = 280;
+const MIN_SCALE = 0.4;
+const MAX_SCALE = 4;
+
+interface AvatarEditorProps {
+  imageUrl: string;
+  onConfirm: (dataUrl: string) => void;
+  onCancel: () => void;
+}
+
+function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
+  const [scale, setScale] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const dragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
+  const pinchRef = useRef<{ initialDistance: number; initialScale: number } | null>(null);
+
+  const viewportSize = AVATAR_VIEWPORT_SIZE;
+
+  const fitImage = useCallback(() => {
+    const img = imgRef.current;
+    const w = viewportSize;
+    const h = viewportSize;
+    if (!img || !img.naturalWidth) return;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+    const fitScale = Math.min(w / iw, h / ih, 1);
+    setScale(fitScale);
+    setOffset({ x: 0, y: 0 });
+  }, [viewportSize]);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete && img.naturalWidth) fitImage();
+    else img.addEventListener('load', fitImage);
+    return () => img.removeEventListener('load', fitImage);
+  }, [imageUrl, fitImage]);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if ((e as React.MouseEvent).button !== undefined && (e as React.MouseEvent).button !== 0) return;
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    dragRef.current = { startX: e.clientX, startY: e.clientY, startOffset: { ...offset } };
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!dragRef.current) return;
+    setOffset({
+      x: dragRef.current.startOffset.x + (e.clientX - dragRef.current.startX),
+      y: dragRef.current.startOffset.y + (e.clientY - dragRef.current.startY),
+    });
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+    dragRef.current = null;
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.08 : 0.08;
+    setScale((s) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, s + s * delta)));
+  };
+
+  const getTouchDistance = (touches: React.TouchList) => {
+    if (touches.length < 2) return 0;
+    const a = touches[0];
+    const b = touches[1];
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      pinchRef.current = { initialDistance: getTouchDistance(e.touches), initialScale: scale };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && pinchRef.current) {
+      e.preventDefault();
+      const d = getTouchDistance(e.touches);
+      const ratio = d / pinchRef.current.initialDistance;
+      setScale((s) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinchRef.current!.initialScale * ratio)));
+    }
+  };
+
+  const handleTouchEnd = () => {
+    pinchRef.current = null;
+  };
+
+  const handleConfirm = () => {
+    const img = imgRef.current;
+    if (!img || !img.naturalWidth) return;
+    const canvas = document.createElement('canvas');
+    canvas.width = viewportSize;
+    canvas.height = viewportSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+    ctx.save();
+    ctx.translate(viewportSize / 2 + offset.x, viewportSize / 2 + offset.y);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -iw / 2, -ih / 2, iw, ih);
+    ctx.restore();
+    try {
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      onConfirm(dataUrl);
+    } catch {
+      onConfirm(img.src);
+    }
+  };
+
+  return (
+    <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="調整頭像位置">
+      <div className="avatar-editor">
+        <p className="avatar-editor-hint">拖曳移動、滾輪或雙指縮放，調整到適合的位置後按確認</p>
+        <div
+          ref={containerRef}
+          className="avatar-editor-viewport"
+          style={{ width: viewportSize, height: viewportSize }}
+          onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+        >
+          <div
+            className="avatar-editor-image-wrap"
+            style={{
+              left: viewportSize / 2,
+              top: viewportSize / 2,
+              transform: `translate(-50%, -50%) translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
+            }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+          >
+            <img ref={imgRef} src={imageUrl} alt="預覽" draggable={false} />
+          </div>
+        </div>
+        <div className="avatar-editor-actions">
+          <button type="button" className="cat-avatar-btn-secondary" onClick={onCancel}>
+            取消
+          </button>
+          <button type="button" className="avatar-editor-confirm" onClick={handleConfirm}>
+            確認
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export type CatSetupFormData = Omit<CatInsert, 'user_id'>;
 
@@ -38,8 +193,8 @@ export function CatSetupPage({
   const [habits, setHabits] = useState('');
   const [selfRef, setSelfRef] = useState('');
   const [customPersonality, setCustomPersonality] = useState('');
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
+  const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(null);
+  const [editorImageUrl, setEditorImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -56,7 +211,7 @@ export function CatSetupPage({
       setDislikes(initialCat.dislikes ?? '');
       setHabits(initialCat.habits ?? '');
       setSelfRef(initialCat.self_ref ?? '');
-      setAvatarPreviewUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
+      setAvatarDataUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
       setCustomPersonality('');
     }
   }, [initialCat]);
@@ -69,20 +224,24 @@ export function CatSetupPage({
       return;
     }
     setError('');
-    setAvatarFile(file);
-    setAvatarPreviewUrl((prev) => {
-      if (prev?.startsWith('blob:')) URL.revokeObjectURL(prev);
-      return URL.createObjectURL(file);
-    });
+    setEditorImageUrl(URL.createObjectURL(file));
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleEditorConfirm = (dataUrl: string) => {
+    setAvatarDataUrl(dataUrl);
+    if (editorImageUrl?.startsWith('blob:')) URL.revokeObjectURL(editorImageUrl);
+    setEditorImageUrl(null);
+  };
+
+  const handleEditorCancel = () => {
+    if (editorImageUrl?.startsWith('blob:')) URL.revokeObjectURL(editorImageUrl);
+    setEditorImageUrl(null);
   };
 
   const clearAvatar = () => {
-    setAvatarFile(null);
+    setAvatarDataUrl(null);
     if (initialCat) removeCatAvatarLocal(initialCat.id);
-    setAvatarPreviewUrl((prev) => {
-      if (prev?.startsWith('blob:')) URL.revokeObjectURL(prev);
-      return initialCat ? getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null : null;
-    });
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -124,18 +283,12 @@ export function CatSetupPage({
     setLoading(true);
     try {
       if (isEditMode && onUpdate && initialCat) {
-        if (avatarFile) {
-          const dataUrl = await fileToDataUrl(avatarFile);
-          saveCatAvatarLocal(initialCat.id, dataUrl);
-        }
+        if (avatarDataUrl) saveCatAvatarLocal(initialCat.id, avatarDataUrl);
         await onUpdate(initialCat.id, payload);
         onBack?.();
       } else {
         const created = await onSubmit(payload);
-        if (avatarFile) {
-          const dataUrl = await fileToDataUrl(avatarFile);
-          saveCatAvatarLocal(created.id, dataUrl);
-        }
+        if (avatarDataUrl) saveCatAvatarLocal(created.id, avatarDataUrl);
         onBack?.();
       }
     } catch (err) {
@@ -171,13 +324,21 @@ export function CatSetupPage({
         <h1>{isEditMode ? '編輯貓咪' : '設定你的貓咪'}</h1>
         <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
 
+        {editorImageUrl && (
+          <AvatarEditor
+            imageUrl={editorImageUrl}
+            onConfirm={handleEditorConfirm}
+            onCancel={handleEditorCancel}
+          />
+        )}
+
         <form onSubmit={handleSubmit} className="cat-setup-form">
           <div className="form-group cat-avatar-upload">
             <span>貓咪照片</span>
             <div className="cat-avatar-upload-area">
               <div className="cat-avatar-preview">
-                {avatarPreviewUrl ? (
-                  <img src={avatarPreviewUrl} alt="預覽" />
+                {avatarDataUrl ? (
+                  <img src={avatarDataUrl} alt="預覽" />
                 ) : (
                   <span className="cat-avatar-preview-placeholder">🐱</span>
                 )}
@@ -188,7 +349,7 @@ export function CatSetupPage({
                 accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={handleAvatarChange}
                 className="cat-avatar-input"
-                aria-label="上傳貓咪照片"
+                aria-label="選擇貓咪照片"
               />
               <div className="cat-avatar-actions">
                 <button
@@ -196,16 +357,16 @@ export function CatSetupPage({
                   className="cat-avatar-btn-secondary"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  {avatarPreviewUrl ? '更換圖片' : '選擇圖片'}
+                  {avatarDataUrl ? '更換圖片' : '選擇圖片'}
                 </button>
-                {avatarPreviewUrl && (
+                {avatarDataUrl && (
                   <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
                     移除
                   </button>
                 )}
               </div>
             </div>
-            <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內</p>
+            <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
           </div>
 
           <label>
