@@ -24,6 +24,7 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const dragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
+  const touchDragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
   const pinchRef = useRef<{ initialDistance: number; initialScale: number } | null>(null);
 
   const viewportSize = AVATAR_VIEWPORT_SIZE;
@@ -82,23 +83,40 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
+      touchDragRef.current = null;
       pinchRef.current = { initialDistance: getTouchDistance(e.touches), initialScale: scale };
+    } else if (e.touches.length === 1) {
+      pinchRef.current = null;
+      touchDragRef.current = {
+        startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
+        startOffset: { ...offset },
+      };
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    const pinch = pinchRef.current;
-    if (e.touches.length === 2 && pinch) {
+    if (e.touches.length === 2) {
+      const pinch = pinchRef.current;
+      if (pinch) {
+        e.preventDefault();
+        const d = getTouchDistance(e.touches);
+        const ratio = d / pinch.initialDistance;
+        const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
+        setScale(nextScale);
+      }
+    } else if (e.touches.length === 1 && touchDragRef.current) {
       e.preventDefault();
-      const d = getTouchDistance(e.touches);
-      const ratio = d / pinch.initialDistance;
-      const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
-      setScale(nextScale);
+      setOffset({
+        x: touchDragRef.current.startOffset.x + (e.touches[0].clientX - touchDragRef.current.startX),
+        y: touchDragRef.current.startOffset.y + (e.touches[0].clientY - touchDragRef.current.startY),
+      });
     }
   };
 
-  const handleTouchEnd = () => {
-    pinchRef.current = null;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length < 2) pinchRef.current = null;
+    if (e.touches.length === 0) touchDragRef.current = null;
   };
 
   const handleConfirm = () => {
@@ -127,7 +145,7 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   return (
     <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="調整頭像位置">
       <div className="avatar-editor">
-        <p className="avatar-editor-hint">拖曳移動、滾輪或雙指縮放，調整到適合的位置後按確認</p>
+        <p className="avatar-editor-hint">拖曳移動、滾輪或雙指縮放（或使用下方 ＋／－），調整到適合的位置後按確認</p>
         <div
           ref={containerRef}
           className="avatar-editor-viewport"
@@ -152,6 +170,24 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
           >
             <img ref={imgRef} src={imageUrl} alt="預覽" draggable={false} />
           </div>
+        </div>
+        <div className="avatar-editor-zoom-btns">
+          <button
+            type="button"
+            className="avatar-editor-zoom-btn"
+            onClick={() => setScale((s) => Math.max(MIN_SCALE, s - 0.25))}
+            aria-label="縮小"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            className="avatar-editor-zoom-btn"
+            onClick={() => setScale((s) => Math.min(MAX_SCALE, s + 0.25))}
+            aria-label="放大"
+          >
+            +
+          </button>
         </div>
         <div className="avatar-editor-actions">
           <button type="button" className="cat-avatar-btn-secondary" onClick={onCancel}>
