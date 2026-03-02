@@ -1,11 +1,11 @@
 /**
- * SDD 6.1 免費版：每日 10 則訊息
- * 隔天台灣時間 00:00 重置
+ * SDD 6.1 免費版：每日訊息上限由 config 決定
+ * 隔天台灣時間 00:00 重置；limit 為 null 時不限次數
  */
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { DAILY_MESSAGE_LIMIT } from '../config';
 
-const FREE_DAILY_LIMIT = 10;
 const TAIWAN_TZ = 'Asia/Taipei';
 
 function getTodayTaiwan(): string {
@@ -16,12 +16,15 @@ export function useMessageLimit(userId: string | undefined, plan: string) {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  const limit = DAILY_MESSAGE_LIMIT;
   const isPaid = plan === 'paid';
-  const canSend = isPaid || count < FREE_DAILY_LIMIT;
-  const remaining = isPaid ? Infinity : Math.max(0, FREE_DAILY_LIMIT - count);
+  const limitDisabled = limit == null;
+  const canSend = limitDisabled || isPaid || count < limit;
+  const remaining =
+    limitDisabled || isPaid ? Infinity : Math.max(0, limit - count);
 
   useEffect(() => {
-    if (!userId) {
+    if (!userId || limitDisabled) {
       setCount(0);
       setLoading(false);
       return;
@@ -44,10 +47,10 @@ export function useMessageLimit(userId: string | undefined, plan: string) {
     }
 
     fetchCount();
-  }, [userId]);
+  }, [userId, limitDisabled]);
 
   const incrementCount = async (): Promise<boolean> => {
-    if (!userId) return false;
+    if (!userId || limitDisabled) return true;
     const today = getTodayTaiwan();
 
     const { data: newCount, error } = await supabase.rpc(
@@ -68,7 +71,7 @@ export function useMessageLimit(userId: string | undefined, plan: string) {
     count,
     canSend,
     remaining,
-    limit: isPaid ? null : FREE_DAILY_LIMIT,
+    limit: limitDisabled || isPaid ? null : limit,
     incrementCount,
     loading,
   };
