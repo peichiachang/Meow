@@ -12,15 +12,22 @@
 }
 
 .chat-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 10;
   flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  margin: 0 -16px;
   padding: 1rem 16px;
   border-bottom: 2px solid #fed7aa;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .chat-back-btn {
@@ -119,7 +126,7 @@
 .chat-main {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem 0 180px;
+  padding: 72px 0 180px 0;
 }
 
 .chat-welcome {
