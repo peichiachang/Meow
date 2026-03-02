@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { PERSONALITY_LABELS } from '../data/personalities';
 import {
   getCatAvatarLocal,
@@ -8,7 +8,7 @@ import {
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
-const AVATAR_VIEWPORT_SIZE = 280;
+const AVATAR_VIEWPORT_DEFAULT = 280;
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 4;
 
@@ -21,13 +21,25 @@ interface AvatarEditorProps {
 function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [viewportSize, setViewportSize] = useState(AVATAR_VIEWPORT_DEFAULT);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const dragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
   const touchDragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
   const pinchRef = useRef<{ initialDistance: number; initialScale: number } | null>(null);
 
-  const viewportSize = AVATAR_VIEWPORT_SIZE;
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth || AVATAR_VIEWPORT_DEFAULT;
+      setViewportSize(w);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const fitImage = useCallback(() => {
     const img = imgRef.current;
@@ -122,20 +134,31 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const handleConfirm = () => {
     const img = imgRef.current;
     if (!img || !img.naturalWidth) return;
+    const size = viewportSize;
     const canvas = document.createElement('canvas');
-    canvas.width = viewportSize;
-    canvas.height = viewportSize;
+    canvas.width = size;
+    canvas.height = size;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const iw = img.naturalWidth;
     const ih = img.naturalHeight;
     ctx.save();
-    ctx.translate(viewportSize / 2 + offset.x, viewportSize / 2 + offset.y);
+    ctx.translate(size / 2 + offset.x, size / 2 + offset.y);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -iw / 2, -ih / 2, iw, ih);
     ctx.restore();
     try {
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      if (size > AVATAR_VIEWPORT_DEFAULT) {
+        const small = document.createElement('canvas');
+        small.width = AVATAR_VIEWPORT_DEFAULT;
+        small.height = AVATAR_VIEWPORT_DEFAULT;
+        const sctx = small.getContext('2d');
+        if (sctx) {
+          sctx.drawImage(canvas, 0, 0, size, size, 0, 0, AVATAR_VIEWPORT_DEFAULT, AVATAR_VIEWPORT_DEFAULT);
+          dataUrl = small.toDataURL('image/jpeg', 0.85);
+        }
+      }
       onConfirm(dataUrl);
     } catch {
       onConfirm(img.src);
@@ -143,13 +166,14 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   };
 
   return (
-    <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="調整頭像位置">
-      <div className="avatar-editor">
-        <p className="avatar-editor-hint">拖曳移動、滾輪或雙指縮放（或使用下方 ＋／－），調整到適合的位置後按確認</p>
+    <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="預覽與裁切頭像">
+      <div className="avatar-editor avatar-editor-fullpage">
+        <h2 className="avatar-editor-title">預覽與裁切</h2>
+        <p className="avatar-editor-hint">拖曳移動、雙指或按鈕縮放，圓圈內為頭像裁切範圍，確認後套用</p>
         <div
           ref={containerRef}
           className="avatar-editor-viewport"
-          style={{ width: viewportSize, height: viewportSize }}
+          style={{ width: 'min(85vmin, 400px)', height: 'min(85vmin, 400px)' }}
           onWheel={handleWheel}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
