@@ -260,40 +260,39 @@ export function pickCannedByKeywordAndPersonality(
 
   // 2) 討厭（切題）：沒有喜歡對應句時，若提到討厭內容則用對應負面句，無則走一般邏輯
   if (pool.length === 0 && userMentionedDislike) {
+    // 先找「回覆內文含討厭切題關鍵字」的罐頭（如地震→發抖、搖晃、地震）；從「全部罐頭」篩，不限制負面語氣，否則會漏掉 353、354
+    const preferredKeywords = new Set<string>();
+    for (const p of dislikePhrases) {
+      if (!userMessage.includes(p)) continue;
+      const kw = DISLIKE_PREFERRED_REPLY_KEYWORDS[p];
+      if (kw) kw.forEach((k) => preferredKeywords.add(k));
+    }
+    let topicPool: number[] = [];
+    if (preferredKeywords.size > 0) {
+      topicPool = Array.from({ length: CANNED_MESSAGES.length }, (_, i) => i).filter((i) => {
+        const text = CANNED_MESSAGES[i].text;
+        return [...preferredKeywords].some((k) => text.includes(k));
+      });
+    }
     const correspondingNegative = getCorrespondingNegativePool(dislikePhrases);
-    if (correspondingNegative.length > 0) {
-      // 先找出「回覆內文含討厭相關關鍵字」的切題罐頭（如地震→發抖、搖晃、地震）
-      const preferredKeywords = new Set<string>();
-      for (const p of dislikePhrases) {
-        if (!userMessage.includes(p)) continue;
-        const kw = DISLIKE_PREFERRED_REPLY_KEYWORDS[p];
-        if (kw) kw.forEach((k) => preferredKeywords.add(k));
-      }
-      let topicPool: number[] = [];
-      if (preferredKeywords.size > 0) {
-        topicPool = correspondingNegative.filter((i) => {
-          const text = CANNED_MESSAGES[i].text;
-          return [...preferredKeywords].some((k) => text.includes(k));
-        });
-      }
-      // 有切題罐頭時優先從切題池選（再依個性篩；若篩完為空仍用切題池，切題優先於個性）
-      if (topicPool.length > 0) {
-        pool = topicPool.filter((i) => {
-          const msg = CANNED_MESSAGES[i];
-          if (!msg.personalities.length) return true;
-          if (!catSet) return true;
-          return msg.personalities.every((p) => catSet.has(p));
-        });
-        if (pool.length === 0) pool = topicPool;
-      } else {
-        pool = correspondingNegative.filter((i) => {
-          const msg = CANNED_MESSAGES[i];
-          if (!msg.personalities.length) return true;
-          if (!catSet) return true;
-          return msg.personalities.every((p) => catSet.has(p));
-        });
-        if (pool.length === 0) pool = correspondingNegative;
-      }
+
+    if (topicPool.length > 0) {
+      // 有切題罐頭時優先從切題池選（再依個性篩；若篩完為空仍用切題池）
+      pool = topicPool.filter((i) => {
+        const msg = CANNED_MESSAGES[i];
+        if (!msg.personalities.length) return true;
+        if (!catSet) return true;
+        return msg.personalities.every((p) => catSet.has(p));
+      });
+      if (pool.length === 0) pool = topicPool;
+    } else if (correspondingNegative.length > 0) {
+      pool = correspondingNegative.filter((i) => {
+        const msg = CANNED_MESSAGES[i];
+        if (!msg.personalities.length) return true;
+        if (!catSet) return true;
+        return msg.personalities.every((p) => catSet.has(p));
+      });
+      if (pool.length === 0) pool = correspondingNegative;
     } else {
       const keywords = getMatchedKeywords(userMessage);
       if (keywords.length === 0) return null;
