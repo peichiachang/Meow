@@ -147,6 +147,14 @@ const DISLIKE_TO_CONTENT_KEYWORDS: Record<string, string[]> = {
   吸塵器: ['吸塵器', '怪獸', '躲', '吵'],
 };
 
+/** 討厭詞 → 回覆內文「建議出現」的關鍵字（優先選有這些字的罐頭，讓回覆切題） */
+const DISLIKE_PREFERRED_REPLY_KEYWORDS: Record<string, string[]> = {
+  地震: ['發抖', '搖晃', '地震'],
+  打雷: ['打雷', '雷聲', '閃電', '嚇'],
+  洗澡: ['洗澡', '有水'],
+  吸塵器: ['吸塵器', '怪獸', '吵'],
+};
+
 /** 喜歡詞 → 罐頭內文可能出現的相關關鍵字（用來找「對應到的句子」） */
 const PREFERENCE_TO_CONTENT_KEYWORDS: Record<string, string[]> = {
   罐頭: ['罐頭', '罐罐', '開飯', '碗', '餵', '餓', '肉泥', '零食'],
@@ -235,7 +243,8 @@ export function pickCannedByKeywordAndPersonality(
   const catSet = personality?.length ? new Set(personality) : null;
   let pool: number[] = [];
 
-  // 1) 喜歡：有提到喜歡內容時，優先從「對應到的句子」中選（多則則隨機）
+  // 切題 = 貓咪「喜歡」「討厭」對應到的句子。順序：喜歡（切題）→ 討厭（切題）→ 一般（關鍵字＋個性）
+  // 1) 喜歡（切題）：使用者提到喜歡內容時，優先從對應句選
   if (userMentionedPreference) {
     const correspondingPreference = getCorrespondingPreferencePool(preferencePhrases);
     if (correspondingPreference.length > 0) {
@@ -249,17 +258,42 @@ export function pickCannedByKeywordAndPersonality(
     }
   }
 
-  // 2) 討厭：沒有喜歡對應句時，若提到討厭內容則用對應負面句或一般邏輯
+  // 2) 討厭（切題）：沒有喜歡對應句時，若提到討厭內容則用對應負面句，無則走一般邏輯
   if (pool.length === 0 && userMentionedDislike) {
     const correspondingNegative = getCorrespondingNegativePool(dislikePhrases);
     if (correspondingNegative.length > 0) {
-      pool = correspondingNegative.filter((i) => {
-        const msg = CANNED_MESSAGES[i];
-        if (!msg.personalities.length) return true;
-        if (!catSet) return true;
-        return msg.personalities.every((p) => catSet.has(p));
-      });
-      if (pool.length === 0) pool = correspondingNegative;
+      // 先找出「回覆內文含討厭相關關鍵字」的切題罐頭（如地震→發抖、搖晃、地震）
+      const preferredKeywords = new Set<string>();
+      for (const p of dislikePhrases) {
+        if (!userMessage.includes(p)) continue;
+        const kw = DISLIKE_PREFERRED_REPLY_KEYWORDS[p];
+        if (kw) kw.forEach((k) => preferredKeywords.add(k));
+      }
+      let topicPool: number[] = [];
+      if (preferredKeywords.size > 0) {
+        topicPool = correspondingNegative.filter((i) => {
+          const text = CANNED_MESSAGES[i].text;
+          return [...preferredKeywords].some((k) => text.includes(k));
+        });
+      }
+      // 有切題罐頭時優先從切題池選（再依個性篩；若篩完為空仍用切題池，切題優先於個性）
+      if (topicPool.length > 0) {
+        pool = topicPool.filter((i) => {
+          const msg = CANNED_MESSAGES[i];
+          if (!msg.personalities.length) return true;
+          if (!catSet) return true;
+          return msg.personalities.every((p) => catSet.has(p));
+        });
+        if (pool.length === 0) pool = topicPool;
+      } else {
+        pool = correspondingNegative.filter((i) => {
+          const msg = CANNED_MESSAGES[i];
+          if (!msg.personalities.length) return true;
+          if (!catSet) return true;
+          return msg.personalities.every((p) => catSet.has(p));
+        });
+        if (pool.length === 0) pool = correspondingNegative;
+      }
     } else {
       const keywords = getMatchedKeywords(userMessage);
       if (keywords.length === 0) return null;
@@ -287,7 +321,7 @@ export function pickCannedByKeywordAndPersonality(
     }
   }
 
-  // 3) 一般：依關鍵字＋個性篩選
+  // 3) 一般：無切題時才用，依關鍵字＋個性篩選罐頭訊息
   if (pool.length === 0) {
     const keywords = getMatchedKeywords(userMessage);
     if (keywords.length === 0) return null;
