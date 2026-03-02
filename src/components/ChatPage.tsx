@@ -88,6 +88,11 @@ export function ChatPage({
         .map((m) => m.content);
       const cannedReply = getKeywordCannedReply(text, selectedCat.personality, {
         excludeTexts: lastAssistantTexts.length ? lastAssistantTexts : undefined,
+        slotOverrides: selectedCat.self_ref
+          ? { subject: selectedCat.self_ref }
+          : undefined,
+        preferences: selectedCat.preferences ?? undefined,
+        dislikes: selectedCat.dislikes ?? undefined,
       });
       const reply = cannedReply ?? await sendChatMessage(
         selectedCat,

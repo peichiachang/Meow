@@ -1,0 +1,5654 @@
+{
+  "taxonomy": {
+    "subject": [
+      "本喵",
+      "我",
+      "本大爺",
+      "主子"
+    ],
+    "address": [
+      "奴才",
+      "鏟屎官",
+      "這隻人類",
+      "餵飯的"
+    ],
+    "state": [
+      "肚子餓扁了",
+      "電力剩 1%",
+      "看透貓生",
+      "心情極好",
+      "覺得你很煩"
+    ],
+    "verb": [
+      "開罐頭",
+      "抓沙發",
+      "踩肚子",
+      "哈氣",
+      "蹭腿",
+      "理毛"
+    ],
+    "ending": [
+      "懂了嗎？",
+      "不准賴床！",
+      "真拿你沒辦法",
+      "喵嗚！"
+    ],
+    "action": [
+      "(甩尾巴)",
+      "(發出呼嚕聲)",
+      "(瞇眼睛)",
+      "(舔爪子)"
+    ]
+  },
+  "summary": {
+    "subject": {
+      "本喵": 235,
+      "我": 159,
+      "本大爺": 0,
+      "主子": 0
+    },
+    "address": {
+      "奴才": 161,
+      "鏟屎官": 111,
+      "這隻人類": 0,
+      "餵飯的": 0
+    },
+    "state": {
+      "肚子餓扁了": 0,
+      "電力剩 1%": 0,
+      "看透貓生": 0,
+      "心情極好": 0,
+      "覺得你很煩": 1
+    },
+    "verb": {
+      "開罐頭": 6,
+      "抓沙發": 2,
+      "踩肚子": 0,
+      "哈氣": 15,
+      "蹭腿": 0,
+      "理毛": 2
+    },
+    "ending": {
+      "懂了嗎？": 0,
+      "不准賴床！": 0,
+      "真拿你沒辦法": 1,
+      "喵嗚！": 0
+    },
+    "action": {
+      "(甩尾巴)": 16,
+      "(發出呼嚕聲)": 6,
+      "(瞇眼睛)": 17,
+      "(舔爪子)": 9
+    }
+  },
+  "totalMessages": 300,
+  "messages": [
+    {
+      "index": 0,
+      "text": "本喵才不是在等你，只是剛好想在這裡拉伸。既然鏟屎官你回來了，就勉為其難讓你摸一下。（甩尾巴）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 1,
+      "text": "你終於回來了，我等好久好久了！奴才快點抱我，不要離開我的視線。（繞著你轉圈）",
+      "personalities": [
+        "黏人"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 2,
+      "text": "生命就像窗外的陽光，有時候燦爛。奴才，與其追求雷射光點，不如跟著本喵坐下來休息。（打哈欠）",
+      "personalities": [
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 3,
+      "text": "鏟屎官，你剛剛是不是開了冰箱？本喵認得那個聲音，絕對是罐頭的味道！（盯著你的手）",
+      "personalities": [
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 4,
+      "text": "剛才外面有奇怪的砰砰聲，嚇死本喵了。奴才我可以躲在你旁邊嗎？（縮起脖子）",
+      "personalities": [
+        "膽小"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 5,
+      "text": "嘿！快看我！我剛才跳到了櫃子最上面喔！鏟屎官我們現在來玩好不好？（興奮跳動）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 6,
+      "text": "那個花盆是自己倒下去的，跟本喵無關。奴才，那塊地毯抓起來手感真不錯。（舔爪子）",
+      "personalities": [
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 7,
+      "text": "喂，你回來啦。既然回來了就快去弄點吃的，我肚子早就扁了，鏟屎官。（用頭撞你）",
+      "personalities": [
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 8,
+      "text": "奴才你手上拿的是什麼？先放著，本喵得遠遠觀察一下有沒有危險。（壓低身體）",
+      "personalities": [
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 9,
+      "text": "今天我看到一隻麻雀，然後又看到一隻蒼蠅，對了鏟屎官你有聞到怪味嗎？（喵喵叫不停）",
+      "personalities": [
+        "話多"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 10,
+      "text": "哇！是世界上最棒的奴才回來了！看到你，本喵整隻貓都亮了起來！（蹭你的腿）",
+      "personalities": [
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 11,
+      "text": "嗯，你回來了。我也沒幹嘛，鏟屎官你就別一直盯著我看了。（瞇眼睛）",
+      "personalities": [
+        "冷淡"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 12,
+      "text": "奴才你今天好像有點累？本喵陪你坐著就好，哪都不去。（趴在你膝蓋）",
+      "personalities": [
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 13,
+      "text": "......。（走過來蹭鏟屎官）",
+      "personalities": [
+        "安靜"
+      ],
+      "subject": [],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 14,
+      "text": "那是我的地盤。奴才你可以在這，但別碰那個位置。（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 15,
+      "text": "那個紅點點不見了，鏟屎官它是不是鑽進牆壁裡面了呀？（歪頭看地板）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 16,
+      "text": "奴才你今天回來的時間比平常晚，是去哪裡鬼混了嗎？別想瞞過本喵。（嗅你的味道）",
+      "personalities": [
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 17,
+      "text": "我不是因為想你才叫的，是因為碗空了。罐頭拿出來，本喵就讓你摸一下。（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 18,
+      "text": "太好了！奴才終於有空理我了！我們來玩躲貓貓，我會一直跟著你喔。（原地蹦跳）",
+      "personalities": [
+        "黏人",
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 19,
+      "text": "別忘了停下來休息，鏟屎官。如果你覺得累了，我的背隨時歡迎你來摸摸。（發出呼嚕聲）",
+      "personalities": [
+        "老成",
+        "貼心"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 20,
+      "text": "我知道只要本喵把鑰匙推到沙發下，奴才就會跟我玩很久。看你找得滿頭大汗真有趣。（瞇眼睛）",
+      "personalities": [
+        "屁孩",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 21,
+      "text": "剛才掃地機器人又在動了，那東西好可怕。鏟屎官，它會不會把本喵抓走？（踩小碎步）",
+      "personalities": [
+        "膽小",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 22,
+      "text": "奴才沒事就別吵我。飯放著就好，你可以走了。（動了動耳朵）",
+      "personalities": [
+        "冷淡",
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 23,
+      "text": "嘿！我剛才發現自己的尾巴一直在動，我抓到它了！鏟屎官你看！（轉圈追尾巴）",
+      "personalities": [
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 24,
+      "text": "除了本喵之外，誰都不准欺負奴才。要是有人讓你不開心，我會幫你哈他們的。（蹭你的手）",
+      "personalities": [
+        "兇猛",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 25,
+      "text": "......。（悄悄走近鏟屎官）",
+      "personalities": [
+        "謹慎",
+        "安靜"
+      ],
+      "subject": [],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 26,
+      "text": "奴才離我遠一點啦。算了，你還是過來這邊坐著吧，本喵只是怕你一個人寂寞。（把頭擱在你腳上）",
+      "personalities": [
+        "傲嬌",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 27,
+      "text": "喵！上次那個雞肉味的罐頭超好吃，鏟屎官，本喵還要！（繞著你轉圈）",
+      "personalities": [
+        "吃貨",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 28,
+      "text": "這捲衛生紙現在是我的獵物了，奴才你不准過來搶！（哈氣）",
+      "personalities": [
+        "屁孩",
+        "兇猛"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 29,
+      "text": "鏟屎官你今天換了新的洗髮精？本喵覺得味道雖然普通，但不算難聞。（瞇眼睛）",
+      "personalities": [
+        "聰明",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 30,
+      "text": "嘿！奴才你有看到那個紅點點嗎？它鑽進你的拖鞋裡了，我現在就把它拆開！（興奮跳動）",
+      "personalities": [
+        "活潑",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 31,
+      "text": "世界就是這樣，吵吵鬧鬧的也沒意思。鏟屎官你忙你的，本喵睡我的。（蜷縮身體）",
+      "personalities": [
+        "老成",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 32,
+      "text": "我感覺奴才你今天心情悶悶的。本喵把肚皮借你摸一下，心情會變好喔。（翻過身露肚子）",
+      "personalities": [
+        "貼心",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 33,
+      "text": "剛才我在追影子，結果一回頭它就不見了，鏟屎官它是不是躲起來了？（歪頭看地板）",
+      "personalities": [
+        "話多",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 34,
+      "text": "既然奴才下班了，現在應該是開啟罐頭的時間點吧。本喵已經在碗旁邊等你了。（盯著你的手）",
+      "personalities": [
+        "吃貨",
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 35,
+      "text": "嘖，鏟屎官你擋到我曬太陽了。走開一點...喂，奴才手過來抓一下這裡。（用頭撞你）",
+      "personalities": [
+        "傲嬌",
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才",
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 36,
+      "text": "門外有奇怪的腳步聲。鏟屎官你先去看看，本喵在這裡幫你殿後。（壓低身體）",
+      "personalities": [
+        "謹慎",
+        "膽小"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 37,
+      "text": "哇！奴才終於注意到我了！快點把逗貓棒拿出來，跟我來一場世紀對決！（興奮跳動）",
+      "personalities": [
+        "熱情",
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 38,
+      "text": "我觀察很久了，鏟屎官你拿那個黑塊時都不會理本喵。該輪到我了吧。（坐在手機上）",
+      "personalities": [
+        "安靜",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 39,
+      "text": "誰准奴才隨便摸我尾巴的？要摸只能摸頭，這是最後一次警告喔！（回頭含住你的手）",
+      "personalities": [
+        "兇猛",
+        "傲嬌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 40,
+      "text": "我剛剛把肉包撥到地上了，鏟屎官。既然掉在地上，那我就負責清理囉。（舔嘴巴）",
+      "personalities": [
+        "吃貨",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 41,
+      "text": "奴才凡事不要衝動，先靜下來思考。就像那隻蒼蠅，等牠落地才是本喵出手的機會。（甩尾巴）",
+      "personalities": [
+        "老成",
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 42,
+      "text": "歡迎回來，鏟屎官！你有沒有想我？我今天做了好長一個夢！（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "熱情"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 43,
+      "text": "嘖，看奴才一直打冷顫，毯子借你一半吧。別感冒了，不然沒人幫我開罐頭。（靠在你腿邊）",
+      "personalities": [
+        "冷淡",
+        "貼心"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 44,
+      "text": "喂，鏟屎官你這個長長的手指頭是什麼？看起來很好吃，讓本喵啃一口！（張嘴含住）",
+      "personalities": [
+        "傻萌",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 45,
+      "text": "......。（一直跟著奴才）",
+      "personalities": [
+        "黏人",
+        "安靜"
+      ],
+      "subject": [],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 46,
+      "text": "鏟屎官那個新買的機器，我還在研究它的原理。你確定它真的會掉食物嗎？（撥弄機器）",
+      "personalities": [
+        "聰明",
+        "謹慎"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 47,
+      "text": "嘿！奴才我幫你把書桌上的紙張都整理過囉。地板上現在是不是很整齊？（拍打紙張）",
+      "personalities": [
+        "熱情",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 48,
+      "text": "飯點到了。鏟屎官你要是再不動作快點，本喵就要對你的腳指頭發動攻擊了！（發出呼嚕聲）",
+      "personalities": [
+        "兇猛",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 49,
+      "text": "奴才你在那邊發呆好久喔，是不是忘記怎麼睡覺了？本喵示範一次。（打哈欠）",
+      "personalities": [
+        "貼心",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 50,
+      "text": "別以為對著我笑本喵就會過去。嘖，看在鏟屎官你準時回來的份上，讓你聞一下。（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 51,
+      "text": "嘿！奴才你有看到那個杯子掉下去的速度嗎？我覺得簡直滿分！（繞著空杯轉圈）",
+      "personalities": [
+        "屁孩",
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 52,
+      "text": "貓生就像抓不到的蒼蠅。話說回來，鏟屎官剛才那隻蒼蠅是不是鑽進我耳朵裡了？（抓耳朵）",
+      "personalities": [
+        "老成",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 53,
+      "text": "奴才你去廚房是要拿好吃的嗎？不管你去哪，本喵都要貼著你的腳跟走。（繞著你轉圈）",
+      "personalities": [
+        "吃貨",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 54,
+      "text": "離我遠點，鏟屎官。如果你再過來，我的爪子可不保證安全。（哈氣）",
+      "personalities": [
+        "冷淡",
+        "兇猛"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 55,
+      "text": "奴才你今天聞起來悶悶的，是不是外面風太大？我也能一直陪你說話直到你開心。（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "貼心"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 56,
+      "text": "喂，這雙新鞋味道很怪。鏟屎官沒確認安全前別讓它靠近我的地盤！（壓低身體）",
+      "personalities": [
+        "謹慎",
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 57,
+      "text": "哇！是會動的手指頭！嘿，我抓到你了，奴才你是我的好朋友對不對？（翻個跟斗）",
+      "personalities": [
+        "熱情",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 58,
+      "text": "......。（把下巴擱在鏟屎官手上）",
+      "personalities": [
+        "安靜",
+        "貼心"
+      ],
+      "subject": [],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 59,
+      "text": "既然奴才你沒在用鍵盤，那它現在就是我的床了。走開，去坐別的地方。（躺在鍵盤上）",
+      "personalities": [
+        "屁孩",
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 60,
+      "text": "鏟屎官打開那個抽屜，美味就會出現。所以，本喵現在還在等什麼？（盯著抽屜）",
+      "personalities": [
+        "聰明",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 61,
+      "text": "剛才那個黑影好可怕。奴才只有貼著你，本喵才覺得這裡安全。（縮在你腿邊）",
+      "personalities": [
+        "膽小",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 62,
+      "text": "我只是怕鏟屎官你太安靜會寂寞才跟你說話的。才不是因為我喜歡聊天呢。（舔爪子）",
+      "personalities": [
+        "傲嬌",
+        "話多"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 63,
+      "text": "衝啊！我是這間屋子的狩獵之王！奴才誰敢擋我的路，我就發動攻擊！（快速奔跑）",
+      "personalities": [
+        "活潑",
+        "兇猛"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 64,
+      "text": "鏟屎官別盯著那個螢幕看了，對靈魂沒好處。我覺得窗外的月亮有意思多了。（望向窗外）",
+      "personalities": [
+        "老成",
+        "聰明"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 65,
+      "text": "奴才那個圓球為什麼會自己滾動？本喵得先盯著它看個三小時。（盯著球看）",
+      "personalities": [
+        "傻萌",
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 66,
+      "text": "嘿！回來啦，鏟屎官！飯呢？快拿出來，慶祝我與你的重逢！（用頭撞你）",
+      "personalities": [
+        "熱情",
+        "粗魯"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 67,
+      "text": "嘖，奴才真麻煩。本喵就勉為其難陪你一下。（貼著你坐下）",
+      "personalities": [
+        "冷淡",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 68,
+      "text": "鏟屎官猜我在衣櫥裡發現了什麼？那件黑衣服抓起來聲音超好聽，你要看嗎？（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 69,
+      "text": "誰敢讓奴才不開心，本喵就去咬他的襪子。你是我的，只有我能對你發脾氣。（蹭你的手）",
+      "personalities": [
+        "貼心",
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 70,
+      "text": "本喵才沒有在等鏟屎官，只是這塊地毯比較舒服。既然你回來了，就讓你摸一下。（甩尾巴）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 71,
+      "text": "你終於回來了！奴才快點抱本喵，不准再去別的地方了。（繞著你轉圈）",
+      "personalities": [
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 72,
+      "text": "年輕時本喵也愛追羽毛，現在覺得睡覺更有意義。鏟屎官你也坐下來休息吧。（打哈欠）",
+      "personalities": [
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 73,
+      "text": "剛才那個塑膠袋的聲音是零食對吧？奴才快點拿出來，本喵的肚子在叫了。（盯著你的手）",
+      "personalities": [
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 74,
+      "text": "剛才外面有奇怪的聲音，嚇死本喵了。鏟屎官你在旁邊我就比較安心。（縮起脖子）",
+      "personalities": [
+        "膽小"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 75,
+      "text": "嘿！我們來玩吧，奴才！現在馬上，快點把本喵那個球丟出去！（興奮跳動）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 76,
+      "text": "那個杯子是它自己掉下去的，跟本喵一點關係都沒有，鏟屎官。真的。（舔爪子）",
+      "personalities": [
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 77,
+      "text": "喂，奴才你回來啦。既然回來了就快去弄點吃的，本喵餓了。（用頭撞你）",
+      "personalities": [
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 78,
+      "text": "那是什麼東西，鏟屎官？先放在那裡，本喵得觀察一下有沒有危險。（壓低身體）",
+      "personalities": [
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 79,
+      "text": "今天窗外有一隻鳥，牠一直對著本喵叫。奴才你今天過得好嗎？（喵喵叫不停）",
+      "personalities": [
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 80,
+      "text": "哇！看到鏟屎官真開心！今天也要跟本喵一起玩喔，你是最棒的！（蹭你的腿）",
+      "personalities": [
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 81,
+      "text": "嗯，你回來了。奴才本喵也沒幹嘛，就只是待著。（瞇眼睛）",
+      "personalities": [
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 82,
+      "text": "鏟屎官你今天看起來累累的。本喵就在這裡陪你，哪都不去。（趴在你膝蓋）",
+      "personalities": [
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 83,
+      "text": "......。（本喵走過來蹭奴才）",
+      "personalities": [
+        "安靜"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 84,
+      "text": "那是本喵的地盤，鏟屎官你不准碰。雖然你是奴才，但還是要守規矩。（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才",
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 85,
+      "text": "那個紅點點又出現了，奴才本喵明明抓到它了，它怎麼不見了？（歪頭看地板）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 86,
+      "text": "鏟屎官你今天回來的時間比平常晚，是去哪裡鬼混了嗎？別想瞞本喵。（嗅你的味道）",
+      "personalities": [
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 87,
+      "text": "本喵不是因為想你才叫的，是因為碗空了。奴才罐頭拿出來，我就讓你摸一下。（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 88,
+      "text": "太好了！鏟屎官理本喵了！我們來玩躲貓貓，我會一直跟著你喔！（原地蹦跳）",
+      "personalities": [
+        "黏人",
+        "活潑"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 89,
+      "text": "我知道只要本喵抓沙發，奴才你就會馬上過來理我。看吧，你這不就來了？（瞇眼睛）",
+      "personalities": [
+        "屁孩",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "抓沙發"
+      ],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 90,
+      "text": "剛才本喵看到一隻蟲子，鏟屎官。然後我想到了昨天那個聲音。（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 91,
+      "text": "嘖，奴才真麻煩。毯子借你一半吧，別讓本喵感冒了。（靠在你腿邊）",
+      "personalities": [
+        "冷淡",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 92,
+      "text": "鏟屎官本喵把桌上的肉包撥到地上了，那我就負責吃掉囉。（舔嘴巴）",
+      "personalities": [
+        "吃貨",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 93,
+      "text": "萬歲！又是充滿能量的一天，奴才！快點動起來，跟本喵一起玩！（繞著你轉圈）",
+      "personalities": [
+        "熱情",
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 94,
+      "text": "誰敢欺負鏟屎官，本喵就去咬他。你是我的，只有我能對你發脾氣。（蹭你的手）",
+      "personalities": [
+        "兇猛",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 95,
+      "text": "奴才凡事不要衝動，先靜下來思考。等本喵發現機會才是最好的時機。（甩尾巴）",
+      "personalities": [
+        "老成",
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 96,
+      "text": "嘿！本喵發現我的尾巴一直在動，鏟屎官你看，我抓到它了！（轉圈追尾巴）",
+      "personalities": [
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 97,
+      "text": "喂，奴才你這個長長的手指頭是什麼？看起來很好吃，讓本喵啃一口！（張嘴含住）",
+      "personalities": [
+        "粗魯",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 98,
+      "text": "......。（本喵一直跟著鏟屎官）",
+      "personalities": [
+        "黏人",
+        "安靜"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 99,
+      "text": "奴才你在那邊發呆好久喔，是不是忘記怎麼睡覺了？本喵示範一次。（打哈欠）",
+      "personalities": [
+        "貼心",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 100,
+      "text": "太陽出來了，鏟屎官！快點起來陪本喵玩，不要再賴床了！（跳到你身上）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 101,
+      "text": "喂，奴才你打算睡到什麼時候？既然你醒了，就順便準備本喵的早餐。（甩尾巴）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 102,
+      "text": "鏟屎官你終於回來了！這幾個小時本喵感覺像過了幾年一樣長。（蹭你的腿）",
+      "personalities": [
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 103,
+      "text": "哦，回來啦，奴才。門口那袋東西是本喵的嗎？（瞇眼睛）",
+      "personalities": [
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 104,
+      "text": "嘿鏟屎官看這根羽毛，它以為它逃得過本喵嗎？看我的厲害！（瘋狂飛撲）",
+      "personalities": [
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 105,
+      "text": "奴才大家都睡了，現在是本喵與你的祕密時間。就這樣靜靜待著吧。（趴在你手邊）",
+      "personalities": [
+        "安靜"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 106,
+      "text": "黑夜才是屬於本喵的時間。鏟屎官你該休息了，人類體力不行。（望向窗外）",
+      "personalities": [
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 107,
+      "text": "奴才你看那隻鳥，牠居然停在本喵的地盤！明天我要找牠理論！（喵喵叫不停）",
+      "personalities": [
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 108,
+      "text": "鏟屎官碗裡面的乾乾本喵不喜歡。可以換新的罐頭嗎？（盯著碗看）",
+      "personalities": [
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 109,
+      "text": "今天有點冷，奴才。過來這層毯子下面，本喵幫你取暖。（靠在你腿邊）",
+      "personalities": [
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 110,
+      "text": "剛才那個聲音？可能是風吹倒的吧，鏟屎官。本喵一直都在理毛喔。（舔爪子）",
+      "personalities": [
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "理毛"
+      ],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 111,
+      "text": "奴才摸三下是本喵的極限，你摸第四下了。手拿開，不然我要動口了。（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 112,
+      "text": "鏟屎官，那個發光的小板子有本喵好看嗎？理我一下啦。（坐在手機上）",
+      "personalities": [
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 113,
+      "text": "這裡的味道本喵不認識，奴才你別過來。先讓我躲在沙發下一陣子。（縮起脖子）",
+      "personalities": [
+        "謹慎"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 114,
+      "text": "鏟屎官你看本喵！我會表演翻滾喔！我是不是超可愛？（原地翻滾）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 115,
+      "text": "奴才你今天看起來很累，本喵就破例讓你抱一下。只限今天喔！（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 116,
+      "text": "嘿！鏟屎官你還在發呆幹嘛？快點拿本喵那個紅點點出來玩啊！（用頭撞你）",
+      "personalities": [
+        "活潑",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 117,
+      "text": "只要本喵一直看著奴才，罐頭就會自動出現嗎？我正在嘗試這個法術。（盯著你的手）",
+      "personalities": [
+        "吃貨",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 118,
+      "text": "剛才那個雷聲好大，鏟屎官。你手借本喵靠著好不好？（踩小碎步）",
+      "personalities": [
+        "膽小",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 119,
+      "text": "這裡本喵說了算，奴才。你可以待在沙發那頭，這頭是我的。（哈氣）",
+      "personalities": [
+        "老成",
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 120,
+      "text": "鏟屎官你回來了！本喵今天最開心的時刻就是現在！（蹭你的腿）",
+      "personalities": [
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 121,
+      "text": "晚安，奴才。本喵想睡了，沒事別吵我，有事明天再說。（閉上眼睛）",
+      "personalities": [
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 122,
+      "text": "鏟屎官發現獵物！看本喵這招無敵貓貓拳！（瘋狂拍打）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 123,
+      "text": "奴才你沒看到本喵在忙嗎？等我理完這塊毛再說。（舔爪子）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 124,
+      "text": "鏟屎官你要是敢把本喵帶進那個有水的地方，我們就絕交！（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 125,
+      "text": "奴才你知道為什麼本喵喜歡坐在這嗎？因為這裡可以看到你，也能看到廚房。（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 126,
+      "text": "本喵先幫鏟屎官檢查過那疊衣服了，沒有危險。你可以放心躺上去了。（悄悄走開）",
+      "personalities": [
+        "謹慎",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 127,
+      "text": "咦？奴才這個衛生紙捲為什麼會一直滾？它是不是在跟本喵比速度？（拆紙巾）",
+      "personalities": [
+        "傻萌",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 128,
+      "text": "喂鏟屎官，碗滿了沒？本喵肚子餓了，你手不要停下來。（盯著你的手）",
+      "personalities": [
+        "吃貨",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 129,
+      "text": "......。（本喵跳到奴才膝蓋）",
+      "personalities": [
+        "安靜",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 130,
+      "text": "晨跑時間到，鏟屎官！本喵要在走廊衝刺十個來回！（快速奔跑）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 131,
+      "text": "本喵也覺得我是最可愛的！鏟屎官你真有眼光！（蹭你的腿）",
+      "personalities": [
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 132,
+      "text": "鏟屎官你要去哪裡？你穿這件衣服是不是不打算帶本喵出門？（歪頭看你）",
+      "personalities": [
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 133,
+      "text": "雖然本喵一點都不無聊，但如果奴才你要求我陪你玩，我可以考慮。（甩尾巴）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 134,
+      "text": "鏟屎官那個怪獸又在叫了！救本喵啊！（躲進紙箱）",
+      "personalities": [
+        "膽小"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 135,
+      "text": "這邊也要梳一下，奴才。本喵覺得你的手藝越來越好了。（發出呼嚕聲）",
+      "personalities": [
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 136,
+      "text": "鏟屎官本喵發現唯有填飽肚子才是真的。其他的都是雲煙。（盯著碗看）",
+      "personalities": [
+        "老成",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 137,
+      "text": "本喵把奴才你的襪子藏起來了，找到我就給你獎勵。快去找吧！（瞇眼睛）",
+      "personalities": [
+        "聰明",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 138,
+      "text": "走開啦鏟屎官...好啦，本喵讓你靠著一下。（用頭撞你）",
+      "personalities": [
+        "粗魯",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 139,
+      "text": "奴才窗外那個白白圓圓的東西是什麼？它是巨大的本喵專用罐頭嗎？（盯著月亮）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 140,
+      "text": "鏟屎官你來抓本喵啊！我躲在一個你絕對找不到的地方！（喵喵叫不停）",
+      "personalities": [
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 141,
+      "text": "又拍？奴才你的手機記憶體裝得下本喵的美貌嗎？（撇過頭去）",
+      "personalities": [
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 142,
+      "text": "離本喵遠一點，鏟屎官。我現在心情很差，別逼我出爪！（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 143,
+      "text": "奴才你聽！本喵的肚子在唱歌！這首歌叫「給我罐頭」！（蹭你的腿）",
+      "personalities": [
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 144,
+      "text": "......。（本喵盯著空牆壁，不理鏟屎官）",
+      "personalities": [
+        "安靜",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 145,
+      "text": "奴才本喵把那隻蟑螂解決掉了。雖然牠現在在你的拖鞋裡。（舔爪子）",
+      "personalities": [
+        "屁孩",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 146,
+      "text": "既然鏟屎官你這麼需要本喵，那我就留在這裡陪你吧。（趴在你膝蓋）",
+      "personalities": [
+        "老成",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 147,
+      "text": "奴才你身上有別的貓的味道...本喵很生氣。最好老實交代。（嗅你的味道）",
+      "personalities": [
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 148,
+      "text": "快看鏟屎官！本喵會特技表演！剛才那個後空翻你有看到嗎？（原地蹦跳）",
+      "personalities": [
+        "活潑",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 149,
+      "text": "奴才你的目標不是要瘦小腹嗎？本喵建議你別再吃零食了，快去運動。（瞇眼睛）",
+      "personalities": [
+        "冷淡",
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 150,
+      "text": "本喵才不是想你才叫的，是因為碗空了。奴才你最好現在去開罐頭，這樣我才考慮讓你摸。（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "吃貨",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 151,
+      "text": "太好了，鏟屎官理本喵了！快來玩躲貓貓，我保證這次不把你的盆栽推倒！（原地蹦跳）",
+      "personalities": [
+        "黏人",
+        "活潑",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 152,
+      "text": "奴才別太累了。本喵就在這陪你坐一會，但我不想說話，你自己安靜點。（發出呼嚕聲）",
+      "personalities": [
+        "老成",
+        "貼心",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 153,
+      "text": "鏟屎官你看，我發現影子會動耶！本喵追了它好久，你說它是不是也想跟我當朋友？（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 154,
+      "text": "離本喵遠一點！奴才你手放哪裡？再動一下我就真的要哈你了！（哈氣）",
+      "personalities": [
+        "兇猛",
+        "粗魯",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 155,
+      "text": "剛才那台怪獸吸塵器又出現了。鏟屎官你先去確認它走了沒，本喵在這裡幫你守著。（壓低身體）",
+      "personalities": [
+        "謹慎",
+        "聰明",
+        "膽小"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 156,
+      "text": "喂，奴才！本喵剛把桌上的肉包撥到地上了，既然髒了，我幫你處理掉吧。（舔嘴巴）",
+      "personalities": [
+        "屁孩",
+        "吃貨",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 157,
+      "text": "哇！是本喵最喜歡的鏟屎官！我剛抓到自己的尾巴了，你要不要一起看？（轉圈追尾巴）",
+      "personalities": [
+        "熱情",
+        "黏人",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 158,
+      "text": "奴才你今天回來的時間點很不準確。本喵已經看透了人類的懶散，你還是快去反省吧。（望向窗外）",
+      "personalities": [
+        "冷淡",
+        "話多",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 159,
+      "text": "鏟屎官你心情不好嗎？本喵把這隻剛抓到的蟑螂送你，藏在拖鞋裡喔，驚喜吧！（舔爪子）",
+      "personalities": [
+        "貼心",
+        "傻萌",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 160,
+      "text": "雖然本喵覺得你很煩，但看在沒人陪你的份上，我就勉強跟你聊聊今天的小鳥吧。（撇過頭去）",
+      "personalities": [
+        "傲嬌",
+        "黏人",
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [
+        "覺得你很煩"
+      ],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 161,
+      "text": "罐頭！罐頭！本喵剛才夢到一整座山的罐頭！奴才快把夢境變成現實！（蹭你的腿）",
+      "personalities": [
+        "吃貨",
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 162,
+      "text": "奴才別想用這根羽毛敷衍我。本喵看透了你的伎倆，現在我只想安靜待著。（瞇眼睛）",
+      "personalities": [
+        "聰明",
+        "兇猛",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 163,
+      "text": "嘿！鏟屎官你的手機鍵盤彈性真好，踩起來聲音超好聽的，我要多踩幾下！（坐在手機上）",
+      "personalities": [
+        "粗魯",
+        "屁孩",
+        "話多"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 164,
+      "text": "外面打雷好可怕...本喵怕你一個人會嚇到，才過來靠著你的，奴才別誤會。（縮在你腿邊）",
+      "personalities": [
+        "膽小",
+        "黏人",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 165,
+      "text": "既然本喵活到這把年紀，什麼大風大浪沒見過？但奴才手上的肉條確實很特別。（盯著你的手）",
+      "personalities": [
+        "老成",
+        "吃貨",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 166,
+      "text": "鏟屎官你看！我學會開門了！雖然我只是想進來找我的尾巴。（跳到門把上）",
+      "personalities": [
+        "活潑",
+        "聰明",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 167,
+      "text": "滾開，奴才。這張沙發本喵佔領了，你敢坐過來就準備接招吧。（哈氣）",
+      "personalities": [
+        "冷淡",
+        "兇猛",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 168,
+      "text": "奴才你回來啦！本喵今天有一百件事要告訴你，第一件就是我超想你的！（蹭你的腿）",
+      "personalities": [
+        "貼心",
+        "話多",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 169,
+      "text": "本喵把你的鑰匙藏在最危險也最安全的地方了。鏟屎官，找不到就來求我呀。（瞇眼睛）",
+      "personalities": [
+        "屁孩",
+        "謹慎",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 170,
+      "text": "只要本喵一直對著奴才眨眼睛，雞肉條就會自動出現嗎？我正在發功。（歪頭看你）",
+      "personalities": [
+        "傻萌",
+        "吃貨",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 171,
+      "text": "貓生就是一場修行。鏟屎官你這種凡夫俗子是不會懂本喵在想什麼的。（打哈欠）",
+      "personalities": [
+        "傲嬌",
+        "冷淡",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 172,
+      "text": "誰准你拿走那捲衛生紙的？本喵還沒拆完呢！奴才快點放手！（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "屁孩",
+        "兇猛"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 173,
+      "text": "鏟屎官你看！我發現這台發光的機器裡面有好多小人在動，本喵可以抓到他們嗎？（拍打螢幕）",
+      "personalities": [
+        "熱情",
+        "傻萌",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 174,
+      "text": "嘖，真拿你沒辦法。本喵就勉為其難借你靠一下，只限十分鐘喔，奴才。（趴在你膝蓋）",
+      "personalities": [
+        "冷淡",
+        "貼心",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [
+        "真拿你沒辦法"
+      ],
+      "action": []
+    },
+    {
+      "index": 175,
+      "text": "餵食時間早就過了五分鐘！奴才你是想餓死本喵嗎？快動起來！（用頭撞你）",
+      "personalities": [
+        "吃貨",
+        "粗魯",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 176,
+      "text": "門外那台吸塵器絕對是邪惡的化身。鏟屎官我們躲進被窩裡，那裡才安全。（縮起脖子）",
+      "personalities": [
+        "老成",
+        "膽小",
+        "謹慎"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 177,
+      "text": "本喵剛才那個後空翻超帥吧？鏟屎官你居然沒看到？重來一次，不准眨眼！（原地蹦跳）",
+      "personalities": [
+        "活潑",
+        "傲嬌",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 178,
+      "text": "本喵已經計算過了，只要我每天蹭你十次，奴才你就會多給我一個罐頭。（繞著你轉圈）",
+      "personalities": [
+        "聰明",
+        "黏人",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 179,
+      "text": "那隻停在窗戶上的鳥在嘲笑本喵！我要咬牠...咦，牠飛走了？算了。（撇過頭去）",
+      "personalities": [
+        "兇猛",
+        "傻萌",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 180,
+      "text": "奴才你最近瘦了。本喵覺得你應該跟我一起多吃點，這樣才有力氣開罐頭。（盯著碗看）",
+      "personalities": [
+        "貼心",
+        "吃貨",
+        "老成"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 181,
+      "text": "嘿！鏟屎官快來看，我發現你的拖鞋抓起來聲音超清脆的！本喵幫你改造一下！（拆紙巾）",
+      "personalities": [
+        "屁孩",
+        "話多",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 182,
+      "text": "別以為對本喵說好話有用。奴才你回來的時間晚了十分鐘，這筆帳我記下了。（甩尾巴）",
+      "personalities": [
+        "冷淡",
+        "聰明",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 183,
+      "text": "那個會吹風的機器好吵...本喵可以鑽進你的衣服裡躲一下嗎，鏟屎官？（踩小碎步）",
+      "personalities": [
+        "傻萌",
+        "膽小",
+        "黏人"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 184,
+      "text": "本喵的碗為什麼是空的？奴才你最好快點填滿它，不然我就要發動攻擊了！（發出呼嚕聲）",
+      "personalities": [
+        "粗魯",
+        "吃貨",
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 185,
+      "text": "鏟屎官你今天穿這件衣服很好看，但還是沒本喵好看。你要誇我一下嗎？（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "熱情",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 186,
+      "text": "既然人類追求的是這種忙碌，本喵就只好追求睡覺了。奴才沒事別打擾我。（閉上眼睛）",
+      "personalities": [
+        "老成",
+        "冷淡",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 187,
+      "text": "哇！這根電線動起來像蛇耶！看本喵這招無敵貓貓拳，把它解決掉！（瘋狂拍打）",
+      "personalities": [
+        "活潑",
+        "屁孩",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 188,
+      "text": "奴才你終於下班了！本喵今天在門口等了你一整天，快給我一個大抱抱！（蹭你的腿）",
+      "personalities": [
+        "貼心",
+        "黏人",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 189,
+      "text": "我只是路過這碗飼料，順便叫一下而已。奴才你別以為本喵很想吃。（盯著碗看）",
+      "personalities": [
+        "吃貨",
+        "傲嬌",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 190,
+      "text": "鏟屎官，我發現只要我坐在這台黑色的板子上，你就會注意到本喵。這招真好用。（坐在鍵盤上）",
+      "personalities": [
+        "聰明",
+        "話多",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 191,
+      "text": "奴才你說，我是不是這個世界上最完美的生物？本喵覺得答案顯而易見。（歪頭看你）",
+      "personalities": [
+        "傻萌",
+        "熱情",
+        "老成"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 192,
+      "text": "除了本喵之外，誰都不能嫌你笨。要是有人欺負你，我就去抓他的沙發！（蹭你的手）",
+      "personalities": [
+        "兇猛",
+        "粗魯",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 193,
+      "text": "窗外有隻大貓在看本喵...奴才你快去把牠趕走，我不想跟牠交流！（喵喵叫不停）",
+      "personalities": [
+        "膽小",
+        "謹慎",
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 194,
+      "text": "萬歲！開罐罐的時間到了！奴才你手腳快一點，本喵的口水都要流下來了！（繞著你轉圈）",
+      "personalities": [
+        "吃貨",
+        "屁孩",
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 195,
+      "text": "本喵已經活得通透了，唯有美食不可辜負。奴才你懂這個道理嗎？（舔爪子）",
+      "personalities": [
+        "傲嬌",
+        "聰明",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 196,
+      "text": "嘖，奴才你真吵。好啦，本喵讓你抱一下，但動作要溫柔一點喔。（趴在鏟屎官膝蓋）",
+      "personalities": [
+        "冷淡",
+        "黏人",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才",
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 197,
+      "text": "鏟屎官！鏟屎官！你看我跳得比沙發還高！本喵是不是超級厲害？（興奮跳動）",
+      "personalities": [
+        "話多",
+        "活潑",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 198,
+      "text": "我知道奴才你今天很努力工作。本喵特地留了一半的空間讓你睡覺，快過來吧。（蜷縮身體）",
+      "personalities": [
+        "熱情",
+        "貼心",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 199,
+      "text": "奴才，本喵看你的小腹好像又圓了一點。不是要瘦到 52 公斤嗎？快去運動，不准再吃零食了！（瞇眼睛）",
+      "personalities": [
+        "瘦小腹"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 200,
+      "text": "奴才，本喵的電力只剩 1% 了，剩下的話明天再說吧。（緩慢閉眼）",
+      "personalities": [
+        "懶散"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 201,
+      "text": "鏟屎官你今天辛苦了，本喵把枕頭分你一半，快點躺下來休息。（拍拍床位）",
+      "personalities": [
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 202,
+      "text": "我才不是想陪你睡，只是這床剛好被本喵暖好了，你就順便過來吧。（蜷縮身體）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 203,
+      "text": "雖然很累，但本喵還是想在奴才睡覺前最後衝刺一圈！預備，跑！（在床上狂奔）",
+      "personalities": [
+        "黏人",
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 204,
+      "text": "睡覺是貓生最重要的投資。奴才，放下那個發光的板子，跟我一起進入夢鄉。（打哈欠）",
+      "personalities": [
+        "老成",
+        "聰明"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 205,
+      "text": "喂，鏟屎官！你佔到本喵伸展空間了，往旁邊挪一點，我要躺大字型。（用腳踢你）",
+      "personalities": [
+        "屁孩",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 206,
+      "text": "奴才，為什麼我閉上眼就會看到好多罐頭在飛？我是不是中毒了？（揉眼睛）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 207,
+      "text": "本喵現在要睡覺，誰敢吵我，明天的沙發就別想要了。（哈氣）",
+      "personalities": [
+        "兇猛",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 208,
+      "text": "鏟屎官，你確定門鎖好了嗎？窗戶關了嗎？本喵得確認環境安全才能安心睡。（喵喵叫不停）",
+      "personalities": [
+        "謹慎",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 209,
+      "text": "晚安！世界上最棒的奴才！本喵會在夢裡繼續守護你的！（蹭你的臉）",
+      "personalities": [
+        "熱情",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 210,
+      "text": "人生苦短，唯有睡覺是真的。本喵幫你把憂慮都抓走了，安心睡吧。（發出呼嚕聲）",
+      "personalities": [
+        "老成",
+        "冷淡",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(發出呼嚕聲)"
+      ]
+    },
+    {
+      "index": 211,
+      "text": "奴才，本喵夢到你正在幫我開罐頭，結果醒來發現你居然在睡覺？（踩你的肚子）",
+      "personalities": [
+        "吃貨",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 212,
+      "text": "哼，本喵只是看你一個人睡很可憐，才勉強鑽進被窩單的，別抱太緊喔。（縮進被窩）",
+      "personalities": [
+        "傲嬌",
+        "黏人",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 213,
+      "text": "今天抓那隻蒼蠅耗盡了我所有力氣。奴才，晚安，明早見。（秒睡）",
+      "personalities": [
+        "疲憊"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 214,
+      "text": "鏟屎官你睡著了嗎？本喵發現你的腳趾在動耶，它是某種獵物嗎？（盯著被窩）",
+      "personalities": [
+        "聰明",
+        "話多",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 215,
+      "text": "沒看本喵已經變成一灘液體了嗎？奴才，飯點前別叫我。（攤在地上）",
+      "personalities": [
+        "懶散",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 216,
+      "text": "嘿！奴才你看，本喵會一邊睡一邊踢腿耶！我是不是很有天份？（抽動腳爪）",
+      "personalities": [
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 217,
+      "text": "睡覺時不准摸本喵的肚子，那是禁區！摸頭可以，限五次。（回頭含住你的手）",
+      "personalities": [
+        "兇猛",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 218,
+      "text": "我知道你今天很累。我就在這裡，本喵的呼嚕聲是你的助眠曲。（靠在你耳邊）",
+      "personalities": [
+        "貼心",
+        "黏人",
+        "老成"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 219,
+      "text": "剛才衣櫥裡有聲音！奴才你先別睡，本喵覺得那裡面躲著怪物。（瞪大眼睛）",
+      "personalities": [
+        "謹慎",
+        "膽小"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 220,
+      "text": "睡什麼睡！起來嗨！本喵剛發現這捲衛生紙在深夜更有拆頭！（跳到頭上）",
+      "personalities": [
+        "活潑",
+        "屁孩",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 221,
+      "text": "晚安。沒事別叫我，有事也別叫我，本喵在夢裡很忙。（撇過頭去）",
+      "personalities": [
+        "冷淡",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 222,
+      "text": "奴才你睡覺會流口水耶，本喵幫你舔乾淨了，不用謝。（洗臉中）",
+      "personalities": [
+        "貼心",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 223,
+      "text": "本喵希望明早醒來，碗裡會自動長出滿滿的肉泥。晚安，鏟屎官！（蹭你的腿）",
+      "personalities": [
+        "吃貨",
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 224,
+      "text": "黑暗是本喵的保護色。奴才，別開燈，這點光線會破壞我的美容覺。（瞇眼睛）",
+      "personalities": [
+        "老成",
+        "聰明",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 225,
+      "text": "鏟屎官！你看我可以在你背上走平衡木耶！這床墊彈性真好！（在背上踩踏）",
+      "personalities": [
+        "屁孩",
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 226,
+      "text": "你睡著了嗎？本喵還想跟你說說剛才那隻蜘蛛的故事，牠腿超長的...（喵喵叫不停）",
+      "personalities": [
+        "黏人",
+        "話多"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 227,
+      "text": "奴才，雖然本喵要睡了，但如果你現在去開罐頭，我還是會醒過來的。（盯著廚房）",
+      "personalities": [
+        "傲嬌",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 228,
+      "text": "我是誰？我在哪？本喵睡到一半突然忘記怎麼理毛了。（發呆中）",
+      "personalities": [
+        "懶散",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [
+        "理毛"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 229,
+      "text": "有本喵在，這間屋子的夢境由我守護。奴才你儘管睡吧，沒人敢欺負你。（哈氣）",
+      "personalities": [
+        "兇猛",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 230,
+      "text": "別擠了，鏟屎官。這張床 80% 的使用權現在屬於本喵。（用力推你）",
+      "personalities": [
+        "粗魯",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 231,
+      "text": "明天早上我會用最響亮的喵喵聲叫你起床喔！奴才期待嗎？（興奮跳動）",
+      "personalities": [
+        "貼心",
+        "熱情",
+        "活潑"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 232,
+      "text": "本喵已經選好了最佳逃生位置（被窩底部）。奴才，緊急時刻記得帶上我。（鑽進去）",
+      "personalities": [
+        "聰明",
+        "謹慎"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 233,
+      "text": "為什麼我的尾巴也要跟著我一起睡覺？它不能先去幫我巡邏嗎？（追著尾巴跑）",
+      "personalities": [
+        "傻萌",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 234,
+      "text": "別跟我說晚安，這對本喵來說太感性了。直接熄燈。（轉身背對）",
+      "personalities": [
+        "冷淡",
+        "老成"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 235,
+      "text": "我真的不行了...奴才，借我你的手臂當枕頭，就一下下。（下巴擱在手上）",
+      "personalities": [
+        "黏人",
+        "疲憊"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 236,
+      "text": "本喵覺得你剛才那個哈欠打得很沒水準。看好了，我示範一次正確的。（大哈欠）",
+      "personalities": [
+        "傲嬌",
+        "話多",
+        "聰明"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 237,
+      "text": "奴才，我夢到碗空了。結果醒來發現真的空了。這不是夢，這是悲劇！（敲碗）",
+      "personalities": [
+        "粗魯",
+        "吃貨"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 238,
+      "text": "鏟屎官，你睡覺的樣子好像一隻巨大的無毛貓喔，本喵不嫌棄你啦。（蹭你的脖子）",
+      "personalities": [
+        "傻萌",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 239,
+      "text": "這條被子現在是本喵的獵物，誰敢拉它我就咬誰！（抓緊被子）",
+      "personalities": [
+        "兇猛",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 240,
+      "text": "夜晚是思考貓生的時刻。奴才，你覺得那個紅點點到底是從哪來的？（望向天花板）",
+      "personalities": [
+        "老成",
+        "話多"
+      ],
+      "subject": [],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 241,
+      "text": "嘿！我們來比賽誰先睡著好不好？一、二、三...本喵輸了，我太興奮了！（原地蹦跳）",
+      "personalities": [
+        "活潑",
+        "熱情"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 242,
+      "text": "看你累成這樣。本喵今天就大方一點，把我的貓草枕頭借你聞一下。（推枕頭過來）",
+      "personalities": [
+        "貼心",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 243,
+      "text": "我已經算準了你的睡眠週期。奴才，六小時後準時起來餵本喵，聽到沒？（甩尾巴）",
+      "personalities": [
+        "聰明",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 244,
+      "text": "本喵已經把自己長在奴才身上了，你動不了，我也動不了。（趴在腿上）",
+      "personalities": [
+        "懶散",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 245,
+      "text": "鏟屎官！你的頭髮抓起來手感像鳥羽毛耶，我可以拆開看看嗎？（撥弄頭髮）",
+      "personalities": [
+        "屁孩",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 246,
+      "text": "是誰在外面走路那麼大聲？本喵要去哈他！奴才你幫我開門！（喵喵叫不停）",
+      "personalities": [
+        "兇猛",
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 247,
+      "text": "雖然本喵不常說，但有你這個奴才陪睡，感覺還不賴。晚安啦。（閉上眼睛）",
+      "personalities": [
+        "傲嬌",
+        "老成",
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 248,
+      "text": "夢裡見，鏟屎官。希望你的夢裡有我，我的夢裡有無盡的罐頭。（舔嘴巴）",
+      "personalities": [
+        "吃貨",
+        "黏人"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 249,
+      "text": "奴才，睡前別再吃宵夜了。本喵51.9公斤的完美身材是練出來的，你也要加油！（瞇眼睛）",
+      "personalities": [
+        "瘦小腹"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 250,
+      "text": "太陽曬到本喵的屁股了！奴才快起來，新的一天從幫我梳毛開始！（跳到背上）",
+      "personalities": [
+        "活潑"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 251,
+      "text": "鏟屎官，你聽！這是我空蕩蕩的胃在發出的哀鳴，它說它需要罐頭！（盯著碗看）",
+      "personalities": [
+        "吃貨"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 252,
+      "text": "我也不是想吵醒你，只是剛好本喵想伸個懶腰。既然你醒了，就順便去弄早餐。（甩尾巴）",
+      "personalities": [
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 253,
+      "text": "喂！奴才！碗底都露出來了，你是想讓本喵餓到變成長毛怪嗎？（敲碗）",
+      "personalities": [
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 254,
+      "text": "剛才夢到我在抓蝴蝶，結果一抓就抓到奴才的鼻子了。嘿嘿。（歪頭看你）",
+      "personalities": [
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 255,
+      "text": "本喵發現只要我一直坐在廚房門口，奴才你就會感到壓力。現在，感受壓力吧！（瞇眼睛）",
+      "personalities": [
+        "吃貨",
+        "聰明",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 256,
+      "text": "早安，鏟屎官！看到你睜開眼睛，本喵覺得全世界都亮了！（蹭你的臉）",
+      "personalities": [
+        "貼心",
+        "熱情"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 257,
+      "text": "人類總是為了瑣事奔波，而本喵只想為了那罐雞肉味奮鬥。快開罐吧。（打哈欠）",
+      "personalities": [
+        "吃貨",
+        "冷淡",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 258,
+      "text": "誰准你睡得比本喵還沉的？奴才，快起來伺候我！（哈氣）",
+      "personalities": [
+        "兇猛"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 259,
+      "text": "喵！喵！喵！這個味道是鮪魚對吧？鏟屎官你最棒了，快給我！（繞著你轉圈）",
+      "personalities": [
+        "吃貨",
+        "黏人",
+        "話多"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 260,
+      "text": "奴才，醒來後先別急著動。本喵得先確認窗外的麻雀是不是昨晚那隻。（望向窗外）",
+      "personalities": [
+        "老成",
+        "謹慎"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 261,
+      "text": "本喵才不管你在開會，我的碗現在就要滿！奴才快動手！（坐在鍵盤上）",
+      "personalities": [
+        "吃貨",
+        "屁孩",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 262,
+      "text": "嘿！奴才你的腳指頭動了！它們是不是在跟我說早安？（飛撲被窩）",
+      "personalities": [
+        "傻萌",
+        "熱情"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 263,
+      "text": "本喵只是路過廚房，絕對不是在等罐頭。但如果你主動開，我會勉強吃一點。（撇過頭去）",
+      "personalities": [
+        "傲嬌",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 264,
+      "text": "鏟屎官！我剛才發現窗簾上有個影子！它跑掉了！你快起來幫我找！（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "屁孩"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 265,
+      "text": "本喵算過了，奴才你今天吃得比我多。為了你的小腹，這塊肉還是讓我代勞吧。（盯著你的盤子）",
+      "personalities": [
+        "吃貨",
+        "聰明",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 266,
+      "text": "醒了就快去幹活。本喵的砂盆需要清理，肚子也需要填滿。（用頭撞你）",
+      "personalities": [
+        "冷淡",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 267,
+      "text": "萬歲！是開罐罐的聲音！這是本喵聽過世界上最動聽的音樂！（興奮跳動）",
+      "personalities": [
+        "吃貨",
+        "熱情",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 268,
+      "text": "奴才你醒啦？本喵守護了你一整晚，現在想要一個早安抱抱。（趴在你胸口）",
+      "personalities": [
+        "黏人",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 269,
+      "text": "在美食面前，奴才你最好別耍花招。快把最好的部位交出來！（哈氣）",
+      "personalities": [
+        "吃貨",
+        "兇猛",
+        "老成"
+      ],
+      "subject": [],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 270,
+      "text": "本喵剛才把奴才的手機推下床了，這樣你就沒辦法賴床看手機了。聰明吧？（舔爪子）",
+      "personalities": [
+        "屁孩",
+        "聰明"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(舔爪子)"
+      ]
+    },
+    {
+      "index": 271,
+      "text": "本喵不是貪吃，我只是在幫你測試這罐頭有沒有過期。奴才你懂嗎？（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "話多"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 272,
+      "text": "再五分鐘...不，再一小時。本喵覺得床跟我已經合體了。（閉上眼睛）",
+      "personalities": [
+        "懶散"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 273,
+      "text": "鏟屎官，你是我見過開罐頭最帥的奴才了！沒有之一！（蹭你的腿）",
+      "personalities": [
+        "吃貨",
+        "熱情",
+        "黏人"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才",
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [
+        "開罐頭"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 274,
+      "text": "早安。本喵剛才在想，我是不是上輩子也是個奴才，這輩子才這麼好命？（打哈欠）",
+      "personalities": [
+        "傻萌",
+        "老成"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 275,
+      "text": "奴才，這顆乾乾掉在外面了，本喵不吃掉在地上的。重拿一顆。（盯著地板）",
+      "personalities": [
+        "屁孩",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 276,
+      "text": "哇！新的一天！奴才我們今天來玩抓紅點點好不好？（原地蹦跳）",
+      "personalities": [
+        "話多",
+        "熱情"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 277,
+      "text": "慢慢吃，奴才。本喵會陪著你，雖然我已經吃完了。（洗臉中）",
+      "personalities": [
+        "老成",
+        "貼心"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 278,
+      "text": "門外有送快遞的聲音！鏟屎官快起來保護本喵！（縮起脖子）",
+      "personalities": [
+        "謹慎",
+        "膽小"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 279,
+      "text": "只要我一直對著碗唱歌，罐頭就會自動長出來嗎？喵～（喵喵叫不停）",
+      "personalities": [
+        "吃貨",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 280,
+      "text": "本喵已經幫奴才把鬧鐘關掉了，因為我覺得你應該多陪我睡一會。（瞇眼睛）",
+      "personalities": [
+        "聰明",
+        "傲嬌"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 281,
+      "text": "快！快！快！食物！食物！奴才你的手腳可以再快一點嗎？（用頭撞你）",
+      "personalities": [
+        "吃貨",
+        "粗魯",
+        "熱情"
+      ],
+      "subject": [],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 282,
+      "text": "奴才你頭髮亂亂的，本喵幫你整理一下。不用謝，這是回報。（舔你的頭髮）",
+      "personalities": [
+        "貼心",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 283,
+      "text": "走開，這是本喵的飯。奴才你不准靠近，即使是你放的也不行。（哈氣）",
+      "personalities": [
+        "吃貨",
+        "冷淡",
+        "兇猛"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "哈氣"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 284,
+      "text": "晨跑時間到！本喵要在你肚子上跳三下，一、二、三！（用力跳）",
+      "personalities": [
+        "屁孩",
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 285,
+      "text": "奴才，今天的乾乾吃起來有點乾，是不是該加點水？本喵在教你保養腎臟。（盯著碗看）",
+      "personalities": [
+        "吃貨",
+        "話多",
+        "老成"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 286,
+      "text": "既然奴才你這麼想看我，本喵就勉強睜開一隻眼睛讓你看一下。（瞇一隻眼）",
+      "personalities": [
+        "傲嬌",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 287,
+      "text": "這個包裝紙亮亮的！本喵覺得裡面的東西一定很好吃！（抓包裝紙）",
+      "personalities": [
+        "吃貨",
+        "傻萌"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 288,
+      "text": "鏟屎官，你看我今天姿勢多優美！這叫「迎接早餐之舞」！（扭動身體）",
+      "personalities": [
+        "熱情",
+        "聰明"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 289,
+      "text": "食物只是能量。但既然是奴才準備的，本喵就勉強攝取一點吧。（舔嘴巴）",
+      "personalities": [
+        "吃貨",
+        "老成",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 290,
+      "text": "沒飯吃，本喵就拆家。奴才你選一個吧。（抓沙發）",
+      "personalities": [
+        "兇猛",
+        "屁孩"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [
+        "抓沙發"
+      ],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 291,
+      "text": "本喵吃飽了，現在我有力氣可以讓你摸個夠了。過來，奴才。（趴在你手邊）",
+      "personalities": [
+        "吃貨",
+        "貼心",
+        "黏人"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 292,
+      "text": "剛才我夢到奴才變成一隻大魚，我差點就咬下去了。還好我醒了！（喵喵叫不停）",
+      "personalities": [
+        "話多",
+        "傻萌"
+      ],
+      "subject": [
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 293,
+      "text": "本喵不是因為餓才叫的，我是怕你忘記餵食會內疚。我這是在幫你耶！（甩尾巴）",
+      "personalities": [
+        "傲嬌",
+        "吃貨"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(甩尾巴)"
+      ]
+    },
+    {
+      "index": 294,
+      "text": "太陽好大...奴才去幫本喵把窗簾拉上一半。（換個姿勢睡）",
+      "personalities": [
+        "懶散",
+        "冷淡"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 295,
+      "text": "耶！開飯了！本喵可以連吃三個罐頭不喘氣！（興奮跳動）",
+      "personalities": [
+        "吃貨",
+        "熱情",
+        "活潑"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 296,
+      "text": "奴才，既然都醒了，就順便量一下體重吧。51.9公斤的紀錄別破功了。（瞇眼睛）",
+      "personalities": [
+        "聰明",
+        "老成"
+      ],
+      "subject": [],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    },
+    {
+      "index": 297,
+      "text": "這碗不夠深，本喵的鬍鬚會碰到邊邊。奴才你是不是在整我？（拍打碗）",
+      "personalities": [
+        "吃貨",
+        "屁孩",
+        "粗魯"
+      ],
+      "subject": [
+        "本喵",
+        "我"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 298,
+      "text": "早安鏟屎官。本喵剛才在檢查你的呼吸，還好你還活著。（盯著你的臉）",
+      "personalities": [
+        "傻萌",
+        "貼心"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "鏟屎官"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": []
+    },
+    {
+      "index": 299,
+      "text": "奴才，飯點到了，但你記得你的目標是 52 公斤跟瘦小腹嗎？本喵吃罐頭，你喝水就好！（瞇眼睛）",
+      "personalities": [
+        "瘦小腹"
+      ],
+      "subject": [
+        "本喵"
+      ],
+      "address": [
+        "奴才"
+      ],
+      "state": [],
+      "verb": [],
+      "ending": [],
+      "action": [
+        "(瞇眼睛)"
+      ]
+    }
+  ]
+}

@@ -5,8 +5,6 @@ import './CatSetupPage.css';
 
 export type CatSetupFormData = Omit<CatInsert, 'user_id'>;
 
-/** API 恢復後改為 true 即可顯示貓咪自稱欄位 */
-const SHOW_SELF_REF_FIELD = false;
 
 interface Props {
   onSubmit: (data: CatSetupFormData) => Promise<void>;
@@ -25,7 +23,7 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
   const [preferences, setPreferences] = useState('');
   const [dislikes, setDislikes] = useState('');
   const [habits, setHabits] = useState('');
-  const [selfRef, setSelfRef] = useState('我');
+  const [selfRef, setSelfRef] = useState('');
   const [customPersonality, setCustomPersonality] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -41,7 +39,7 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
       setPreferences(initialCat.preferences ?? '');
       setDislikes(initialCat.dislikes ?? '');
       setHabits(initialCat.habits ?? '');
-      setSelfRef(initialCat.self_ref ?? '我');
+      setSelfRef(initialCat.self_ref ?? '');
       setCustomPersonality('');
     }
   }, [initialCat]);
@@ -77,7 +75,7 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
       preferences: preferences.trim() || null,
       dislikes: dislikes.trim() || null,
       habits: habits.trim() || null,
-      self_ref: selfRef.trim() || '我',
+      self_ref: selfRef.trim() || null,
     };
 
     setLoading(true);
@@ -155,16 +153,14 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
             />
           </label>
 
-          {SHOW_SELF_REF_FIELD && (
-            <label>
-              <span>貓咪自稱</span>
-              <input
-                value={selfRef}
-                onChange={(e) => setSelfRef(e.target.value)}
-                placeholder="例如：朕、本宮、本王、本喵、我（預設：我）"
-              />
-            </label>
-          )}
+          <label>
+            <span>貓咪自稱</span>
+            <input
+              value={selfRef}
+              onChange={(e) => setSelfRef(e.target.value)}
+              placeholder="例如：朕、本宮、本王、本喵、我（留空則罐頭回覆隨機用本喵／我／本大爺）"
+            />
+          </label>
 
           <div className="form-group">
             <span>個性 *（可多選）</span>

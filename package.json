@@ -9,7 +9,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:ai": "tsx scripts/test-ai-chat.ts"
+    "test:ai": "tsx scripts/test-ai-chat.ts",
+    "test:canned": "tsx scripts/verify-canned-dialogue.ts",
+    "classify:canned": "tsx scripts/classify-canned-by-taxonomy.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

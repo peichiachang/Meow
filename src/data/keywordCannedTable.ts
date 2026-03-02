@@ -1,10 +1,13 @@
 /**
  * 關鍵字 ↔ 罐頭編號 對應表
- * 從 200 則罐頭內容萃取關鍵字，建立「關鍵字 → 罐頭索引[]」；
- * 使用者訊息先做關鍵字匹配，再以個性為第二維度篩選後隨機回覆。
+ * 從罐頭內容萃取關鍵字，建立「關鍵字 → 罐頭索引[]」；
+ * 使用者訊息先做關鍵字匹配，再以個性為第二維度篩選後隨機回覆；
+ * 回傳前套用 slot 抽換（同屬性詞隨機替換）以增加變化。
  */
 
+import type { SlotOverrides } from './cannedSlotTaxonomy';
 import { CANNED_MESSAGES } from './cannedMessages';
+import { substituteCannedSlots } from './cannedSlotTaxonomy';
 
 /** 用於匹配的關鍵字（使用者可能輸入 或 罐頭內容會出現的詞），長關鍵字放前面以優先匹配 */
 const MASTER_KEYWORDS = [
@@ -117,6 +120,22 @@ export const KEYWORD_TO_CANNED_INDICES = (() => {
   return map;
 })();
 
+/** 將「喜歡／討厭」等自由文字拆成可比對的詞組（依 、，, 分隔，至少 1 字） */
+function parsePhrases(raw: string | null | undefined): string[] {
+  if (!raw || !raw.trim()) return [];
+  return raw
+    .split(/[、，,\s]+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length >= 1);
+}
+
+/** 罐頭內文具「反面／拒絕」語氣時會出現的詞（使用者提到貓討厭的東西時優先選這類） */
+const NEGATIVE_FEEDBACK_KEYWORDS = [
+  '討厭', '不要', '才不', '別吵', '別碰', '別逼', '不准', '走開', '離我遠', '離本喵遠', '滾開',
+  '哈氣', '絕交', '手拿開', '拒絕', '不要過來', '別過來', '不可以', '不行', '才不要',
+  '敲碗', '抓壞', '推落', '咬住', '撞倒', '無視', '背對', '撥弄', '踢翻', '啃食', '抓爛', '推倒', '炸毛',
+];
+
 /** 取得「使用者訊息中出現」的關鍵字（依 MASTER_KEYWORDS 長度優先匹配） */
 export function getMatchedKeywords(userMessage: string): string[] {
   const trimmed = userMessage.trim();
@@ -129,33 +148,65 @@ export function getMatchedKeywords(userMessage: string): string[] {
 }
 
 /**
- * 依關鍵字與貓咪個性，從 200 則罐頭中篩選候選並隨機回傳一則的 text；無候選則回傳 null。
+ * 依關鍵字與貓咪個性，從罐頭中篩選候選並隨機回傳一則的 text；無候選則回傳 null。
  * @param excludeTexts 要排除的罐頭內容（例如上一則回覆），可避免同一輸入一直回同一則
+ * @param skipSlotSubstitution 若為 true 則回傳原始罐頭文，不套用 slot 抽換（供測試用）
+ * @param slotOverrides 依貓咪檔案覆寫的 slot（如 subject: 貓咪自稱「朕」）
+ * @param preferences 貓咪喜歡的內容（罐頭內文提到時提高被選中機率）
+ * @param dislikes 貓咪討厭的內容（罐頭內文提到時排除，不選該則）
  */
 export function pickCannedByKeywordAndPersonality(
   userMessage: string,
   personality: string[] | null | undefined,
-  excludeTexts?: string[]
+  excludeTexts?: string[],
+  skipSlotSubstitution?: boolean,
+  slotOverrides?: SlotOverrides,
+  preferences?: string | null,
+  dislikes?: string | null
 ): string | null {
-  const keywords = getMatchedKeywords(userMessage);
-  if (keywords.length === 0) return null;
-
-  const candidateIndices = new Set<number>();
-  for (const kw of keywords) {
-    const indices = KEYWORD_TO_CANNED_INDICES.get(kw);
-    if (indices) indices.forEach((i) => candidateIndices.add(i));
-  }
-  if (candidateIndices.size === 0) return null;
+  const dislikePhrases = parsePhrases(dislikes);
+  const userMentionedDislike =
+    dislikePhrases.length > 0 &&
+    dislikePhrases.some((p) => userMessage.includes(p));
 
   const catSet = personality?.length ? new Set(personality) : null;
-  const filtered = Array.from(candidateIndices).filter((i) => {
-    const msg = CANNED_MESSAGES[i];
-    if (!msg.personalities.length) return true;
-    if (!catSet) return true;
-    return msg.personalities.every((p) => catSet.has(p));
-  });
+  let pool: number[];
 
-  let pool = filtered.length > 0 ? filtered : (catSet ? [] : Array.from(candidateIndices));
+  if (userMentionedDislike) {
+    pool = Array.from({ length: CANNED_MESSAGES.length }, (_, i) => i).filter((i) => {
+      const msg = CANNED_MESSAGES[i];
+      const text = msg.text;
+      if (!NEGATIVE_FEEDBACK_KEYWORDS.some((kw) => text.includes(kw))) return false;
+      if (!msg.personalities.length) return true;
+      if (!catSet) return true;
+      return msg.personalities.every((p) => catSet.has(p));
+    });
+  } else {
+    const keywords = getMatchedKeywords(userMessage);
+    if (keywords.length === 0) return null;
+    const candidateIndices = new Set<number>();
+    for (const kw of keywords) {
+      const indices = KEYWORD_TO_CANNED_INDICES.get(kw);
+      if (indices) indices.forEach((i) => candidateIndices.add(i));
+    }
+    if (candidateIndices.size === 0) return null;
+    const filtered = Array.from(candidateIndices).filter((i) => {
+      const msg = CANNED_MESSAGES[i];
+      if (!msg.personalities.length) return true;
+      if (!catSet) return true;
+      return msg.personalities.every((p) => catSet.has(p));
+    });
+    pool = filtered.length > 0 ? filtered : (catSet ? [] : Array.from(candidateIndices));
+    if (pool.length === 0) return null;
+    if (dislikePhrases.length > 0) {
+      const withoutDislikes = pool.filter((i) => {
+        const text = CANNED_MESSAGES[i].text;
+        return !dislikePhrases.some((p) => text.includes(p));
+      });
+      if (withoutDislikes.length > 0) pool = withoutDislikes;
+    }
+  }
+
   if (pool.length === 0) return null;
 
   const excludeSet = excludeTexts?.length ? new Set(excludeTexts) : null;
@@ -164,6 +215,19 @@ export function pickCannedByKeywordAndPersonality(
     if (withoutRecent.length > 0) pool = withoutRecent;
   }
 
+  const preferencePhrases = parsePhrases(preferences);
+  if (preferencePhrases.length > 0) {
+    const boosted: number[] = [];
+    for (const i of pool) {
+      boosted.push(i);
+      const text = CANNED_MESSAGES[i].text;
+      if (preferencePhrases.some((p) => text.includes(p))) boosted.push(i);
+    }
+    pool = boosted;
+  }
+
   const idx = pool[Math.floor(Math.random() * pool.length)];
-  return CANNED_MESSAGES[idx].text;
+  const raw = CANNED_MESSAGES[idx].text;
+  if (skipSlotSubstitution) return raw;
+  return substituteCannedSlots(raw, Math.random, slotOverrides);
 }
