@@ -87,11 +87,13 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2 && pinchRef.current) {
+    const pinch = pinchRef.current;
+    if (e.touches.length === 2 && pinch) {
       e.preventDefault();
       const d = getTouchDistance(e.touches);
-      const ratio = d / pinchRef.current.initialDistance;
-      setScale(() => Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinchRef.current!.initialScale * ratio)));
+      const ratio = d / pinch.initialDistance;
+      const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
+      setScale(nextScale);
     }
   };
 
