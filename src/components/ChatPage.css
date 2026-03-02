@@ -6,7 +6,7 @@
   margin: 0 auto;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 0 16px;
+  padding: 0 16px 48px;
   box-sizing: border-box;
   background: linear-gradient(180deg, #fef7ed 0%, #fff7ed 100%);
 }
