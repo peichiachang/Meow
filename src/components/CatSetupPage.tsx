@@ -91,7 +91,7 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
       e.preventDefault();
       const d = getTouchDistance(e.touches);
       const ratio = d / pinchRef.current.initialDistance;
-      setScale((s) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinchRef.current!.initialScale * ratio)));
+      setScale(() => Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinchRef.current!.initialScale * ratio)));
     }
   };
 
