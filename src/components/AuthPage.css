@@ -1,0 +1,143 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, #fef7ed 0%, #fff7ed 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  background: #fff;
+  border: 2px solid #fed7aa;
+  border-radius: 1rem;
+}
+
+.auth-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: #1c1917;
+}
+
+.auth-sub {
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  color: #78716c;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-form input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #fed7aa;
+}
+
+.auth-form button {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #1c1917;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e7e5e4;
+}
+
+.auth-divider span {
+  font-size: 0.85rem;
+  color: #a8a29e;
+}
+
+.auth-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #fff;
+  color: #1c1917;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-google:hover {
+  border-color: #d6d3d1;
+  background: #fafaf9;
+}
+
+.auth-google:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-google-icon {
+  flex-shrink: 0;
+}
+
+.auth-error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #b91c1c;
+}
+
+.auth-switch {
+  margin-top: 1rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  color: #78716c;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-switch:hover {
+  color: #1c1917;
+}
+
+.auth-disclaimer {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: #a8a29e;
+}

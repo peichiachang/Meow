@@ -1,0 +1,118 @@
+.cat-setup-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, #fef7ed 0%, #fff7ed 100%);
+}
+
+.cat-setup-card {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: #fff;
+  border: 2px solid #fed7aa;
+  border-radius: 1rem;
+}
+
+.cat-setup-back {
+  margin: 0 0 1rem;
+  padding: 0.25rem 0;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  color: #78716c;
+  cursor: pointer;
+}
+
+.cat-setup-back:hover {
+  color: #1c1917;
+}
+
+.cat-setup-card h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  color: #1c1917;
+}
+
+.cat-setup-sub {
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  color: #78716c;
+}
+
+.cat-setup-form label,
+.cat-setup-form .form-group {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cat-setup-form label span,
+.cat-setup-form .form-group > span {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #44403c;
+}
+
+.cat-setup-form input,
+.cat-setup-form textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.cat-setup-form input:focus,
+.cat-setup-form textarea:focus {
+  outline: none;
+  border-color: #fed7aa;
+}
+
+.personality-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.personality-btn {
+  padding: 0.4rem 0.75rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 1rem;
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.personality-btn.active {
+  border-color: #1c1917;
+  background: #1c1917;
+  color: #fff;
+}
+
+.custom-personality {
+  margin-top: 0.5rem;
+}
+
+.form-error {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #b91c1c;
+}
+
+.cat-setup-form button[type='submit'] {
+  width: 100%;
+  padding: 0.75rem;
+  background: #1c1917;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cat-setup-form button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
