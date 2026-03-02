@@ -5,6 +5,9 @@ import './CatSetupPage.css';
 
 export type CatSetupFormData = Omit<CatInsert, 'user_id'>;
 
+/** API 恢復後改為 true 即可顯示貓咪自稱欄位 */
+const SHOW_SELF_REF_FIELD = false;
+
 interface Props {
   onSubmit: (data: CatSetupFormData) => Promise<void>;
   onBack?: () => void;
@@ -152,14 +155,16 @@ export function CatSetupPage({ onSubmit, onBack, onUpdate, initialCat, maxCats, 
             />
           </label>
 
-          <label>
-            <span>貓咪自稱</span>
-            <input
-              value={selfRef}
-              onChange={(e) => setSelfRef(e.target.value)}
-              placeholder="例如：朕、本宮、本王、本喵、我（預設：我）"
-            />
-          </label>
+          {SHOW_SELF_REF_FIELD && (
+            <label>
+              <span>貓咪自稱</span>
+              <input
+                value={selfRef}
+                onChange={(e) => setSelfRef(e.target.value)}
+                placeholder="例如：朕、本宮、本王、本喵、我（預設：我）"
+              />
+            </label>
+          )}
 
           <div className="form-group">
             <span>個性 *（可多選）</span>
