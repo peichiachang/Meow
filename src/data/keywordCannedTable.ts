@@ -38,6 +38,7 @@ const MASTER_KEYWORDS = [
   '哈氣', '瞇眼睛', '甩尾巴', '舔爪子', '舔嘴巴', '含住', '咬', '嗅', '用頭撞你', '蹭你的腿', '蹭你的手', '靠在你腿邊', '趴在你膝蓋', '坐在手機上', '躺在鍵盤上', '盯著', '歪頭', '望向窗外', '縮起脖子', '壓低身體', '踩小碎步', '繞著你轉圈',
   '花盆', '地毯', '蒼蠅', '麻雀', '影子', '蟲子', '月亮', '鳥', '衛生紙', '拖鞋', '襪子', '鑰匙', '沙發', '抽屜', '書桌', '紙張', '衣櫥', '門把', '電線', '蟑螂',
   '瘦小腹', '運動', '零食', '52公斤',
+  '懶散', '疲憊', '電力', '枕頭', '床位', '夢鄉', '秒睡', '助眠', '美容覺', '逃生', '被窩',
 ];
 
 /** 關鍵字 → 罐頭索引[]（該關鍵字出現在「罐頭內容」裡的編號） */
@@ -73,6 +74,18 @@ const USER_KEYWORD_TO_CONTENT: Record<string, string[]> = {
   '怎麼了': ['幹嘛', '奴才', '鏟屎官'],
   '想睡了': ['睡', '晚安', '睏', '閉上眼睛', '打哈欠'],
   '睏了': ['睡', '睏', '晚安', '休息', '打哈欠'],
+  '睡覺了嗎': ['睡', '晚安', '睏', '休息', '打哈欠', '閉上眼睛'],
+  '睡了嗎': ['睡', '晚安', '睏', '打哈欠'],
+  '有沒有睡': ['睡', '晚安', '睏', '休息'],
+  '在睡嗎': ['睡', '晚安', '睏'],
+  '要睡了': ['睡', '晚安', '閉上眼睛', '打哈欠'],
+  '睡了沒': ['睡', '晚安', '睏'],
+  '想睡覺': ['睡', '晚安', '睏', '休息', '打哈欠'],
+  '吃飯了嗎': ['罐頭', '餓', '開飯', '碗', '餵', '冰箱', '飯點'],
+  '吃飯了沒': ['罐頭', '餓', '開飯', '碗', '餵'],
+  '有沒有吃飯': ['罐頭', '餓', '開飯', '碗'],
+  '回來了': ['回來', '到家', '下班', '奴才', '鏟屎官'],
+  '回家了': ['回來', '到家', '奴才', '鏟屎官'],
   '好累喔': ['累', '休息', '趴在你膝蓋', '靠在你腿邊'],
   '好無聊': ['無聊', '玩', '甩尾巴'],
   '無聊死了': ['無聊', '玩'],
@@ -115,10 +128,14 @@ export function getMatchedKeywords(userMessage: string): string[] {
   return matched;
 }
 
-/** 依關鍵字與貓咪個性，從 200 則罐頭中篩選候選並隨機回傳一則的 text；無候選則回傳 null */
+/**
+ * 依關鍵字與貓咪個性，從 200 則罐頭中篩選候選並隨機回傳一則的 text；無候選則回傳 null。
+ * @param excludeTexts 要排除的罐頭內容（例如上一則回覆），可避免同一輸入一直回同一則
+ */
 export function pickCannedByKeywordAndPersonality(
   userMessage: string,
-  personality: string[] | null | undefined
+  personality: string[] | null | undefined,
+  excludeTexts?: string[]
 ): string | null {
   const keywords = getMatchedKeywords(userMessage);
   if (keywords.length === 0) return null;
@@ -138,8 +155,15 @@ export function pickCannedByKeywordAndPersonality(
     return msg.personalities.every((p) => catSet.has(p));
   });
 
-  const pool = filtered.length > 0 ? filtered : (catSet ? [] : Array.from(candidateIndices));
+  let pool = filtered.length > 0 ? filtered : (catSet ? [] : Array.from(candidateIndices));
   if (pool.length === 0) return null;
+
+  const excludeSet = excludeTexts?.length ? new Set(excludeTexts) : null;
+  if (excludeSet?.size) {
+    const withoutRecent = pool.filter((i) => !excludeSet.has(CANNED_MESSAGES[i].text));
+    if (withoutRecent.length > 0) pool = withoutRecent;
+  }
+
   const idx = pool[Math.floor(Math.random() * pool.length)];
   return CANNED_MESSAGES[idx].text;
 }

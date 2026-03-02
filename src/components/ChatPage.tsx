@@ -82,7 +82,13 @@ export function ChatPage({
       await onAddMessage('user', text);
       await onIncrementCount();
 
-      const cannedReply = getKeywordCannedReply(text, selectedCat.personality);
+      const lastAssistantTexts = messages
+        .filter((m) => m.role === 'assistant')
+        .slice(-2)
+        .map((m) => m.content);
+      const cannedReply = getKeywordCannedReply(text, selectedCat.personality, {
+        excludeTexts: lastAssistantTexts.length ? lastAssistantTexts : undefined,
+      });
       const reply = cannedReply ?? await sendChatMessage(
         selectedCat,
         text,

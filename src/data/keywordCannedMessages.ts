@@ -17,10 +17,12 @@ export const KEYWORD_CANNED: KeywordCanned[] = [];
 /**
  * 依使用者輸入與貓咪個性，回傳匹配的罐頭訊息；無匹配則回傳 null（改走 AI）。
  * 先從 200 則罐頭萃取的關鍵字對應表做關鍵字匹配，再以個性篩選後隨機取一則。
+ * @param excludeTexts 要排除的罐頭內容（例如上一則回覆），可避免同一輸入重複回同一則
  */
 export function getKeywordCannedReply(
   userMessage: string,
-  personality?: string[] | null
+  personality?: string[] | null,
+  options?: { excludeTexts?: string[] }
 ): string | null {
-  return pickCannedByKeywordAndPersonality(userMessage, personality);
+  return pickCannedByKeywordAndPersonality(userMessage, personality, options?.excludeTexts);
 }
