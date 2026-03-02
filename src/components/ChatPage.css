@@ -241,7 +241,7 @@
 
 .chat-input-area textarea {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 16px;
   border: 2px solid #e7e5e4;
   border-radius: 1rem;
   font-size: 0.95rem;
