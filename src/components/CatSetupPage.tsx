@@ -107,7 +107,8 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       touchDragRef.current = null;
-      pinchRef.current = { initialDistance: getTouchDistance(e.touches), initialScale: scale };
+      const dist = getTouchDistance(e.touches);
+      pinchRef.current = { initialDistance: Math.max(10, dist), initialScale: scale };
     } else if (e.touches.length === 1) {
       pinchRef.current = null;
       touchDragRef.current = {
@@ -121,12 +122,12 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const handleTouchMove = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       const pinch = pinchRef.current;
-      if (pinch) {
+      if (pinch && pinch.initialDistance > 0) {
         e.preventDefault();
         const d = getTouchDistance(e.touches);
         const rawRatio = d / pinch.initialDistance;
-        // 限制單次手勢的縮放比例，避免照片瞬間變極大
-        const ratio = Math.min(1.5, Math.max(1 / 1.5, rawRatio));
+        // 放大上限 1.5、縮小下限 0.5，避免瞬間極大且能正常縮小
+        const ratio = Math.min(1.5, Math.max(0.5, rawRatio));
         const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
         setScale(nextScale);
       }
@@ -212,16 +213,22 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
           <button
             type="button"
             className="avatar-editor-zoom-btn"
-            onClick={() => setScale((s) => Math.max(MIN_SCALE, s - 0.25))}
             aria-label="縮小"
+            onPointerDown={(e) => {
+              e.preventDefault();
+              setScale((s) => Math.max(MIN_SCALE, s - 0.25));
+            }}
           >
             −
           </button>
           <button
             type="button"
             className="avatar-editor-zoom-btn"
-            onClick={() => setScale((s) => Math.min(MAX_SCALE, s + 0.25))}
             aria-label="放大"
+            onPointerDown={(e) => {
+              e.preventDefault();
+              setScale((s) => Math.min(MAX_SCALE, s + 0.25));
+            }}
           >
             +
           </button>

@@ -114,12 +114,12 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: #1c1917;
+  background: rgba(28, 25, 23, 0.6); /* 60% 黑遮罩，可看到背後照片 */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  touch-action: none; /* 防止整個編輯器區域觸發頁面縮放 */
+  /* 不在 overlay 設 touch-action，改由 viewport 限定，讓 −/+ 按鈕可正常觸發 */
 }
 
 .avatar-editor {
@@ -140,7 +140,7 @@
   max-width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  background: #1c1917;
+  background: transparent; /* 讓 60% 黑遮罩透出背後照片 */
   border-radius: 0;
 }
 
@@ -205,6 +205,7 @@
   gap: 0.75rem;
   justify-content: center;
   margin-top: 1.25rem;
+  touch-action: manipulation;
 }
 
 .avatar-editor-zoom-btn {
@@ -219,6 +220,7 @@
   border-radius: 0.5rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* 讓縮放按鈕在觸控時可正常觸發，不受 overlay 影響 */
 }
 
 .avatar-editor-zoom-btn:hover {
@@ -236,6 +238,7 @@
   justify-content: center;
   margin-top: 1.25rem;
   flex-wrap: wrap;
+  touch-action: manipulation;
 }
 
 .avatar-editor-fullpage .avatar-editor-actions .cat-avatar-btn-secondary {
