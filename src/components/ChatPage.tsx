@@ -150,9 +150,10 @@ export function ChatPage({
     } catch (err) {
       const msg = err instanceof Error ? err.message : '';
       // AI 忙碌或網路錯誤時顯示明確提示，其餘用開場白當 fallback
+      const selfRef = selectedCat.self_ref || '我';
       const fallback =
         msg.includes('暫時忙碌') || msg.includes('AI 服務錯誤')
-          ? 'AI 暫時忙碌，請稍後再試。'
+          ? `${selfRef}正在午睡中，暫時不想理你...(伺服器忙碌)`
           : getOpeningLine(selectedCat.cat_name, {
               hour: new Date().getHours(),
               hoursSinceLastOpen: null,
