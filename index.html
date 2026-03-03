@@ -9,8 +9,33 @@
     <title>Meow - 了解喵喵的內心話</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script id="version-check" data-version="__BUILD_VERSION__">(function(){var el=document.getElementById('version-check');var buildVer=(el&&el.getAttribute('data-version'))||'';if(!buildVer||buildVer.indexOf('__')===0)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;}).then(function(d){if(d&&d.version&&d.version!==buildVer){document.body.innerHTML='<div style="position:fixed;inset:0;z-index:99999;background:#1c1917;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;text-align:center;font-size:1rem;"><p style="margin-bottom:1rem;">發現新版本，請重新整理以取得最新功能</p><button onclick="location.reload()" style="padding:0.6rem 1.2rem;background:#f59e0b;color:#1c1917;border:none;border-radius:8px;font-weight:600;cursor:pointer;">重新整理</button></div>';}});})();</script>
+    <div id="root">
+      <div id="welcome-screen" style="position:fixed;inset:0;z-index:99999;background:#fff7ed;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;font-family:system-ui;-webkit-font-smoothing:antialiased;">
+        <div style="font-size:2rem;font-weight:700;color:#1c1917;margin-bottom:0.25rem;">Meow</div>
+        <div style="font-size:0.9rem;color:#78716c;margin-bottom:1.5rem;">了解喵喵的內心話</div>
+        <div style="font-size:0.85rem;color:#a8a29e;" id="welcome-msg">正在取得最新版本…</div>
+      </div>
+    </div>
+    <script id="version-check" data-version="__BUILD_VERSION__">(function(){
+      var welcomeMsg=document.getElementById('welcome-msg');
+      var setMsg=function(t){if(welcomeMsg)welcomeMsg.textContent=t;};
+      var el=document.getElementById('version-check');
+      var buildVer=(el&&el.getAttribute('data-version'))||'';
+      if(typeof caches!=='undefined'&&caches.keys){try{caches.keys().then(function(keys){keys.forEach(function(k){caches.delete(k);});});}catch(e){}}
+      function go(){
+        fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;}).then(function(d){
+          if(!d||!d.version){setMsg('載入中…');return;}
+          var serverVer=d.version;
+          if(buildVer&&buildVer.indexOf('__')!==0&&serverVer!==buildVer){
+            setMsg('正在更新至最新版本…');
+            location.replace('/?v='+encodeURIComponent(serverVer));
+            return;
+          }
+          setMsg('載入中…');
+        }).catch(function(){setMsg('載入中…');});
+      }
+      go();
+    })();</script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
