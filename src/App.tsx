@@ -11,6 +11,23 @@ import { MainPage } from './components/MainPage';
 import type { Cat } from './types/database';
 import './App.css';
 
+/** 登入後檢查伺服器 version.json 與目前 bundle 版本，若不同則提示重新整理 */
+function useNewVersionCheck(enabled: boolean) {
+  const [showBanner, setShowBanner] = useState(false);
+  useEffect(() => {
+    if (!enabled) return;
+    fetch('/version.json', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((data: { version?: string }) => {
+        if (data.version != null && data.version !== __BUILD_VERSION__) {
+          setShowBanner(true);
+        }
+      })
+      .catch(() => {});
+  }, [enabled]);
+  return showBanner;
+}
+
 const FREE_MAX_CATS = 1;
 const PAID_MAX_CATS = 5;
 
@@ -24,6 +41,8 @@ function App() {
   const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
   const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
   const [editingCatId, setEditingCatId] = useState<string | null>(null);
+
+  const showNewVersionBanner = useNewVersionCheck(!!user);
 
   const currentCatForMessages = selectedCat ?? cats[0];
   const { messages, addMessage, getRecentForContext } = useMessages(currentCatForMessages?.id);
@@ -96,17 +115,31 @@ function App() {
     );
   }
 
+  const newVersionBanner = showNewVersionBanner ? (
+    <div className="app-new-version-banner" role="alert">
+      <span>發現新版本，請重新整理以取得最新功能</span>
+      <button type="button" onClick={() => window.location.reload()}>
+        重新整理
+      </button>
+    </div>
+  ) : null;
+
   if (catsLoading) {
     return (
-      <div className="app-loading">
-        <p>載入中...</p>
-      </div>
+      <>
+        {newVersionBanner}
+        <div className="app-loading">
+          <p>載入中...</p>
+        </div>
+      </>
     );
   }
 
   if (cats.length === 0) {
     return (
-      <CatSetupPage
+      <>
+        {newVersionBanner}
+        <CatSetupPage
         onSubmit={async (data) => {
           const cat = await createCat(data);
           handleCatCreated(cat);
@@ -115,13 +148,16 @@ function App() {
         maxCats={maxCats}
         currentCount={0}
       />
+      </>
     );
   }
 
   if (view === 'setup') {
     const editingCat = editingCatId ? cats.find((c) => c.id === editingCatId) ?? null : null;
     return (
-      <CatSetupPage
+      <>
+        {newVersionBanner}
+        <CatSetupPage
         onSubmit={async (data) => {
           const cat = await createCat(data);
           handleCatCreated(cat);
@@ -144,12 +180,15 @@ function App() {
         maxCats={maxCats}
         currentCount={cats.length}
       />
+      </>
     );
   }
 
   if (view === 'main') {
     return (
-      <MainPage
+      <>
+        {newVersionBanner}
+        <MainPage
         cats={cats}
         maxCats={maxCats}
         onSelectCat={(cat) => {
@@ -173,6 +212,7 @@ function App() {
         }}
         onSignOut={signOut}
       />
+      </>
     );
   }
 
@@ -180,7 +220,9 @@ function App() {
   if (!currentCat) return null;
 
   return (
-    <ChatPage
+    <>
+      {newVersionBanner}
+      <ChatPage
       cats={cats}
       selectedCat={currentCat}
       onSelectCat={setSelectedCat}
@@ -194,6 +236,7 @@ function App() {
       onIncrementCount={incrementCount}
       onSignOut={signOut}
     />
+    </>
   );
 }
 
