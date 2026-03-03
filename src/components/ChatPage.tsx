@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { getOpeningLine } from '../data/openingLines';
 import { getKeywordCannedReply } from '../data/keywordCannedMessages';
+import { isEmotionalTrigger } from '../data/triggerCategories';
 import { getCatDisplayAvatar } from '../services/localAvatarService';
+import { getCurrentWeather } from '../services/weatherService';
 import { sendChatMessage } from '../services/chatService';
 import { triggerMemorySummarize } from '../services/memoryService';
 import type { Cat } from '../types/database';
@@ -46,7 +48,7 @@ export function ChatPage({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // 開場白：每次進入或切換貓咪時
+  // 開場白：每次進入或切換貓咪時（含選填天氣，需位置授權）
   useEffect(() => {
     const now = new Date();
     const hour = now.getHours();
@@ -54,14 +56,25 @@ export function ChatPage({
     const last = lastStr ? parseInt(lastStr, 10) : null;
     const hoursSince = last ? (Date.now() - last) / (1000 * 60 * 60) : null;
 
-    const line = getOpeningLine(selectedCat.cat_name, {
+    const baseContext = {
       hour,
       hoursSinceLastOpen: hoursSince,
       personality: selectedCat.personality,
-    });
-    setOpeningLine(line);
+    };
+    const lineWithoutWeather = getOpeningLine(selectedCat.cat_name, baseContext);
+    setOpeningLine(lineWithoutWeather);
     setShowOpening(true);
     localStorage.setItem(LAST_OPEN_KEY, Date.now().toString());
+
+    getCurrentWeather().then((weather) => {
+      if (weather?.condition) {
+        const lineWithWeather = getOpeningLine(selectedCat.cat_name, {
+          ...baseContext,
+          weather: weather.condition,
+        });
+        setOpeningLine(lineWithWeather);
+      }
+    });
   }, [selectedCat.id]);
 
   useEffect(() => {
@@ -95,12 +108,31 @@ export function ChatPage({
         preferences: selectedCat.preferences ?? undefined,
         dislikes: selectedCat.dislikes ?? undefined,
       });
-      const reply = cannedReply ?? await sendChatMessage(
-        selectedCat,
-        text,
-        recentBefore,
-        memorySummary
-      );
+      // 情緒類：隨機選罐頭或 AI（只回一則），因罐頭切題性有限
+      let reply: string;
+      if (isEmotionalTrigger(text)) {
+        if (cannedReply !== null && Math.random() < 0.5) {
+          reply = cannedReply;
+        } else {
+          reply = await sendChatMessage(
+            selectedCat,
+            text,
+            recentBefore,
+            memorySummary
+          );
+        }
+      } else {
+        reply =
+          cannedReply ??
+          (await sendChatMessage(
+            selectedCat,
+            text,
+            recentBefore,
+            memorySummary
+          ));
+      }
+
+      await onAddMessage('assistant', reply);
 
       await onAddMessage('assistant', reply);
       // SDD 2.5：每 10 則對話後非同步觸發記憶摘要

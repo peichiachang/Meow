@@ -1,29 +1,29 @@
 # Meow SDD - 待決定事項
 
-依 SDD 實作時，以下項目需要你決定或提供資訊。
+依 [SDD v1.3](./SDD.md) 實作時，以下項目需要你決定或提供資訊。
 
 ---
 
 ## 1. 後端 API 代理
 
-**SDD 要求**：所有 Claude API 呼叫透過後端代理，不在前端暴露 API Key。
+**SDD 要求**：所有 AI API 呼叫透過後端代理，不在前端暴露 API Key。
 
-**方案**：使用 **Supabase Edge Functions** 作為代理（與 Supabase 整合，無需額外伺服器）。
+**方案**：使用 **Supabase Edge Functions** 作為代理（與 Supabase 整合，無需額外伺服器）。目前使用 **Gemini 2.5 Flash-Lite**（測試階段）。
 
 **你需要**：
 - 在 [Supabase Dashboard](https://supabase.com/dashboard) 建立專案
-- 設定 Edge Function 的 Secret：`ANTHROPIC_API_KEY`
-- 取得 [Anthropic API Key](https://console.anthropic.com/)
+- 設定 Edge Function 的 Secret：`GEMINI_API_KEY`
+- 取得 [Gemini API Key](https://aistudio.google.com/apikey)（免費）
 
-**替代**：若偏好自架 Node.js 後端，請告知。
+**替代**：若升級至 Claude Haiku 4.5，改設 `ANTHROPIC_API_KEY` 並調整 Edge Function 的 model。
 
 ---
 
-## 2. Claude 模型版本
+## 2. AI 模型版本
 
-**SDD 指定**：`claude-sonnet-4-20250514`
+**SDD 指定（測試階段）**：`gemini-2.5-flash-lite`
 
-若此模型 ID 在 Anthropic API 無法使用，需改為目前可用版本（例如 `claude-3-5-sonnet-20241022`）。實作時會先使用 SDD 指定版本，若有錯誤再調整。
+**備選**：`claude-haiku-4-5-20251001`（視品質升級）。實作時以 SDD 指定之 Gemini 為準。
 
 ---
 
@@ -75,7 +75,7 @@
 |------|------|
 | `VITE_SUPABASE_URL` | Supabase 專案 URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase 匿名 key（前端） |
-| `ANTHROPIC_API_KEY` | Supabase Edge Function Secret |
+| `GEMINI_API_KEY` | Supabase Edge Function Secret（AI 對話與記憶摘要） |
 
 ---
 

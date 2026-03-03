@@ -1,23 +1,26 @@
 /**
- * Meow AI 對話自動化測試
+ * Meow AI 對話自動化測試（開發測試使用 Gemini 2.5 Flash-Lite 免費版）
  * 測試不同個性貓咪的 AI 回應是否符合 SDD 2.3 說話規則
  *
  * 執行方式：
- *   ANTHROPIC_API_KEY=your_key npm run test:ai
- * 或在 .env 加入 ANTHROPIC_API_KEY=your_key 後執行 npm run test:ai
+ *   GEMINI_API_KEY=your_key npm run test:ai
+ * 或在 .env 加入 GEMINI_API_KEY=your_key 後執行 npm run test:ai
+ *
+ * API Key 取得：https://aistudio.google.com/apikey
  */
 import 'dotenv/config';
-import Anthropic from '@anthropic-ai/sdk';
 import { buildSystemPrompt } from '../src/lib/promptBuilder';
 import type { Cat } from '../src/types/database';
 
-const API_KEY = process.env.ANTHROPIC_API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) {
-  console.error('❌ 請設定 ANTHROPIC_API_KEY（環境變數或 .env）');
+  console.error('❌ 請設定 GEMINI_API_KEY（環境變數或 .env）');
+  console.error('   取得免費 Key：https://aistudio.google.com/apikey');
   process.exit(1);
 }
 
-const anthropic = new Anthropic({ apiKey: API_KEY });
+const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${API_KEY}`;
 
 const TEST_CATS: Cat[] = [
   {
@@ -88,7 +91,6 @@ const SDD_CHECKS = {
     return sentences.length >= 2 && sentences.length <= 4;
   },
   traditionalChinese: (text: string) => {
-    // 簡體字常見字：说(說)、个(個)、这(這) 等
     const simplifiedChars = ['说', '个', '这', '时', '过', '会', '发', '国', '来'];
     return !simplifiedChars.some((c) => text.includes(c));
   },
@@ -99,15 +101,24 @@ async function runTest(
   userMessage: string
 ): Promise<{ reply: string; checks: Record<string, boolean> }> {
   const systemPrompt = buildSystemPrompt(cat, null);
-  const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 300,
-    temperature: 0.9,
-    system: systemPrompt,
-    messages: [{ role: 'user', content: userMessage }],
+
+  const res = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { role: 'system', parts: [{ text: systemPrompt }] },
+      contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+      generationConfig: { maxOutputTokens: 300, temperature: 0.9 },
+    }),
   });
 
-  const reply = response.content[0].type === 'text' ? response.content[0].text : '';
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Gemini API ${res.status}: ${errText}`);
+  }
+
+  const data = await res.json();
+  const reply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
 
   const checks = {
     no主人: SDD_CHECKS.no主人(reply),
@@ -120,7 +131,7 @@ async function runTest(
 }
 
 async function main() {
-  console.log('🐱 Meow AI 對話測試開始\n');
+  console.log('🐱 Meow AI 對話測試（Gemini 2.5 Flash-Lite）\n');
   console.log('='.repeat(60));
 
   let passCount = 0;
@@ -148,8 +159,7 @@ async function main() {
       totalCount++;
       if (allPass) passCount++;
 
-      // 避免 API 限流
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 400));
     }
   }
 

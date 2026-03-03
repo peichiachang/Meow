@@ -1,12 +1,16 @@
 /**
- * SDD 4.2 開場白設計
- * 開場白僅用時間、等待、行為庫（罐頭改由關鍵字匹配用在對話回覆）
+ * SDD 4.2 / 4.5 開場白設計
+ * 開場白：時間、等待、隨機行為、天氣（選填，需位置授權）
  */
+
+import type { WeatherCondition } from '../services/weatherService';
 
 export type OpeningContext = {
   hour: number;
   hoursSinceLastOpen: number | null; // 距離上次開啟的小時數，null 表示首次
   personality?: string[];
+  /** 選填：取得位置授權後由 weatherService 提供 */
+  weather?: WeatherCondition | null;
 };
 
 function getTimeBasedLines(hour: number): string[] {
@@ -76,6 +80,44 @@ function getRandomBehaviorLines(): string[] {
   ];
 }
 
+/** SDD 4.5 開場白天氣（選填）：依天氣條件回傳對應開場白 */
+function getWeatherBasedLines(condition: WeatherCondition): string[] {
+  switch (condition) {
+    case 'rain':
+      return [
+        '外面好像在下雨，我不喜歡雷聲。',
+        '...（望著窗外）又濕又冷，還是家裡好。',
+        '你淋濕了嗎？快點擦乾，別把地板弄濕。',
+      ];
+    case 'thunder':
+      return [
+        '外面在打雷...我有點怕。',
+        '那個聲音好大，你不怕嗎？',
+        '...（縮在角落）雷聲什麼時候會停？',
+      ];
+    case 'snow':
+      return [
+        '外面白白的，那是什麼？',
+        '好冷喔，你不准開窗。',
+        '...（盯著窗外）那個白白的一直掉下來。',
+      ];
+    case 'cloudy':
+      return [
+        '今天沒什麼太陽，適合睡覺。',
+        '外面灰灰的，你也要出門嗎？',
+        '...（打哈欠）這種天氣最適合窩著。',
+      ];
+    case 'sunny':
+      return [
+        '今天陽光不錯，適合曬太陽。',
+        '外面好亮，你要不要開窗讓我看看？',
+        '...（瞇起眼睛）太陽曬得我好舒服。',
+      ];
+    default:
+      return [];
+  }
+}
+
 export function getOpeningLine(
   catName: string,
   context: OpeningContext
@@ -87,6 +129,10 @@ export function getOpeningLine(
 
   if (context.hoursSinceLastOpen !== null) {
     fallbackLines.push(...getWaitBasedLines(context.hoursSinceLastOpen));
+  }
+
+  if (context.weather) {
+    fallbackLines.push(...getWeatherBasedLines(context.weather));
   }
 
   fallbackLines.push(...getRandomBehaviorLines());

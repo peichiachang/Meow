@@ -119,6 +119,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  touch-action: none; /* 防止整個編輯器區域觸發頁面縮放 */
 }
 
 .avatar-editor {

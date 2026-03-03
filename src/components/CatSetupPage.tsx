@@ -10,7 +10,7 @@ import './CatSetupPage.css';
 
 const AVATAR_VIEWPORT_DEFAULT = 280;
 const MIN_SCALE = 0.4;
-const MAX_SCALE = 4;
+const MAX_SCALE = 2; // 限制最大 2 倍，避免手勢放大時照片變極大
 
 interface AvatarEditorProps {
   imageUrl: string;
@@ -39,6 +39,17 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
+  }, []);
+
+  // 防止頁面隨手指縮放：用 passive: false 讓 preventDefault 生效（僅 touchmove）
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const preventZoom = (e: TouchEvent) => {
+      if (e.touches.length >= 1) e.preventDefault();
+    };
+    el.addEventListener('touchmove', preventZoom, { passive: false });
+    return () => el.removeEventListener('touchmove', preventZoom);
   }, []);
 
   const fitImage = useCallback(() => {
@@ -113,7 +124,9 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
       if (pinch) {
         e.preventDefault();
         const d = getTouchDistance(e.touches);
-        const ratio = d / pinch.initialDistance;
+        const rawRatio = d / pinch.initialDistance;
+        // 限制單次手勢的縮放比例，避免照片瞬間變極大
+        const ratio = Math.min(1.5, Math.max(1 / 1.5, rawRatio));
         const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
         setScale(nextScale);
       }

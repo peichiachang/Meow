@@ -1,4 +1,4 @@
-// Meow SDD 2.5 - 記憶摘要生成
+// Meow SDD 2.5 - 記憶摘要生成（開發測試使用 Gemini 2.5 Flash-Lite）
 // 每 10 則對話後非同步呼叫，將歷史對話壓縮成摘要
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -9,6 +9,7 @@ const corsHeaders = {
 };
 
 const MESSAGES_PER_BATCH = 20; // 每 10 則對話（20 則訊息）觸發一次
+const GEMINI_MODEL = 'gemini-2.5-flash-lite';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -16,10 +17,10 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
+    const apiKey = Deno.env.get('GEMINI_API_KEY');
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }),
+        JSON.stringify({ error: 'GEMINI_API_KEY not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -118,33 +119,28 @@ Deno.serve(async (req) => {
       ? `既有摘要：\n${cat.memory_summary}\n\n---\n\n新對話：\n${conversationText}\n\n請將既有摘要與新對話合併，產出更新後的單一摘要。`
       : `對話內容：\n${conversationText}`;
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+    const geminiRes = await fetch(url, {
       method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        temperature: 0.3,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
+        systemInstruction: { role: 'system', parts: [{ text: systemPrompt }] },
+        contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+        generationConfig: { maxOutputTokens: 500, temperature: 0.3 },
       }),
     });
 
-    if (!anthropicRes.ok) {
-      const errText = await anthropicRes.text();
-      console.error('[summarize-memory] Anthropic error:', anthropicRes.status, errText);
+    if (!geminiRes.ok) {
+      const errText = await geminiRes.text();
+      console.error('[summarize-memory] Gemini error:', geminiRes.status, errText);
       return new Response(
         JSON.stringify({ error: 'Summary generation failed', detail: errText }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    const data = await anthropicRes.json();
-    const summary = data.content?.[0]?.text?.trim() || '';
+    const data = await geminiRes.json();
+    const summary = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
 
     if (!summary) {
       return new Response(
