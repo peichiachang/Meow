@@ -57,29 +57,18 @@ export async function sendChatMessage(
     })),
   };
 
-  const doFetch = async (authToken: string) =>
+  const doFetch = async () =>
     fetch(EDGE_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: anonKey,
-        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(body),
     });
 
-  // Supabase Functions Gateway 需要 apikey header；無 session 時用 anon key 當 Bearer 也可打通
-  const initialAuthToken = token ?? anonKey;
-  let res = await doFetch(initialAuthToken);
-
-  // 若使用者 token 過期，嘗試 refresh 後重試一次（anon key 不需要 refresh）
-  if (res.status === 401 && token) {
-    const { data: refreshed } = await supabase.auth.refreshSession();
-    const newToken = refreshed?.session?.access_token;
-    if (newToken) {
-      res = await doFetch(newToken);
-    }
-  }
+  // Supabase Edge Functions 不再檢查 JWT，只需 apikey；完全移除 Authorization 以避免 Invalid JWT
+  const res = await doFetch();
 
   const raw = await res.text();
   let json: any = null;
