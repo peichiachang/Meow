@@ -30,13 +30,9 @@ export async function sendChatMessage(
     content: m.content,
   }));
 
-  let { data: session } = await supabase.auth.getSession();
-  let token = session?.session?.access_token;
-
-  if (!token) {
-    const { data: refreshed } = await supabase.auth.refreshSession();
-    token = refreshed?.session?.access_token;
-  }
+  // 優先使用使用者的 access token，若沒有登入則退回 anon key
+  const { data: session } = await supabase.auth.getSession();
+  const token = session?.session?.access_token ?? anonKey;
 
   const body = {
     message: userMessage,
@@ -63,11 +59,14 @@ export async function sendChatMessage(
       headers: {
         'Content-Type': 'application/json',
         apikey: anonKey,
+        // Supabase Functions Gateway 需要 Authorization header（JWT）
+        // 這裡優先帶使用者 access token，沒有登入時則使用 anon key。
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });
 
-  // Supabase Edge Functions 不再檢查 JWT，只需 apikey；完全移除 Authorization 以避免 Invalid JWT
+  // Supabase Edge Functions 只需 apikey + 任意合法 Bearer token（此處用 anon key）
   const res = await doFetch();
 
   const raw = await res.text();
