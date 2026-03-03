@@ -1,9 +1,8 @@
 /**
  * SDD 2.6 API 呼叫規格
- * 透過 Supabase Edge Function 代理，呼叫 Claude
+ * 透過 Supabase Edge Function 代理；systemPrompt 由伺服器組裝，避免用戶端快取舊 JS 導致邏輯錯誤。
  */
 import { supabase } from '../lib/supabase';
-import { buildSystemPrompt, getPreferenceTriggerInstruction } from '../lib/promptBuilder';
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
 
@@ -20,10 +19,6 @@ export async function sendChatMessage(
   if (!EDGE_FUNCTION_URL) {
     return getMockResponse();
   }
-
-  let systemPrompt = buildSystemPrompt(cat, memorySummary);
-  const preferenceInstruction = getPreferenceTriggerInstruction(userMessage, cat);
-  if (preferenceInstruction) systemPrompt += preferenceInstruction;
 
   const history = recentMessages.slice(-10).map((m) => ({
     role: m.role as 'user' | 'model',
@@ -45,7 +40,17 @@ export async function sendChatMessage(
     },
     body: JSON.stringify({
       message: userMessage,
-      systemPrompt,
+      cat: {
+        cat_name: cat.cat_name,
+        breed: cat.breed,
+        age: cat.age,
+        personality: cat.personality ?? [],
+        preferences: cat.preferences,
+        dislikes: cat.dislikes,
+        habits: cat.habits,
+        self_ref: cat.self_ref,
+      },
+      memorySummary: memorySummary ?? null,
       history: history.map((h) => ({
         role: h.role === 'model' ? 'assistant' : h.role,
         content: h.content,

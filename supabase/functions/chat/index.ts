@@ -1,7 +1,9 @@
 // Meow - 對話代理（開發測試使用 Gemini 2.5 Flash-Lite 免費版）
 // 透過 Supabase Edge Function 呼叫 Google Gemini API，避免在前端暴露 API Key
+// systemPrompt 在伺服器組裝，避免用戶端快取舊 JS 導致摸肚子／肚子餓等邏輯錯誤
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { buildSystemPrompt, getPreferenceTriggerInstruction } from './promptBuilder.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -47,11 +49,27 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { message, systemPrompt, history } = await req.json();
+    const body = await req.json();
+    const { message, cat, memorySummary, history } = body;
 
     if (!message || typeof message !== 'string') {
       return new Response(
         JSON.stringify({ error: 'message is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // 在伺服器組裝 systemPrompt，不依賴前端版本，避免快取導致摸肚子／肚子餓等邏輯錯誤
+    let systemPrompt: string;
+    if (cat && typeof cat === 'object' && cat.cat_name) {
+      const basePrompt = buildSystemPrompt(cat, memorySummary ?? null);
+      const preferenceInstruction = getPreferenceTriggerInstruction(message, cat);
+      systemPrompt = basePrompt + (preferenceInstruction || '');
+    } else if (typeof body.systemPrompt === 'string') {
+      systemPrompt = body.systemPrompt;
+    } else {
+      return new Response(
+        JSON.stringify({ error: 'cat or systemPrompt is required' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -65,7 +83,7 @@ Deno.serve(async (req) => {
     }
     contents.push({ role: 'user', parts: [{ text: message }] });
 
-    const body = {
+    const geminiBody = {
       systemInstruction: systemPrompt
         ? { role: 'system', parts: [{ text: systemPrompt }] }
         : undefined,
@@ -80,7 +98,7 @@ Deno.serve(async (req) => {
     const geminiRes = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(geminiBody),
     });
 
     if (!geminiRes.ok) {
