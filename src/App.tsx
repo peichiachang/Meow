@@ -17,9 +17,14 @@ function useNewVersionCheck(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
     fetch('/version.json', { cache: 'no-store' })
-      .then((r) => r.json())
-      .then((data: { version?: string }) => {
-        if (data.version != null && data.version !== __BUILD_VERSION__) {
+      .then((r) => {
+        if (!r.ok) return null;
+        const contentType = r.headers.get('content-type') ?? '';
+        if (!contentType.includes('application/json')) return null;
+        return r.json();
+      })
+      .then((data: { version?: string } | null) => {
+        if (data?.version != null && data.version !== __BUILD_VERSION__) {
           setShowBanner(true);
         }
       })

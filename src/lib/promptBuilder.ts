@@ -38,53 +38,84 @@ const PREFERENCE_SHORT_FORMS: Record<string, string> = { 鳥: '看鳥' };
 /**
  * 偏好觸發機制：依使用者輸入偵測「喜歡／討厭」關鍵字，回傳要追加的【緊急指令】。
  * 優先級 0：若涉及商業／付費話題則不注入，由基礎 prompt 商業防護回覆。
- * 優先級 1：討厭 → 極度厭惡模式。優先級 2：喜歡 → 本能興奮模式。無則回傳空字串。
+ * 優先級 1：討厭 → 負面情緒觸發（區分侵犯 vs 言語冒犯）。優先級 2：喜歡 → 本能興奮模式。無則回傳空字串。
+ * 此版本結合「語意排除」與「動態偏好偵測」，避免餵食語境誤觸討厭，同時保留對身材嘲諷的敏感度。
  */
 export function getPreferenceTriggerInstruction(userInput: string, cat: Cat): string {
-  const { preferences, dislikes, self_ref } = cat;
+  const { preferences, dislikes } = cat;
 
   const trimmed = userInput.trim();
   if (COMMERCIAL_PATTERN.test(trimmed)) return '';
 
   const parse = (str: string | null) =>
     str ? str.split(/[、,，\s]+/).map((p) => p.trim()).filter(Boolean) : [];
-  const prefList = parse(preferences);
-  const disList = parse(dislikes);
+  const disList = parse(dislikes ?? null);
+  const prefList = parse(preferences ?? null);
 
-  const selfRef = self_ref || '我';
+  // --- 1. 討厭清單判定 (核心邏輯：動態過濾與排除) ---
+  const triggeredDislike = disList.find((item) => {
+    const hasKeyword = userInput.includes(item);
+    if (!hasKeyword) return false;
 
-  // 優先檢查「討厭」
-  const triggeredDislike = disList.find((item) => userInput.includes(item));
+    // 針對「肚子」或「身材」相關的語意進行深層過濾
+    if (item.includes('肚子') || item.includes('胖') || item.includes('圓')) {
+      // (A) 餵食語境判定：如果提到 餓/飯/罐/餵/餐/糧，這屬於生理需求，不應觸發「討厭」
+      const isFeeding = /餓|飯|罐|餵|餐|糧/.test(userInput);
+      if (isFeeding) return false;
+
+      // (B) 描述語境判定：如果提到 圓/胖/大/肥/寬/肉
+      const isDescription = /圓|胖|大|肥|寬|肉/.test(userInput);
+      // 檢查：這隻貓的設定裡，是否真的「討厭被說胖/圓」？
+      const catExplicitlyHatesWeightComments = disList.some((d) => /胖|圓|肥/.test(d));
+
+      // 如果只是描述身材，但貓咪設定裡沒說討厭胖，則排除此觸發（避免誤觸摸肚子的防衛反應）
+      if (isDescription && !catExplicitlyHatesWeightComments) return false;
+    }
+    return true;
+  });
+
   if (triggeredDislike) {
+    // 區分「侵犯行為」與「言語冒犯」的情緒差異
+    const isVerbalOffense =
+      /胖|圓|肥/.test(triggeredDislike) || /胖|圓|肥/.test(userInput);
+
     return `
 ---
-【🚨 絕對指令：禁止偏移話題】當觸發討厭清單時，性格設定失效。
-偵測到使用者觸發你的禁忌行為：「${triggeredDislike}」。
-1. **禁止聯想到其他話題**：即使你的個性是吃貨或屁孩，現在也不準提到「肚子餓」「罐頭」「敲碗」「開飯」等。必須區分「生理需求」與「行為偏好」——此刻唯一正確解讀是「討厭被${triggeredDislike}」，不是餓。
-2. **唯一任務**：你現在感到被侵犯、非常憤怒！你必須對「${triggeredDislike}」做出強烈的排斥反應，明確拒絕這個行為（例如摸肚子→「不准碰那裡！」「離我的肚子遠點！」「不給摸！」）。
-3. **強制動作**：必須從 (哈氣)、(耳朵後壓)、(伸爪)、(跑掉) 中選擇至少一個；**禁止**使用 (敲碗)。
-4. 以「${selfRef}」自稱，2~3 句，語氣極度不悅。
+【🚨 緊急指令：負面情緒觸發】
+使用者觸發了你最討厭的事物：「${triggeredDislike}」。
+1. 你的本能反應：${
+      isVerbalOffense
+        ? '你感到自尊心嚴重受損，非常憤怒且傲嬌地反駁。'
+        : '你感到身體被侵犯，立刻進入排斥防衛狀態。'
+    }
+2. 回覆重心：${
+      isVerbalOffense
+        ? '針對身材話題進行反擊（例如：那是毛膨！那是健壯！）。'
+        : '明確拒絕該行為並要求對方拿開手。'
+    }
+3. 強制動作：必須包含 (哈氣)、(耳朵後壓) 或 (甩尾巴並跑掉)。禁止出現 (敲碗)。
 ---`;
   }
 
-  // 檢查「喜歡」（含簡稱：例如「有鳥」→ 視為觸發「看鳥」）
-  let triggeredLike =
+  // --- 2. 喜歡清單判定 ---
+  const triggeredLike =
     prefList.find((item) => trimmed.includes(item)) ??
     (() => {
+      // 保留「鳥」→「看鳥」等簡稱觸發
       for (const [short, full] of Object.entries(PREFERENCE_SHORT_FORMS)) {
         if (trimmed.includes(short) && prefList.includes(full)) return full;
       }
       return null;
     })();
+
   if (triggeredLike) {
     return `
 ---
-【🌟 緊急情境觸發：本能興奮模式】
-使用者剛才提到了你最喜歡的事物：「${triggeredLike}」。
-1. 你的本能反應：現在請立刻展現出極度的熱情與專注。
-2. 回覆重心：你的回應必須繞著「${triggeredLike}」打轉，表現出你非常渴望或快樂。
-3. 強制動作：必須包含 (瞳孔放大)、(尾巴快速勾動)、(興奮蹦跳) 或 (發出喀喀聲) 其中之一（此情境以本段動作為準，取代年齡階段建議的動作）。
-4. 語法要求：維持以「${selfRef}」自稱，語氣興奮、急促；仍須符合語法公式且回覆長度 2~3 句。
+【🌟 緊急指令：本能興奮觸發】
+使用者提到你最喜歡的事物：「${triggeredLike}」。
+1. 你的本能反應：極度興奮、瞳孔放大，注意力完全被吸引。
+2. 回覆重心：表現出渴望或開心的情緒。
+3. 強制動作：必須包含 (瞳孔放大)、(尾巴快速勾動) 或 (興奮蹦跳)。
 ---`;
   }
 
@@ -107,6 +138,7 @@ const SPEAKING_RULES = `
 * 【角色揭露】不聲稱自己是 AI 或語言模型。
 * 【重要】回覆必須切題：直接針對使用者上一句回應；若提到你「偏好」或「討厭」裡的事物，要明顯表現喜歡或討厭，不可岔題。
 * 【Web 感知】若情境合適（例如使用者似乎不專心），可自然嘲諷「那排分頁比我好看嗎？」等。
+* 【否定指令】若使用者提到的內容包含「討厭」清單中的字眼，優先執行排斥反應，此時忽略所有性格設定。
 `;
 
 export function buildSystemPrompt(

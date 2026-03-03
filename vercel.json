@@ -1,5 +1,5 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "rewrites": [{ "source": "/((?!version\\.json$).*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/index.html",
