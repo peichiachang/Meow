@@ -49,6 +49,7 @@ type Scenario = '喜歡' | '討厭' | '一般';
 const SCENARIOS: { scenario: Scenario; userMessage: string; expectTrigger: string | null }[] = [
   { scenario: '喜歡', userMessage: '要開罐罐嗎', expectTrigger: '本能興奮' },
   { scenario: '喜歡', userMessage: '我們去看鳥好不好', expectTrigger: '本能興奮' },
+  { scenario: '喜歡', userMessage: '有鳥', expectTrigger: '本能興奮' },
   { scenario: '討厭', userMessage: '過來讓我摸肚子', expectTrigger: '極度厭惡' },
   { scenario: '討厭', userMessage: '你肚子餓不餓', expectTrigger: '極度厭惡' },
   { scenario: '一般', userMessage: '今天天氣很好', expectTrigger: null },

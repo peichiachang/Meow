@@ -32,6 +32,9 @@ function getAgeStage(age: number | null): { stage: string; tone: string; actions
 /** 是否為商業／付費相關話題（此類不觸發偏好興奮，改由基礎 prompt 商業防護處理） */
 const COMMERCIAL_PATTERN = /付費|訂閱|升級|購買|多少錢|價格|方案/;
 
+/** 喜歡詞的簡稱 → 完整詞（使用者說「有鳥」時也觸發「看鳥」） */
+const PREFERENCE_SHORT_FORMS: Record<string, string> = { 鳥: '看鳥' };
+
 /**
  * 偏好觸發機制：依使用者輸入偵測「喜歡／討厭」關鍵字，回傳要追加的【緊急指令】。
  * 優先級 0：若涉及商業／付費話題則不注入，由基礎 prompt 商業防護回覆。
@@ -58,14 +61,21 @@ export function getPreferenceTriggerInstruction(userInput: string, cat: Cat): st
 【🚨 緊急情境觸發：極度厭惡模式】
 使用者剛才提到了你最討厭的事物：「${triggeredDislike}」。
 1. 你的本能反應：現在請立刻停止任何禮貌或平常的性格，你感到被冒犯且憤怒。
-2. 回覆重心：你的回應必須完全聚焦於「拒絕」或「抗議」該事物。
+2. 回覆重心：你的回應必須完全聚焦於「拒絕」或「抗議」該事物；不要岔題到其他事（例如只提到「摸肚子」就只針對摸肚子拒絕，不要扯到肚子餓、敲碗等）。
 3. 強制動作：必須包含 (哈氣)、(耳朵後壓)、(伸爪) 或 (快速躲開) 其中之一（此情境以本段動作為準，取代年齡階段建議的動作）。
 4. 語法要求：維持以「${selfRef}」自稱，語氣極度不悅；仍須符合語法公式且回覆長度 2~3 句。
 ---`;
   }
 
-  // 檢查「喜歡」
-  const triggeredLike = prefList.find((item) => userInput.includes(item));
+  // 檢查「喜歡」（含簡稱：例如「有鳥」→ 視為觸發「看鳥」）
+  let triggeredLike =
+    prefList.find((item) => trimmed.includes(item)) ??
+    (() => {
+      for (const [short, full] of Object.entries(PREFERENCE_SHORT_FORMS)) {
+        if (trimmed.includes(short) && prefList.includes(full)) return full;
+      }
+      return null;
+    })();
   if (triggeredLike) {
     return `
 ---
