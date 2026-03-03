@@ -153,7 +153,7 @@ export function ChatPage({
       const selfRef = selectedCat.self_ref || '我';
       const fallback =
         msg.includes('暫時忙碌') || msg.includes('AI 服務錯誤')
-          ? `${selfRef}正在午睡中，暫時不想理你...(伺服器忙碌)`
+          ? `${selfRef}正在午睡中，暫時不想理你...(伺服器連線異常)`
           : getOpeningLine(selectedCat.cat_name, {
               hour: new Date().getHours(),
               hoursSinceLastOpen: null,
