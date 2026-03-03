@@ -229,10 +229,11 @@ export function CatSetupPage({
       return;
     }
 
+    const ageNum = age === '' ? null : Number(age);
     const payload: CatSetupFormData = {
       cat_name: catName.trim(),
       breed: breed.trim() || null,
-      age: age === '' ? null : Number(age),
+      age: ageNum != null && Number.isFinite(ageNum) ? ageNum : null,
       personality: personalityList,
       preferences: preferences.trim() || null,
       dislikes: dislikes.trim() || null,
@@ -253,7 +254,9 @@ export function CatSetupPage({
         onBack?.();
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : '儲存失敗');
+      const msg = err instanceof Error ? err.message : '儲存失敗';
+      setError(msg);
+      console.error('[CatSetupPage] 儲存失敗', err);
     } finally {
       setLoading(false);
     }

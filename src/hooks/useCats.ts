@@ -34,12 +34,28 @@ export function useCats(userId: string | undefined) {
 
   const createCat = async (insert: Omit<CatInsert, 'user_id'>) => {
     if (!userId) throw new Error('未登入');
+    const payload = {
+      user_id: userId,
+      cat_name: insert.cat_name,
+      breed: insert.breed ?? null,
+      age: insert.age != null && Number.isFinite(Number(insert.age)) ? Number(insert.age) : null,
+      personality: Array.isArray(insert.personality) ? insert.personality : [],
+      preferences: insert.preferences ?? null,
+      dislikes: insert.dislikes ?? null,
+      habits: insert.habits ?? null,
+      self_ref: insert.self_ref ?? null,
+      avatar_url: insert.avatar_url ?? null,
+    };
     const { data, error } = await supabase
       .from('cats')
-      .insert({ ...insert, user_id: userId })
+      .insert(payload)
       .select()
       .single();
-    if (error) throw error;
+    if (error) {
+      const msg = (error as { message?: string; details?: string }).details ?? (error as Error).message ?? '儲存失敗';
+      console.error('[useCats] createCat', error, payload);
+      throw new Error(msg);
+    }
     setCats((prev) => [...prev, data]);
     return data;
   };
