@@ -148,12 +148,16 @@ export function ChatPage({
         triggerMemorySummarize(selectedCat.id);
       }
     } catch (err) {
-      // API 失敗時改顯示隨機罐頭訊息，避免整頁都是錯誤提示
-      const fallback = getOpeningLine(selectedCat.cat_name, {
-        hour: new Date().getHours(),
-        hoursSinceLastOpen: null,
-        personality: selectedCat.personality,
-      });
+      const msg = err instanceof Error ? err.message : '';
+      // AI 忙碌或網路錯誤時顯示明確提示，其餘用開場白當 fallback
+      const fallback =
+        msg.includes('暫時忙碌') || msg.includes('AI 服務錯誤')
+          ? 'AI 暫時忙碌，請稍後再試。'
+          : getOpeningLine(selectedCat.cat_name, {
+              hour: new Date().getHours(),
+              hoursSinceLastOpen: null,
+              personality: selectedCat.personality,
+            });
       await onAddMessage('assistant', fallback);
     } finally {
       setLoading(false);

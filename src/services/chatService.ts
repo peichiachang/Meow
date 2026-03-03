@@ -58,21 +58,36 @@ export async function sendChatMessage(
       body: JSON.stringify(body),
     });
 
-  // Supabase Edge Functions 只需 apikey + 任意合法 Bearer token（此處用 anon key）
-  const res = await doFetch();
+  const parseResponse = async (res: Response) => {
+    const raw = await res.text();
+    let json: any = null;
+    try {
+      json = raw ? JSON.parse(raw) : null;
+    } catch {
+      json = null;
+    }
+    return { raw, json };
+  };
 
-  const raw = await res.text();
-  let json: any = null;
-  try {
-    json = raw ? JSON.parse(raw) : null;
-  } catch {
-    json = null;
+  let res = await doFetch();
+  let { raw, json } = await parseResponse(res);
+
+  // 502/503（AI 高負載）時重試一次，間隔 2 秒
+  if (res.status === 502 || res.status === 503) {
+    await new Promise((r) => setTimeout(r, 2000));
+    res = await doFetch();
+    const parsed = await parseResponse(res);
+    raw = parsed.raw;
+    json = parsed.json;
   }
 
   if (!res.ok) {
     console.error('[chatService] chat error', res.status, raw);
     if (res.status === 401) {
       throw new Error('登入已過期，請重新登出再登入');
+    }
+    if (res.status === 502 || res.status === 503) {
+      throw new Error('AI 暫時忙碌，請稍後再試');
     }
     throw new Error(json?.error || json?.detail || `AI 服務錯誤 (${res.status})`);
   }
