@@ -27,6 +27,8 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
   const dragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
   const touchDragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
   const pinchRef = useRef<{ initialDistance: number; initialScale: number } | null>(null);
+  const scaleRef = useRef(scale);
+  scaleRef.current = scale;
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -177,14 +179,17 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
     }
   };
 
+  const zoomOut = () => {
+    const next = Math.max(MIN_SCALE, scaleRef.current - 0.25);
+    setScale(next);
+  };
+  const zoomIn = () => {
+    const next = Math.min(MAX_SCALE, scaleRef.current + 0.25);
+    setScale(next);
+  };
+
   return (
     <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="預覽與裁切頭像">
-      <div
-        className="avatar-editor-bg-photo"
-        style={{ backgroundImage: `url(${imageUrl})` }}
-        aria-hidden
-      />
-      <div className="avatar-editor-mask" aria-hidden />
       <div className="avatar-editor avatar-editor-fullpage">
         <h2 className="avatar-editor-title">預覽與裁切</h2>
         <p className="avatar-editor-hint">拖曳移動、雙指或按鈕縮放，圓圈內為頭像裁切範圍，確認後套用</p>
@@ -221,12 +226,12 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setScale((s) => Math.max(MIN_SCALE, s - 0.25));
+              zoomOut();
             }}
             onPointerDown={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setScale((s) => Math.max(MIN_SCALE, s - 0.25));
+              zoomOut();
             }}
           >
             −
@@ -238,12 +243,12 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setScale((s) => Math.min(MAX_SCALE, s + 0.25));
+              zoomIn();
             }}
             onPointerDown={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setScale((s) => Math.min(MAX_SCALE, s + 0.25));
+              zoomIn();
             }}
           >
             +

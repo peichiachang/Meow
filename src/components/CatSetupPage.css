@@ -109,7 +109,7 @@
   color: #78716c;
 }
 
-/* 頭像編輯器：全頁預覽與裁切（縮放／移動） */
+/* 頭像編輯器：全頁預覽與裁切（常見做法：單一深色遮罩，圓圈內只見要裁切的圖） */
 .avatar-editor-overlay {
   position: fixed;
   inset: 0;
@@ -118,30 +118,12 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-}
-
-/* 背後為上傳的照片（全螢幕） */
-.avatar-editor-bg-photo {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-}
-
-/* 60% 黑色遮罩疊在照片上 */
-.avatar-editor-mask {
-  position: absolute;
-  inset: 0;
-  background: rgba(28, 25, 23, 0.6);
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .avatar-editor {
   position: relative;
-  z-index: 2;
-  background: #fff;
+  background: transparent;
   border-radius: 1rem;
   padding: 1.25rem;
   max-width: 100%;
@@ -158,7 +140,7 @@
   max-width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  background: transparent; /* 讓 60% 黑遮罩透出背後照片 */
+  background: transparent;
   border-radius: 0;
 }
 
