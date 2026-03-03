@@ -25,42 +25,66 @@ export async function sendChatMessage(
     content: m.content,
   }));
 
-  const { data: session } = await supabase.auth.getSession();
-  const token = session?.session?.access_token;
+  let { data: session } = await supabase.auth.getSession();
+  let token = session?.session?.access_token;
 
+  if (!token) {
+    const { data: refreshed } = await supabase.auth.refreshSession();
+    token = refreshed?.session?.access_token;
+  }
   if (!token) {
     throw new Error('請先登入');
   }
 
-  const res = await fetch(EDGE_FUNCTION_URL, {
+  const body = {
+    message: userMessage,
+    cat: {
+      cat_name: cat.cat_name,
+      breed: cat.breed,
+      age: cat.age,
+      personality: cat.personality ?? [],
+      preferences: cat.preferences,
+      dislikes: cat.dislikes,
+      habits: cat.habits,
+      self_ref: cat.self_ref,
+    },
+    memorySummary: memorySummary ?? null,
+    history: history.map((h) => ({
+      role: h.role === 'model' ? 'assistant' : h.role,
+      content: h.content,
+    })),
+  };
+
+  let res = await fetch(EDGE_FUNCTION_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      message: userMessage,
-      cat: {
-        cat_name: cat.cat_name,
-        breed: cat.breed,
-        age: cat.age,
-        personality: cat.personality ?? [],
-        preferences: cat.preferences,
-        dislikes: cat.dislikes,
-        habits: cat.habits,
-        self_ref: cat.self_ref,
-      },
-      memorySummary: memorySummary ?? null,
-      history: history.map((h) => ({
-        role: h.role === 'model' ? 'assistant' : h.role,
-        content: h.content,
-      })),
-    }),
+    body: JSON.stringify(body),
   });
+
+  if (res.status === 401) {
+    const { data: refreshed } = await supabase.auth.refreshSession();
+    const newToken = refreshed?.session?.access_token;
+    if (newToken) {
+      res = await fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${newToken}`,
+        },
+        body: JSON.stringify(body),
+      });
+    }
+  }
 
   const json = await res.json();
 
   if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error('登入已過期，請重新登出再登入');
+    }
     throw new Error(json.error || json.detail || 'AI 服務錯誤');
   }
 
