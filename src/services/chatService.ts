@@ -2,7 +2,6 @@
  * SDD 2.6 API 呼叫規格
  * 透過 Supabase Edge Function 代理；systemPrompt 由伺服器組裝，避免用戶端快取舊 JS 導致邏輯錯誤。
  */
-import { supabase } from '../lib/supabase';
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
 
