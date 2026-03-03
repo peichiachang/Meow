@@ -1,4 +1,7 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Cropper from 'react-easy-crop';
+import type { Area } from 'react-easy-crop';
+import 'react-easy-crop/react-easy-crop.css';
 import { PERSONALITY_LABELS } from '../data/personalities';
 import {
   getCatAvatarLocal,
@@ -8,9 +11,42 @@ import {
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
-const AVATAR_VIEWPORT_DEFAULT = 280;
-const MIN_SCALE = 0.1; // 允許縮小到 0.1，避免 fit 後 scale 小於 0.2 時按「−」反而變大
-const MAX_SCALE = 2;
+const AVATAR_SIZE = 280;
+
+function createImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.addEventListener('load', () => resolve(img));
+    img.addEventListener('error', (e) => reject(e));
+    img.src = url;
+  });
+}
+
+async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string> {
+  const image = await createImage(imageSrc);
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('No 2d context');
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+  ctx.drawImage(
+    image,
+    pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height,
+    0, 0, pixelCrop.width, pixelCrop.height
+  );
+  let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+  if (Math.max(pixelCrop.width, pixelCrop.height) > AVATAR_SIZE) {
+    const small = document.createElement('canvas');
+    small.width = AVATAR_SIZE;
+    small.height = AVATAR_SIZE;
+    const sctx = small.getContext('2d');
+    if (sctx) {
+      sctx.drawImage(canvas, 0, 0, pixelCrop.width, pixelCrop.height, 0, 0, AVATAR_SIZE, AVATAR_SIZE);
+      dataUrl = small.toDataURL('image/jpeg', 0.85);
+    }
+  }
+  return dataUrl;
+}
 
 interface AvatarEditorProps {
   imageUrl: string;
@@ -19,220 +55,51 @@ interface AvatarEditorProps {
 }
 
 function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
-  const [scale, setScale] = useState(1);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [viewportSize, setViewportSize] = useState(AVATAR_VIEWPORT_DEFAULT);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const dragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
-  const touchDragRef = useRef<{ startX: number; startY: number; startOffset: { x: number; y: number } } | null>(null);
-  const pinchRef = useRef<{ initialDistance: number; initialScale: number } | null>(null);
-  const scaleRef = useRef(scale);
-  scaleRef.current = scale;
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const croppedAreaPixelsRef = useRef<Area | null>(null);
 
-  useLayoutEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const update = () => {
-      const w = el.clientWidth || AVATAR_VIEWPORT_DEFAULT;
-      setViewportSize(w);
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
+  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
+    croppedAreaPixelsRef.current = croppedAreaPixels;
   }, []);
 
-  // 防止頁面隨手指縮放：用 passive: false 讓 preventDefault 生效（僅 touchmove）
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const preventZoom = (e: TouchEvent) => {
-      if (e.touches.length >= 1) e.preventDefault();
-    };
-    el.addEventListener('touchmove', preventZoom, { passive: false });
-    return () => el.removeEventListener('touchmove', preventZoom);
-  }, []);
-
-  // 僅在圖片「初次載入」時 fit 一次，避免 viewport 變動時一直重設 scale 導致無法縮小
-  useEffect(() => {
-    const img = imgRef.current;
-    const el = containerRef.current;
-    if (!img || !el) return;
-    const onLoad = () => {
-      if (!img.naturalWidth) return;
-      const w = el.clientWidth || AVATAR_VIEWPORT_DEFAULT;
-      const h = el.clientHeight || AVATAR_VIEWPORT_DEFAULT;
-      const fitScale = Math.min(w / img.naturalWidth, h / img.naturalHeight, 1);
-      setScale(fitScale);
-      setOffset({ x: 0, y: 0 });
-    };
-    if (img.complete && img.naturalWidth) onLoad();
-    else img.addEventListener('load', onLoad);
-    return () => img.removeEventListener('load', onLoad);
-  }, [imageUrl]);
-
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if ((e as React.MouseEvent).button !== undefined && (e as React.MouseEvent).button !== 0) return;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-    dragRef.current = { startX: e.clientX, startY: e.clientY, startOffset: { ...offset } };
-  };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!dragRef.current) return;
-    setOffset({
-      x: dragRef.current.startOffset.x + (e.clientX - dragRef.current.startX),
-      y: dragRef.current.startOffset.y + (e.clientY - dragRef.current.startY),
-    });
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
-    dragRef.current = null;
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.08 : 0.08;
-    setScale((s) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, s + s * delta)));
-  };
-
-  const getTouchDistance = (touches: React.TouchList) => {
-    if (touches.length < 2) return 0;
-    const a = touches[0];
-    const b = touches[1];
-    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      touchDragRef.current = null;
-      const dist = getTouchDistance(e.touches);
-      pinchRef.current = { initialDistance: Math.max(10, dist), initialScale: scaleRef.current };
-    } else if (e.touches.length === 1) {
-      pinchRef.current = null;
-      touchDragRef.current = {
-        startX: e.touches[0].clientX,
-        startY: e.touches[0].clientY,
-        startOffset: { ...offset },
-      };
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      const pinch = pinchRef.current;
-      if (pinch && pinch.initialDistance > 0) {
-        e.preventDefault();
-        const d = getTouchDistance(e.touches);
-        const rawRatio = d / pinch.initialDistance;
-        // 放大上限 1.5、縮小下限 0.5，避免瞬間極大且能正常縮小
-        const ratio = Math.min(1.5, Math.max(0.5, rawRatio));
-        const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinch.initialScale * ratio));
-        setScale(nextScale);
-      }
-    } else if (e.touches.length === 1 && touchDragRef.current) {
-      e.preventDefault();
-      setOffset({
-        x: touchDragRef.current.startOffset.x + (e.touches[0].clientX - touchDragRef.current.startX),
-        y: touchDragRef.current.startOffset.y + (e.touches[0].clientY - touchDragRef.current.startY),
-      });
-    }
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (e.touches.length < 2) pinchRef.current = null;
-    if (e.touches.length === 0) touchDragRef.current = null;
-  };
-
-  const handleConfirm = () => {
-    const img = imgRef.current;
-    if (!img || !img.naturalWidth) return;
-    const size = viewportSize;
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const iw = img.naturalWidth;
-    const ih = img.naturalHeight;
-    ctx.save();
-    ctx.translate(size / 2 + offset.x, size / 2 + offset.y);
-    ctx.scale(scale, scale);
-    ctx.drawImage(img, -iw / 2, -ih / 2, iw, ih);
-    ctx.restore();
+  const handleConfirm = useCallback(async () => {
+    const area = croppedAreaPixelsRef.current;
+    if (!area) return;
     try {
-      let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      if (size > AVATAR_VIEWPORT_DEFAULT) {
-        const small = document.createElement('canvas');
-        small.width = AVATAR_VIEWPORT_DEFAULT;
-        small.height = AVATAR_VIEWPORT_DEFAULT;
-        const sctx = small.getContext('2d');
-        if (sctx) {
-          sctx.drawImage(canvas, 0, 0, size, size, 0, 0, AVATAR_VIEWPORT_DEFAULT, AVATAR_VIEWPORT_DEFAULT);
-          dataUrl = small.toDataURL('image/jpeg', 0.85);
-        }
-      }
+      const dataUrl = await getCroppedImg(imageUrl, area);
       onConfirm(dataUrl);
     } catch {
-      onConfirm(img.src);
+      onConfirm(imageUrl);
     }
-  };
-
-  const zoomOut = () => {
-    const next = Math.max(MIN_SCALE, scaleRef.current - 0.25);
-    setScale(next);
-  };
-  const zoomIn = () => {
-    const next = Math.min(MAX_SCALE, scaleRef.current + 0.25);
-    setScale(next);
-  };
+  }, [imageUrl, onConfirm]);
 
   return (
     <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="預覽與裁切頭像">
       <div className="avatar-editor avatar-editor-fullpage">
         <h2 className="avatar-editor-title">預覽與裁切</h2>
         <p className="avatar-editor-hint">拖曳移動、雙指或按鈕縮放，圓圈內為頭像裁切範圍，確認後套用</p>
-        <div
-          ref={containerRef}
-          className="avatar-editor-viewport"
-          style={{ width: 'min(85vmin, 400px)', height: 'min(85vmin, 400px)' }}
-          onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onTouchCancel={handleTouchEnd}
-        >
-          <div
-            className="avatar-editor-image-wrap"
-            style={{
-              left: viewportSize / 2,
-              top: viewportSize / 2,
-              transform: `translate(-50%, -50%) translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
-            }}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
-          >
-            <img ref={imgRef} src={imageUrl} alt="預覽" draggable={false} />
-          </div>
+        <div className="avatar-editor-crop-container">
+          <Cropper
+            image={imageUrl}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            cropShape="round"
+            showGrid={false}
+            minZoom={0.2}
+            maxZoom={3}
+            onCropChange={setCrop}
+            onZoomChange={setZoom}
+            onCropComplete={onCropComplete}
+          />
         </div>
         <div className="avatar-editor-zoom-btns">
           <button
             type="button"
             className="avatar-editor-zoom-btn"
             aria-label="縮小"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              zoomOut();
-            }}
-            onPointerDown={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              zoomOut();
-            }}
+            onClick={() => setZoom((z) => Math.max(0.2, z - 0.25))}
           >
             −
           </button>
@@ -240,16 +107,7 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
             type="button"
             className="avatar-editor-zoom-btn"
             aria-label="放大"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              zoomIn();
-            }}
-            onPointerDown={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              zoomIn();
-            }}
+            onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
           >
             +
           </button>

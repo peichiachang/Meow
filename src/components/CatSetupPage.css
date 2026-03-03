@@ -164,47 +164,12 @@
   max-width: 320px;
 }
 
-.avatar-editor-viewport {
+/* react-easy-crop 需包在 position: relative + 固定高度之容器內 */
+.avatar-editor-crop-container {
   position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  clip-path: circle(50%); /* 與 border-radius 雙重確保圓外不露圖（含 iOS） */
-  isolation: isolate;
-  background: #292524;
-  border: 3px solid #57534e;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
+  width: min(85vmin, 400px);
+  height: min(85vmin, 400px);
   flex-shrink: 0;
-}
-
-.avatar-editor-viewport:active {
-  cursor: grab;
-}
-
-.avatar-editor-image-wrap {
-  position: absolute;
-  cursor: grab;
-  transform-origin: center center;
-  touch-action: none;
-  pointer-events: auto;
-  will-change: transform;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.avatar-editor-image-wrap:active {
-  cursor: grabbing;
-}
-
-.avatar-editor-image-wrap img {
-  display: block;
-  max-width: none;
-  user-select: none;
-  pointer-events: none;
-  -webkit-user-drag: none;
-  user-drag: none;
 }
 
 .avatar-editor-zoom-btns {
