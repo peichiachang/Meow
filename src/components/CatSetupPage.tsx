@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { PERSONALITY_LABELS } from '../data/personalities';
 import {
   getCatAvatarLocal,
