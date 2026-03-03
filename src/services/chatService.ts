@@ -30,10 +30,6 @@ export async function sendChatMessage(
     content: m.content,
   }));
 
-  // 若有登入就帶 JWT；未登入時不要送 Authorization，避免被當成 Invalid JWT
-  const { data: session } = await supabase.auth.getSession();
-  const token = session?.session?.access_token ?? null;
-
   const body = {
     message: userMessage,
     cat: {
@@ -59,7 +55,6 @@ export async function sendChatMessage(
       headers: {
         'Content-Type': 'application/json',
         apikey: anonKey,
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(body),
     });
