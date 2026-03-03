@@ -114,15 +114,33 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(28, 25, 23, 0.6); /* 60% 黑遮罩，可看到背後照片 */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  /* 不在 overlay 設 touch-action，改由 viewport 限定，讓 −/+ 按鈕可正常觸發 */
+}
+
+/* 背後為上傳的照片（全螢幕） */
+.avatar-editor-bg-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* 60% 黑色遮罩疊在照片上 */
+.avatar-editor-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.6);
+  z-index: 1;
 }
 
 .avatar-editor {
+  position: relative;
+  z-index: 2;
   background: #fff;
   border-radius: 1rem;
   padding: 1.25rem;

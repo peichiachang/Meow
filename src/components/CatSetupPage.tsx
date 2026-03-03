@@ -9,8 +9,8 @@ import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
 const AVATAR_VIEWPORT_DEFAULT = 280;
-const MIN_SCALE = 0.4;
-const MAX_SCALE = 2; // 限制最大 2 倍，避免手勢放大時照片變極大
+const MIN_SCALE = 0.2; // 允許縮小到 0.2，避免初始 fit 已在 0.4 時無法再縮小
+const MAX_SCALE = 2;
 
 interface AvatarEditorProps {
   imageUrl: string;
@@ -52,25 +52,23 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
     return () => el.removeEventListener('touchmove', preventZoom);
   }, []);
 
-  const fitImage = useCallback(() => {
-    const img = imgRef.current;
-    const w = viewportSize;
-    const h = viewportSize;
-    if (!img || !img.naturalWidth) return;
-    const iw = img.naturalWidth;
-    const ih = img.naturalHeight;
-    const fitScale = Math.min(w / iw, h / ih, 1);
-    setScale(fitScale);
-    setOffset({ x: 0, y: 0 });
-  }, [viewportSize]);
-
+  // 僅在圖片「初次載入」時 fit 一次，避免 viewport 變動時一直重設 scale 導致無法縮小
   useEffect(() => {
     const img = imgRef.current;
-    if (!img) return;
-    if (img.complete && img.naturalWidth) fitImage();
-    else img.addEventListener('load', fitImage);
-    return () => img.removeEventListener('load', fitImage);
-  }, [imageUrl, fitImage]);
+    const el = containerRef.current;
+    if (!img || !el) return;
+    const onLoad = () => {
+      if (!img.naturalWidth) return;
+      const w = el.clientWidth || AVATAR_VIEWPORT_DEFAULT;
+      const h = el.clientHeight || AVATAR_VIEWPORT_DEFAULT;
+      const fitScale = Math.min(w / img.naturalWidth, h / img.naturalHeight, 1);
+      setScale(fitScale);
+      setOffset({ x: 0, y: 0 });
+    };
+    if (img.complete && img.naturalWidth) onLoad();
+    else img.addEventListener('load', onLoad);
+    return () => img.removeEventListener('load', onLoad);
+  }, [imageUrl]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if ((e as React.MouseEvent).button !== undefined && (e as React.MouseEvent).button !== 0) return;
@@ -181,6 +179,12 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
 
   return (
     <div className="avatar-editor-overlay" role="dialog" aria-modal="true" aria-label="預覽與裁切頭像">
+      <div
+        className="avatar-editor-bg-photo"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+        aria-hidden
+      />
+      <div className="avatar-editor-mask" aria-hidden />
       <div className="avatar-editor avatar-editor-fullpage">
         <h2 className="avatar-editor-title">預覽與裁切</h2>
         <p className="avatar-editor-hint">拖曳移動、雙指或按鈕縮放，圓圈內為頭像裁切範圍，確認後套用</p>
@@ -214,8 +218,14 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
             type="button"
             className="avatar-editor-zoom-btn"
             aria-label="縮小"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setScale((s) => Math.max(MIN_SCALE, s - 0.25));
+            }}
             onPointerDown={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               setScale((s) => Math.max(MIN_SCALE, s - 0.25));
             }}
           >
@@ -225,8 +235,14 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
             type="button"
             className="avatar-editor-zoom-btn"
             aria-label="放大"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setScale((s) => Math.min(MAX_SCALE, s + 0.25));
+            }}
             onPointerDown={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               setScale((s) => Math.min(MAX_SCALE, s + 0.25));
             }}
           >
