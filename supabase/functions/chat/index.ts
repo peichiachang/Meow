@@ -53,7 +53,8 @@ Deno.serve(async (req) => {
     if (cat && typeof cat === 'object' && cat.cat_name) {
       const basePrompt = buildSystemPrompt(cat, memorySummary ?? null);
       const preferenceInstruction = getPreferenceTriggerInstruction(message, cat);
-      systemPrompt = basePrompt + (preferenceInstruction || '');
+      const turnInstruction = `\n【本輪】使用者剛說：「${message}」。你的回覆必須僅針對這句話，且不可與你上一則回覆相同或複製同一句型。`;
+      systemPrompt = basePrompt + (preferenceInstruction || '') + turnInstruction;
     } else if (typeof body.systemPrompt === 'string') {
       systemPrompt = body.systemPrompt;
     } else {
