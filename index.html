@@ -21,20 +21,22 @@
       var setMsg=function(t){if(welcomeMsg)welcomeMsg.textContent=t;};
       var el=document.getElementById('version-check');
       var buildVer=(el&&el.getAttribute('data-version'))||'';
+      var done=false;
+      function finish(){if(done)return;done=true;setMsg('載入中…');}
       if(typeof caches!=='undefined'&&caches.keys){try{caches.keys().then(function(keys){keys.forEach(function(k){caches.delete(k);});});}catch(e){}}
-      function go(){
-        fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;}).then(function(d){
-          if(!d||!d.version){setMsg('載入中…');return;}
-          var serverVer=d.version;
-          if(buildVer&&buildVer.indexOf('__')!==0&&serverVer!==buildVer){
-            setMsg('正在更新至最新版本…');
-            location.replace('/?v='+encodeURIComponent(serverVer));
-            return;
-          }
-          setMsg('載入中…');
-        }).catch(function(){setMsg('載入中…');});
-      }
-      go();
+      setTimeout(function(){finish();},4000);
+      fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;}).then(function(d){
+        if(done)return;
+        if(!d||!d.version){finish();return;}
+        var serverVer=d.version;
+        if(buildVer&&buildVer.indexOf('__')!==0&&serverVer!==buildVer){
+          done=true;
+          setMsg('正在更新至最新版本…');
+          location.replace('/?v='+encodeURIComponent(serverVer));
+          return;
+        }
+        finish();
+      }).catch(function(){finish();});
     })();</script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

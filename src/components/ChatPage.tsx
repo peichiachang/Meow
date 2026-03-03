@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { getOpeningLine } from '../data/openingLines';
 import { getKeywordCannedReply } from '../data/keywordCannedMessages';
 import { isEmotionalTrigger } from '../data/triggerCategories';
+import { getPreferenceTriggerInstruction } from '../lib/promptBuilder';
 import { getCatDisplayAvatar } from '../services/localAvatarService';
 import { getCurrentWeather } from '../services/weatherService';
 import { sendChatMessage } from '../services/chatService';
@@ -108,9 +109,17 @@ export function ChatPage({
         preferences: selectedCat.preferences ?? undefined,
         dislikes: selectedCat.dislikes ?? undefined,
       });
-      // 情緒類：隨機選罐頭或 AI（只回一則），因罐頭切題性有限
+      // 有觸發喜歡／討厭時一律走 API（伺服器 prompt），不讓罐頭覆蓋摸肚子／看鳥等邏輯
+      const preferenceTrigger = getPreferenceTriggerInstruction(text, selectedCat);
       let reply: string;
-      if (isEmotionalTrigger(text)) {
+      if (preferenceTrigger) {
+        reply = await sendChatMessage(
+          selectedCat,
+          text,
+          recentBefore,
+          memorySummary
+        );
+      } else if (isEmotionalTrigger(text)) {
         if (cannedReply !== null && Math.random() < 0.5) {
           reply = cannedReply;
         } else {
