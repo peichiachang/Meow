@@ -30,9 +30,9 @@ export async function sendChatMessage(
     content: m.content,
   }));
 
-  // 優先使用使用者的 access token，若沒有登入則退回 anon key
+  // 若有登入就帶 JWT；未登入時不要送 Authorization，避免被當成 Invalid JWT
   const { data: session } = await supabase.auth.getSession();
-  const token = session?.session?.access_token ?? anonKey;
+  const token = session?.session?.access_token ?? null;
 
   const body = {
     message: userMessage,
@@ -59,9 +59,7 @@ export async function sendChatMessage(
       headers: {
         'Content-Type': 'application/json',
         apikey: anonKey,
-        // Supabase Functions Gateway 需要 Authorization header（JWT）
-        // 這裡優先帶使用者 access token，沒有登入時則使用 anon key。
-        Authorization: `Bearer ${token}`,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(body),
     });
