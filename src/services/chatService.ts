@@ -20,6 +20,11 @@ export async function sendChatMessage(
     return getMockResponse();
   }
 
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  if (!anonKey) {
+    throw new Error('缺少 VITE_SUPABASE_ANON_KEY');
+  }
+
   const history = recentMessages.slice(-10).map((m) => ({
     role: m.role as 'user' | 'model',
     content: m.content,
@@ -31,9 +36,6 @@ export async function sendChatMessage(
   if (!token) {
     const { data: refreshed } = await supabase.auth.refreshSession();
     token = refreshed?.session?.access_token;
-  }
-  if (!token) {
-    throw new Error('請先登入');
   }
 
   const body = {
@@ -55,40 +57,47 @@ export async function sendChatMessage(
     })),
   };
 
-  let res = await fetch(EDGE_FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+  const doFetch = async (authToken: string) =>
+    fetch(EDGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: anonKey,
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (res.status === 401) {
+  // Supabase Functions Gateway 需要 apikey header；無 session 時用 anon key 當 Bearer 也可打通
+  const initialAuthToken = token ?? anonKey;
+  let res = await doFetch(initialAuthToken);
+
+  // 若使用者 token 過期，嘗試 refresh 後重試一次（anon key 不需要 refresh）
+  if (res.status === 401 && token) {
     const { data: refreshed } = await supabase.auth.refreshSession();
     const newToken = refreshed?.session?.access_token;
     if (newToken) {
-      res = await fetch(EDGE_FUNCTION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${newToken}`,
-        },
-        body: JSON.stringify(body),
-      });
+      res = await doFetch(newToken);
     }
   }
 
-  const json = await res.json();
+  const raw = await res.text();
+  let json: any = null;
+  try {
+    json = raw ? JSON.parse(raw) : null;
+  } catch {
+    json = null;
+  }
 
   if (!res.ok) {
+    console.error('[chatService] chat error', res.status, raw);
     if (res.status === 401) {
       throw new Error('登入已過期，請重新登出再登入');
     }
-    throw new Error(json.error || json.detail || 'AI 服務錯誤');
+    throw new Error(json?.error || json?.detail || `AI 服務錯誤 (${res.status})`);
   }
 
-  return json.reply || '';
+  return json?.reply || '';
 }
 
 export function getMockResponse(): string {

@@ -2,12 +2,11 @@
 // 透過 Supabase Edge Function 呼叫 Google Gemini API，避免在前端暴露 API Key
 // systemPrompt 在伺服器組裝，避免用戶端快取舊 JS 導致摸肚子／肚子餓等邏輯錯誤
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildSystemPrompt, getPreferenceTriggerInstruction } from './promptBuilder.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-meow-secret',
 };
 
 const GEMINI_MODEL = 'gemini-2.5-flash-lite';
@@ -26,27 +25,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      { global: { headers: { Authorization: authHeader } } }
-    );
-    const { data: { user } } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
-    if (!user) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid or expired token' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // 可選：若有設定 shared secret，才要求請求帶 x-meow-secret
+    // 目的：避免公開端點被濫用（不設定則不影響現有前端）
+    const sharedSecret = Deno.env.get('MEOW_CHAT_SHARED_SECRET');
+    if (sharedSecret) {
+      const provided = req.headers.get('x-meow-secret');
+      if (!provided || provided !== sharedSecret) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     const body = await req.json();
