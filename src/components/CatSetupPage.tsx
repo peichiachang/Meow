@@ -7,6 +7,8 @@ import {
   getCatAvatarLocal,
   saveCatAvatarLocal,
   removeCatAvatarLocal,
+  DEFAULT_AVATAR_PATHS,
+  fetchImageAsDataUrl,
 } from '../services/localAvatarService';
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
@@ -206,6 +208,16 @@ export function CatSetupPage({
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
+  const handleSelectDefaultAvatar = async (path: string) => {
+    setError('');
+    try {
+      const dataUrl = await fetchImageAsDataUrl(path);
+      setAvatarDataUrl(dataUrl);
+    } catch {
+      setError('預設頭像載入失敗，請重試');
+    }
+  };
+
   const togglePersonality = (p: string) => {
     setPersonality((prev) =>
       prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]
@@ -331,6 +343,23 @@ export function CatSetupPage({
               </div>
             </div>
             <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
+            <div className="cat-avatar-defaults">
+              <span className="cat-avatar-defaults-label">或選擇預設頭像</span>
+              <div className="cat-avatar-defaults-grid" role="listbox" aria-label="預設頭像選項">
+                {DEFAULT_AVATAR_PATHS.map((path, i) => (
+                  <button
+                    key={path}
+                    type="button"
+                    className="cat-avatar-default-btn"
+                    onClick={() => handleSelectDefaultAvatar(path)}
+                    title={`預設頭像 ${i + 1}`}
+                    aria-label={`選擇預設頭像 ${i + 1}`}
+                  >
+                    <img src={path} alt="" />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <label>

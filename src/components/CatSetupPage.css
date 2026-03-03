@@ -114,6 +114,45 @@
   color: #78716c;
 }
 
+.cat-avatar-defaults {
+  margin-top: 1rem;
+}
+
+.cat-avatar-defaults-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #78716c;
+}
+
+.cat-avatar-defaults-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cat-avatar-default-btn {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 2px solid #e7e5e4;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f5f5f4;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.cat-avatar-default-btn:hover {
+  border-color: #fed7aa;
+}
+
+.cat-avatar-default-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* 頭像編輯器：全頁預覽與裁切（常見做法：單一深色遮罩，圓圈內只見要裁切的圖） */
 .avatar-editor-overlay {
   position: fixed;
