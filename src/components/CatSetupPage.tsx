@@ -9,7 +9,7 @@ import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
 const AVATAR_VIEWPORT_DEFAULT = 280;
-const MIN_SCALE = 0.2; // 允許縮小到 0.2，避免初始 fit 已在 0.4 時無法再縮小
+const MIN_SCALE = 0.1; // 允許縮小到 0.1，避免 fit 後 scale 小於 0.2 時按「−」反而變大
 const MAX_SCALE = 2;
 
 interface AvatarEditorProps {
@@ -108,7 +108,7 @@ function AvatarEditor({ imageUrl, onConfirm, onCancel }: AvatarEditorProps) {
     if (e.touches.length === 2) {
       touchDragRef.current = null;
       const dist = getTouchDistance(e.touches);
-      pinchRef.current = { initialDistance: Math.max(10, dist), initialScale: scale };
+      pinchRef.current = { initialDistance: Math.max(10, dist), initialScale: scaleRef.current };
     } else if (e.touches.length === 1) {
       pinchRef.current = null;
       touchDragRef.current = {
@@ -439,7 +439,7 @@ export function CatSetupPage({
           <div className="form-group cat-avatar-upload">
             <span>貓咪照片</span>
             <div className="cat-avatar-upload-area">
-              <div className="cat-avatar-preview">
+              <div className={`cat-avatar-preview ${editorImageUrl ? 'cat-avatar-preview-hidden' : ''}`}>
                 {avatarDataUrl ? (
                   <img src={avatarDataUrl} alt="預覽" />
                 ) : (

@@ -66,6 +66,11 @@
   object-fit: cover;
 }
 
+/* 裁切浮層開啟時隱藏表單頭像預覽，避免透出造成「背後疊一張照片」感 */
+.cat-avatar-preview-hidden {
+  visibility: hidden;
+}
+
 .cat-avatar-preview-placeholder {
   display: flex;
   align-items: center;
@@ -118,7 +123,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: #1c1917; /* 不透明，避免背後表單頭像預覽透出造成「疊一張照片」感 */
 }
 
 .avatar-editor {
@@ -163,6 +168,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+  clip-path: circle(50%); /* 與 border-radius 雙重確保圓外不露圖（含 iOS） */
+  isolation: isolate;
   background: #292524;
   border: 3px solid #57534e;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
