@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
+import { isLikelyWebView } from '../lib/browser';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -42,14 +43,26 @@ export function useAuth() {
     return data;
   };
 
-  const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+  /**
+   * Google 登入。若偵測到在 WebView 內，改為在新視窗開啟 OAuth（避免被 Google 擋），
+   * 並回傳 { openedInNewWindow: true } 供 UI 顯示提示。
+   */
+  const signInWithGoogle = async (): Promise<{ openedInNewWindow?: boolean }> => {
+    const redirectTo = `${window.location.origin}/`;
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/`,
-      },
+      options: { redirectTo },
     });
     if (error) throw error;
+    const url = data?.url;
+    if (!url) return {};
+
+    if (isLikelyWebView()) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      return { openedInNewWindow: true };
+    }
+    window.location.href = url;
+    return {};
   };
 
   const signOut = async () => {

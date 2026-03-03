@@ -136,6 +136,31 @@
   color: #1c1917;
 }
 
+.auth-webview-hint {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  color: #1c1917;
+  background: #fef3c7;
+  border-radius: 0.5rem;
+  line-height: 1.45;
+}
+
+.auth-open-in-browser {
+  margin-top: 0.5rem;
+  padding: 0.35rem 0;
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  color: #b45309;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-open-in-browser:hover {
+  color: #92400e;
+}
+
 .auth-disclaimer {
   margin-top: 1.5rem;
   font-size: 0.75rem;

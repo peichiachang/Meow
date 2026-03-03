@@ -42,6 +42,7 @@ const PAID_MAX_CATS = 5;
 
 function App() {
   const [authError, setAuthError] = useState<string | null>(null);
+  const [googleOpenedInNewWindow, setGoogleOpenedInNewWindow] = useState(false);
   const { user, loading: authLoading, signInWithEmail, signUpWithEmail, signInWithGoogle, signOut } = useAuth();
   const { plan } = useProfile(user?.id);
   const { cats, loading: catsLoading, createCat, updateCat, deleteCat } = useCats(user?.id);
@@ -92,8 +93,10 @@ function App() {
 
   const handleSignInWithGoogle = async () => {
     setAuthError(null);
+    setGoogleOpenedInNewWindow(false);
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+      if (result?.openedInNewWindow) setGoogleOpenedInNewWindow(true);
     } catch (err) {
       setAuthError(err instanceof Error ? err.message : 'Google 登入失敗');
     }
@@ -120,6 +123,7 @@ function App() {
         onSignInWithGoogle={handleSignInWithGoogle}
         error={authError}
         clearError={() => setAuthError(null)}
+        googleOpenedInNewWindow={googleOpenedInNewWindow}
       />
     );
   }

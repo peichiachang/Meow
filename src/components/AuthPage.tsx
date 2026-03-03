@@ -9,6 +9,8 @@ interface Props {
   onSignInWithGoogle: () => Promise<void>;
   error: string | null;
   clearError: () => void;
+  /** 已在新視窗開啟 Google 登入（WebView 情境），顯示請在瀏覽器完成登入的提示 */
+  googleOpenedInNewWindow?: boolean;
 }
 
 export function AuthPage({
@@ -17,6 +19,7 @@ export function AuthPage({
   onSignInWithGoogle,
   error,
   clearError,
+  googleOpenedInNewWindow = false,
 }: Props) {
   const [mode, setMode] = useState<Mode>('signin');
   const [email, setEmail] = useState('');
@@ -95,6 +98,19 @@ export function AuthPage({
             </svg>
             用 Google 登入
           </button>
+          {googleOpenedInNewWindow && (
+            <p className="auth-webview-hint">
+              已為您在新視窗開啟登入頁。請在剛開啟的瀏覽器視窗中完成 Google 登入；完成後會回到 Meow。
+              <br />
+              <button
+                type="button"
+                className="auth-open-in-browser"
+                onClick={() => window.open(window.location.href, '_blank', 'noopener,noreferrer')}
+              >
+                若未自動開啟，請點此在瀏覽器中開啟登入頁
+              </button>
+            </p>
+          )}
         </form>
 
         <button
