@@ -30,6 +30,10 @@
   background: #fbbf24;
 }
 
+.app-new-version-banner--hint {
+  background: #44403c;
+}
+
 .app-loading {
   min-height: 100vh;
   display: flex;

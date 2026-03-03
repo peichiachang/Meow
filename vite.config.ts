@@ -17,6 +17,12 @@ function versionPlugin() {
         path.join(outDir, 'version.json'),
         JSON.stringify({ version })
       );
+      const indexPath = path.join(outDir, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        let html = fs.readFileSync(indexPath, 'utf-8');
+        html = html.replace(/data-version="__BUILD_VERSION__"/, `data-version="${version}"`);
+        fs.writeFileSync(indexPath, html);
+      }
     },
   };
 }

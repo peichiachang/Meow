@@ -14,9 +14,11 @@ import './App.css';
 /** 登入後檢查伺服器 version.json 與目前 bundle 版本，若不同則提示重新整理 */
 function useNewVersionCheck(enabled: boolean) {
   const [showBanner, setShowBanner] = useState(false);
+  const [showFallbackHint, setShowFallbackHint] = useState(false);
   useEffect(() => {
     if (!enabled) return;
-    fetch('/version.json', { cache: 'no-store' })
+    const url = '/version.json?t=' + Date.now();
+    fetch(url, { cache: 'no-store' })
       .then((r) => {
         if (!r.ok) return null;
         const contentType = r.headers.get('content-type') ?? '';
@@ -26,11 +28,13 @@ function useNewVersionCheck(enabled: boolean) {
       .then((data: { version?: string } | null) => {
         if (data?.version != null && data.version !== __BUILD_VERSION__) {
           setShowBanner(true);
+        } else if (data === null) {
+          setShowFallbackHint(true);
         }
       })
-      .catch(() => {});
+      .catch(() => setShowFallbackHint(true));
   }, [enabled]);
-  return showBanner;
+  return { showBanner, showFallbackHint };
 }
 
 const FREE_MAX_CATS = 1;
@@ -47,7 +51,7 @@ function App() {
   const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
   const [editingCatId, setEditingCatId] = useState<string | null>(null);
 
-  const showNewVersionBanner = useNewVersionCheck(!!user);
+  const { showBanner: showNewVersionBanner, showFallbackHint } = useNewVersionCheck(!!user);
 
   const currentCatForMessages = selectedCat ?? cats[0];
   const { messages, addMessage, getRecentForContext } = useMessages(currentCatForMessages?.id);
@@ -129,10 +133,20 @@ function App() {
     </div>
   ) : null;
 
+  const fallbackRefreshBanner = showFallbackHint ? (
+    <div className="app-new-version-banner app-new-version-banner--hint" role="status">
+      <span>若畫面異常請重新整理</span>
+      <button type="button" onClick={() => window.location.reload()}>
+        重新整理
+      </button>
+    </div>
+  ) : null;
+
   if (catsLoading) {
     return (
       <>
         {newVersionBanner}
+        {fallbackRefreshBanner}
         <div className="app-loading">
           <p>載入中...</p>
         </div>
@@ -144,6 +158,7 @@ function App() {
     return (
       <>
         {newVersionBanner}
+        {fallbackRefreshBanner}
         <CatSetupPage
         onSubmit={async (data) => {
           const cat = await createCat(data);
@@ -162,6 +177,7 @@ function App() {
     return (
       <>
         {newVersionBanner}
+        {fallbackRefreshBanner}
         <CatSetupPage
         onSubmit={async (data) => {
           const cat = await createCat(data);
@@ -193,6 +209,7 @@ function App() {
     return (
       <>
         {newVersionBanner}
+        {fallbackRefreshBanner}
         <MainPage
         cats={cats}
         maxCats={maxCats}
@@ -227,6 +244,7 @@ function App() {
   return (
     <>
       {newVersionBanner}
+      {fallbackRefreshBanner}
       <ChatPage
       cats={cats}
       selectedCat={currentCat}
