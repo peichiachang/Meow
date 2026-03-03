@@ -23,6 +23,21 @@ function versionPlugin() {
         html = html.replace(/data-version="__BUILD_VERSION__"/, `data-version="${version}"`);
         fs.writeFileSync(indexPath, html);
       }
+      const refreshHtml = `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Refresh" content="0; url=/?v=${version}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>載入最新版…</title>
+  <style>body{font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#fff7ed;color:#57534e;}p{margin:0.5rem 0;}a{color:#ea580c;}</style>
+</head>
+<body>
+  <p>正在載入最新版…</p>
+  <p>若未自動跳轉，<a href="/?v=${version}">請點此</a>。</p>
+</body>
+</html>`;
+      fs.writeFileSync(path.join(outDir, 'refresh.html'), refreshHtml);
     },
   };
 }

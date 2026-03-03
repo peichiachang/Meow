@@ -1,5 +1,8 @@
 {
-  "rewrites": [{ "source": "/((?!version\\.json$).*)", "destination": "/index.html" }],
+  "rewrites": [
+    { "source": "/refresh", "destination": "/refresh.html" },
+    { "source": "/((?!version\\.json$)(?!refresh\\.html$).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/",
@@ -20,6 +23,13 @@
     {
       "source": "/version.json",
       "headers": [{ "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }]
+    },
+    {
+      "source": "/refresh.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" }
+      ]
     }
   ]
 }
