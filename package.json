@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:ai": "tsx scripts/test-ai-chat.ts",
+    "test:preference": "tsx scripts/test-preference-trigger.ts",
     "test:canned": "tsx scripts/verify-canned-dialogue.ts",
     "classify:canned": "tsx scripts/classify-canned-by-taxonomy.ts"
   },

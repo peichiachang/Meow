@@ -133,10 +133,8 @@ export function ChatPage({
       }
 
       await onAddMessage('assistant', reply);
-
-      await onAddMessage('assistant', reply);
       // SDD 2.5：每 10 則對話後非同步觸發記憶摘要
-      const newCount = messages.length + 2; // user + assistant
+      const newCount = messages.length + 2; // user + assistant（只加一則回覆）
       if (newCount > 0 && newCount % 20 === 0) {
         triggerMemorySummarize(selectedCat.id);
       }

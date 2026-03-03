@@ -355,11 +355,12 @@ export function CatSetupPage({
               type="number"
               min={0}
               max={30}
+              step="0.1"
               value={age}
               onChange={(e) =>
                 setAge(e.target.value === '' ? '' : Number(e.target.value))
               }
-              placeholder="例如：3"
+              placeholder="例如：0.5（幼貓）、1、3"
             />
           </label>
 

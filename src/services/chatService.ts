@@ -3,7 +3,7 @@
  * 透過 Supabase Edge Function 代理，呼叫 Claude
  */
 import { supabase } from '../lib/supabase';
-import { buildSystemPrompt } from '../lib/promptBuilder';
+import { buildSystemPrompt, getPreferenceTriggerInstruction } from '../lib/promptBuilder';
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
 
@@ -21,7 +21,9 @@ export async function sendChatMessage(
     return getMockResponse();
   }
 
-  const systemPrompt = buildSystemPrompt(cat, memorySummary);
+  let systemPrompt = buildSystemPrompt(cat, memorySummary);
+  const preferenceInstruction = getPreferenceTriggerInstruction(userMessage, cat);
+  if (preferenceInstruction) systemPrompt += preferenceInstruction;
 
   const history = recentMessages.slice(-10).map((m) => ({
     role: m.role as 'user' | 'model',
