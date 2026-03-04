@@ -37,8 +37,7 @@ function useNewVersionCheck(enabled: boolean) {
   return { showBanner, showFallbackHint };
 }
 
-const FREE_MAX_CATS = 1;
-const PAID_MAX_CATS = 5;
+const MAX_CATS = 3;
 
 function App() {
   const [authError, setAuthError] = useState<string | null>(null);
@@ -46,7 +45,7 @@ function App() {
   const { user, loading: authLoading, signInWithGoogle, signOut } = useAuth();
   const { plan } = useProfile(user?.id);
   const { cats, loading: catsLoading, createCat, updateCat, deleteCat } = useCats(user?.id);
-  const maxCats = plan === 'paid' ? PAID_MAX_CATS : FREE_MAX_CATS;
+  const maxCats = MAX_CATS;
 
   const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
   const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
@@ -230,6 +229,7 @@ function App() {
           }
         }}
         onSignOut={signOut}
+        userId={user?.id}
       />
       </>
     );

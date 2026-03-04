@@ -12,6 +12,7 @@ interface Props {
   onEditCat: (cat: Cat) => void;
   onDeleteCat: (cat: Cat) => void;
   onSignOut: () => void;
+  userId?: string;
 }
 
 export function MainPage({
@@ -22,6 +23,7 @@ export function MainPage({
   onEditCat,
   onDeleteCat,
   onSignOut,
+  userId,
 }: Props) {
   const canAddCat = cats.length < maxCats;
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -50,6 +52,27 @@ export function MainPage({
     <div className="main-page">
       <header className="main-header">
         <div className="main-header-bar">
+          {userId && (
+            <div
+              style={{
+                fontSize: '10px',
+                color: '#78716c',
+                marginRight: '8px',
+                padding: '4px 8px',
+                background: '#f5f5f4',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontFamily: 'monospace',
+              }}
+              onClick={() => {
+                navigator.clipboard.writeText(userId);
+                alert('User ID 已複製到剪貼簿！');
+              }}
+              title="點擊複製 User ID"
+            >
+              ID: {userId.substring(0, 8)}...
+            </div>
+          )}
           <button
             type="button"
             className="main-sign-out"

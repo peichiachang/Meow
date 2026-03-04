@@ -4,7 +4,7 @@
  */
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { DAILY_MESSAGE_LIMIT } from '../config';
+import { DAILY_MESSAGE_LIMIT, EXEMPT_USER_IDS } from '../config';
 
 const TAIWAN_TZ = 'Asia/Taipei';
 
@@ -12,16 +12,18 @@ function getTodayTaiwan(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: TAIWAN_TZ });
 }
 
-export function useMessageLimit(userId: string | undefined, plan: string) {
+export function useMessageLimit(userId: string | undefined, _plan: string) {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const limit = DAILY_MESSAGE_LIMIT;
-  const isPaid = plan === 'paid';
-  const limitDisabled = limit == null;
-  const canSend = limitDisabled || isPaid || count < limit;
-  const remaining =
-    limitDisabled || isPaid ? Infinity : Math.max(0, limit - count);
+  // 檢查是否為例外帳號（不受限制）
+  const isExempt = userId ? EXEMPT_USER_IDS.includes(userId) : false;
+
+  // 每個帳號每天限定 20 則訊息（貓咪加總計算），例外帳號不受限制
+  const limit = DAILY_MESSAGE_LIMIT ?? 20;
+  const limitDisabled = limit == null || isExempt;
+  const canSend = limitDisabled || count < limit;
+  const remaining = limitDisabled ? Infinity : Math.max(0, limit - count);
 
   useEffect(() => {
     if (!userId || limitDisabled) {
@@ -71,7 +73,7 @@ export function useMessageLimit(userId: string | undefined, plan: string) {
     count,
     canSend,
     remaining,
-    limit: limitDisabled || isPaid ? null : limit,
+    limit: limitDisabled ? null : limit,
     incrementCount,
     loading,
   };
