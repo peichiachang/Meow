@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { getCatDisplayAvatar } from '../services/localAvatarService';
 import type { Cat } from '../types/database';
+import { ConfirmDialog } from './ConfirmDialog';
 import './MainPage.css';
 
 interface Props {
@@ -22,12 +24,26 @@ export function MainPage({
   onSignOut,
 }: Props) {
   const canAddCat = cats.length < maxCats;
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [catToDelete, setCatToDelete] = useState<Cat | null>(null);
 
   const handleDelete = (e: React.MouseEvent, cat: Cat) => {
     e.stopPropagation();
-    if (window.confirm(`確定要刪除「${cat.cat_name}」嗎？此操作無法復原。`)) {
-      onDeleteCat(cat);
+    setCatToDelete(cat);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (catToDelete) {
+      onDeleteCat(catToDelete);
+      setCatToDelete(null);
     }
+    setDeleteDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setCatToDelete(null);
+    setDeleteDialogOpen(false);
   };
 
   return (
@@ -108,6 +124,16 @@ export function MainPage({
           + 新增貓咪
         </button>
       </main>
+
+      <ConfirmDialog
+        isOpen={deleteDialogOpen}
+        title="確認刪除"
+        message={catToDelete ? `確定要刪除「${catToDelete.cat_name}」嗎？此操作無法復原，所有對話記錄也會一併刪除。` : ''}
+        confirmText="確認刪除"
+        cancelText="取消"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 }

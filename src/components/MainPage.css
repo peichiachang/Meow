@@ -1,41 +1,43 @@
+/* 依 Pencil 設計稿 pencil-new.pen 套用 */
 .main-page {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding: 0 16px;
-  background: linear-gradient(180deg, #fef7ed 0%, #fff7ed 100%);
+  background: linear-gradient(180deg, #fef7ed 0%, #f4eee7 100%);
 }
 
 .main-header {
   flex-shrink: 0;
-  padding: 2rem 0 1.5rem;
+  padding: 32px 0 24px;
   text-align: center;
   position: relative;
 }
 
 .main-title {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 32px;
   font-weight: 700;
   color: #1c1917;
 }
 
 .main-sub {
-  margin: 0.25rem 0 0;
-  font-size: 0.9rem;
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 500;
   color: #78716c;
 }
 
 .main-sign-out {
   position: absolute;
-  top: 1rem;
-  right: 0;
-  padding: 0.4rem 0.75rem;
+  top: 0;
+  right: 8px;
+  padding: 6px 12px;
   background: none;
   border: 1px solid #d6d3d1;
-  border-radius: 0.5rem;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  font-size: 14px;
   color: #57534e;
   cursor: pointer;
 }
@@ -57,34 +59,36 @@
 .main-cats {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .main-cat-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
+  gap: 16px;
+  padding: 16px;
   background: #fff;
-  border: 2px solid #fed7aa;
-  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   text-align: left;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .main-cat-card-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 4px;
   margin-left: auto;
   flex-shrink: 0;
 }
 
 .main-cat-btn {
-  padding: 0.35rem 0.6rem;
+  min-width: 32px;
+  padding: 6px 0;
   font-size: 0.8rem;
-  border-radius: 0.5rem;
-  border: 1px solid #e7e5e4;
+  border-radius: 8px;
+  border: 1px solid transparent;
   background: #fff;
   color: #57534e;
   cursor: pointer;
@@ -107,12 +111,13 @@
 
 .main-cat-card:hover {
   background: #fffbeb;
-  border-color: #fdba74;
+  border-color: #fed7aa;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
 
 .main-cat-avatar {
-  width: 3rem;
-  height: 3rem;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -134,30 +139,30 @@
 
 .main-cat-name {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: 18px;
   font-weight: 600;
-  color: #1c1917;
+  color: #2f2f2f;
 }
 
 .main-cat-action {
-  font-size: 0.9rem;
+  font-size: 14px;
   color: #78716c;
 }
 
 .main-add-cat {
-  padding: 1rem;
-  background: none;
-  border: 2px dashed #fed7aa;
-  border-radius: 1rem;
-  font-size: 1rem;
-  color: #78716c;
+  padding: 16px;
+  background: linear-gradient(135deg, #ffc94a 15%, #ffcf7d 87%);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1c1917;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: filter 0.2s, opacity 0.2s;
 }
 
 .main-add-cat:hover {
-  background: #fffbeb;
-  color: #1c1917;
+  filter: brightness(1.05);
 }
 
 .main-add-cat:disabled {
@@ -166,6 +171,5 @@
 }
 
 .main-add-cat:disabled:hover {
-  background: none;
-  color: #78716c;
+  filter: none;
 }
