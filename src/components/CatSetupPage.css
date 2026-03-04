@@ -7,10 +7,11 @@
 .cat-setup-card {
   max-width: 480px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 24px;
   background: #fff;
   border: 2px solid #fed7aa;
-  border-radius: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .cat-setup-back {
