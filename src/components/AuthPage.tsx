@@ -64,7 +64,6 @@ export function AuthPage({
         )}
         {error && <p className="auth-error">{error}</p>}
       </div>
-      <p className="auth-disclaimer">AI 模擬，純娛樂用途</p>
     </div>
   );
 }
