@@ -46,6 +46,10 @@ export function ChatPage({
 
   // 開場白：每次進入或切換貓咪時（含選填天氣，需位置授權）
   useEffect(() => {
+    // 切換貓咪時重置狀態，避免訊息混亂
+    setOpeningLine(null);
+    setShowOpening(true);
+    
     const now = new Date();
     const hour = now.getHours();
     const lastStr = localStorage.getItem(LAST_OPEN_KEY);
@@ -59,7 +63,6 @@ export function ChatPage({
     };
     const lineWithoutWeather = getOpeningLine(selectedCat.cat_name, baseContext);
     setOpeningLine(lineWithoutWeather);
-    setShowOpening(true);
     localStorage.setItem(LAST_OPEN_KEY, Date.now().toString());
 
     getCurrentWeather().then((weather) => {

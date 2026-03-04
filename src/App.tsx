@@ -148,8 +148,8 @@ function App() {
     );
   }
 
-  // 如果沒有貓咪，顯示設定頁面
-  if (cats.length === 0) {
+  // 如果沒有貓咪，顯示設定頁面（但必須確保 catsLoading 為 false，避免重新整理時閃過）
+  if (!catsLoading && cats.length === 0) {
     return (
       <>
         {newVersionBanner}

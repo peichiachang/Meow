@@ -52,28 +52,7 @@ export function MainPage({
   return (
     <div className="main-page">
       <header className="main-header">
-        <div className="main-header-bar">
-          {userId && (
-            <div
-              style={{
-                fontSize: '10px',
-                color: '#78716c',
-                marginRight: '8px',
-                padding: '4px 8px',
-                background: '#f5f5f4',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontFamily: 'monospace',
-              }}
-              onClick={() => {
-                navigator.clipboard.writeText(userId);
-                alert('User ID 已複製到剪貼簿！');
-              }}
-              title="點擊複製 User ID"
-            >
-              ID: {userId.substring(0, 8)}...
-            </div>
-          )}
+        <div className="main-header-top">
           <button
             type="button"
             className="main-sign-out"
@@ -82,9 +61,35 @@ export function MainPage({
           >
             登出
           </button>
+          {BUYMEACOFFEE_USERNAME && (
+            <a
+              href={`https://www.buymeacoffee.com/${BUYMEACOFFEE_USERNAME}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="main-donation-btn-header"
+              title="支持開發者"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="currentColor"/>
+              </svg>
+              <span>支持開發者</span>
+            </a>
+          )}
         </div>
         <h1 className="main-title">Meow</h1>
         <p className="main-sub">了解喵喵的內心話</p>
+        {userId && (
+          <div
+            className="main-user-id"
+            onClick={() => {
+              navigator.clipboard.writeText(userId);
+              alert('User ID 已複製到剪貼簿！');
+            }}
+            title="點擊複製 User ID"
+          >
+            ID: {userId.substring(0, 8)}...
+          </div>
+        )}
       </header>
 
       <main className="main-content">
@@ -154,22 +159,6 @@ export function MainPage({
           + 新增貓咪
         </button>
 
-        {BUYMEACOFFEE_USERNAME && (
-          <div className="main-donation-section">
-            <a
-              href={`https://www.buymeacoffee.com/${BUYMEACOFFEE_USERNAME}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="main-donation-btn"
-              title="支持開發者"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="currentColor"/>
-              </svg>
-              <span>支持開發者</span>
-            </a>
-          </div>
-        )}
       </main>
 
       <ConfirmDialog
