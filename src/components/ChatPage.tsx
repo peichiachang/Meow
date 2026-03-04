@@ -5,13 +5,12 @@ import { isEmotionalTrigger } from '../data/triggerCategories';
 import { getPreferenceTriggerInstruction } from '../lib/promptBuilder';
 import { getCatDisplayAvatar } from '../services/localAvatarService';
 import { getCurrentWeather } from '../services/weatherService';
+import { updateLastOpenTime } from '../lib/stateCalculator';
 import { sendChatMessage } from '../services/chatService';
 import { triggerMemorySummarize } from '../services/memoryService';
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
 import './ChatPage.css';
-
-const LAST_OPEN_KEY = 'meow:last_open';
 
 interface Props {
   cats: Cat[];
@@ -52,7 +51,8 @@ export function ChatPage({
     
     const now = new Date();
     const hour = now.getHours();
-    const lastStr = localStorage.getItem(LAST_OPEN_KEY);
+    // 計算距離上次開啟的時間（用於開場白，hunger 由 chatService 計算）
+    const lastStr = localStorage.getItem('meow_last_open');
     const last = lastStr ? parseInt(lastStr, 10) : null;
     const hoursSince = last ? (Date.now() - last) / (1000 * 60 * 60) : null;
 
@@ -63,7 +63,7 @@ export function ChatPage({
     };
     const lineWithoutWeather = getOpeningLine(selectedCat.cat_name, baseContext);
     setOpeningLine(lineWithoutWeather);
-    localStorage.setItem(LAST_OPEN_KEY, Date.now().toString());
+    updateLastOpenTime(); // 使用統一的函數更新時間
 
     getCurrentWeather().then((weather) => {
       if (weather?.condition) {

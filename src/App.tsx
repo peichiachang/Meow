@@ -9,6 +9,7 @@ import { CatSetupPage } from './components/CatSetupPage';
 import { ChatPage } from './components/ChatPage';
 import { MainPage } from './components/MainPage';
 import { EXEMPT_USER_IDS } from './config';
+import { updateDailyContext } from './services/dailyContextService';
 import type { Cat } from './types/database';
 import './App.css';
 
@@ -53,7 +54,8 @@ function App() {
   const maxCats = isExemptUser ? EXEMPT_MAX_CATS : MAX_CATS;
 
   const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
-  const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
+  // 初始 view 設為 null，等待數據載入完成後再決定
+  const [view, setView] = useState<'main' | 'chat' | 'setup' | null>(null);
   const [editingCatId, setEditingCatId] = useState<string | null>(null);
 
   const { showBanner: showNewVersionBanner, showFallbackHint } = useNewVersionCheck(!!user);
@@ -63,6 +65,28 @@ function App() {
   const { canSend, remaining, incrementCount } = useMessageLimit(user?.id, plan);
 
   const memorySummary = (selectedCat ?? cats[0])?.memory_summary ?? null;
+
+  // SDD v2.1: 登入後更新 daily_context（每天一次）
+  useEffect(() => {
+    if (user && !authLoading) {
+      // 非同步更新，不阻塞 UI
+      updateDailyContext().catch((err) => {
+        console.error('[App] Failed to update daily context:', err);
+      });
+    }
+  }, [user, authLoading]);
+
+  // 初始化：當 cats 載入完成後，根據是否有貓咪來設定初始 view
+  useEffect(() => {
+    if (!catsLoading && view === null) {
+      if (cats.length > 0) {
+        setView('main');
+        setSelectedCat(cats[0]);
+      } else {
+        setView('setup');
+      }
+    }
+  }, [catsLoading, cats.length, view]);
 
   useEffect(() => {
     if (cats.length > 0 && !selectedCat) {
@@ -78,7 +102,7 @@ function App() {
 
   // 當 cats 載入完成且有貓咪時，確保顯示 MainPage（除非正在編輯或聊天）
   useEffect(() => {
-    if (!catsLoading && cats.length > 0 && view !== 'setup' && view !== 'chat') {
+    if (!catsLoading && cats.length > 0 && view !== 'setup' && view !== 'chat' && view !== null) {
       setView('main');
     }
   }, [catsLoading, cats.length, view]);
@@ -148,7 +172,20 @@ function App() {
     );
   }
 
-  // 如果沒有貓咪，顯示設定頁面（但必須確保 catsLoading 為 false，避免重新整理時閃過）
+  // 如果 view 還沒初始化，繼續顯示載入畫面（避免重新整理時閃現）
+  if (view === null) {
+    return (
+      <>
+        {newVersionBanner}
+        {fallbackRefreshBanner}
+        <div className="app-loading">
+          <p>載入中...</p>
+        </div>
+      </>
+    );
+  }
+
+  // 如果沒有貓咪，顯示設定頁面
   if (!catsLoading && cats.length === 0) {
     return (
       <>

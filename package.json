@@ -16,6 +16,7 @@
     "test:belly": "tsx scripts/test-belly-phrases.ts",
     "test:canned": "tsx scripts/verify-canned-dialogue.ts",
     "test:security": "tsx scripts/test-security.ts",
+    "test:daily-context": "tsx scripts/test-daily-context.ts",
     "classify:canned": "tsx scripts/classify-canned-by-taxonomy.ts"
   },
   "dependencies": {

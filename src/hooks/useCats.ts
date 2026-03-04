@@ -13,6 +13,9 @@ export function useCats(userId: string | undefined) {
       return;
     }
 
+    // 設定載入狀態，避免在請求完成前顯示錯誤頁面
+    setLoading(true);
+
     async function fetchCats() {
       const { data, error } = await supabase
         .from('cats')

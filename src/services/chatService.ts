@@ -5,6 +5,7 @@
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
 import { supabase } from '../lib/supabase';
+import { calculateHunger } from '../lib/stateCalculator';
 
 const EDGE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_URL
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`
@@ -31,24 +32,32 @@ export async function sendChatMessage(
     throw new Error('未登入');
   }
 
-  const history = recentMessages.slice(-10).map((m) => ({
+  // 減少歷史訊息數量以降低超時風險：從 10 條減少到 5 條（最近 5 輪對話）
+  const history = recentMessages.slice(-5).map((m) => ({
     role: m.role as 'user' | 'model',
     content: m.content,
   }));
 
-  const body = {
-    message: userMessage,
-    cat: {
-      cat_name: cat.cat_name,
-      breed: cat.breed,
-      age: cat.age,
-      personality: cat.personality ?? [],
-      preferences: cat.preferences,
-      dislikes: cat.dislikes,
-      habits: cat.habits,
-      self_ref: cat.self_ref,
-      status: cat.status || 'Living',
-    },
+  // SDD v2.1: 計算 hunger（距離上次開啟 App 的時間）
+  const hunger = calculateHunger();
+
+    const body = {
+      message: userMessage,
+      cat: {
+        id: cat.id, // 新增：用於計算對話輪數
+        cat_name: cat.cat_name,
+        age: cat.age,
+        personality: cat.personality ?? [],
+        preferences: cat.preferences,
+        dislikes: cat.dislikes,
+        habits: cat.habits,
+        self_ref: cat.self_ref,
+        owner_ref: (cat as any).owner_ref || null,
+        status: cat.status || 'Living',
+        mood: null, // 由後端計算
+        energy: null, // 由後端計算
+        hunger: hunger, // 前端計算
+      },
     memorySummary: memorySummary ?? null,
     history: history.map((h) => ({
       role: h.role === 'model' ? 'assistant' : h.role,
