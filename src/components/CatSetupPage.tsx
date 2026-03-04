@@ -158,6 +158,7 @@ export function CatSetupPage({
   const [customPersonality, setCustomPersonality] = useState('');
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(null);
   const [editorImageUrl, setEditorImageUrl] = useState<string | null>(null);
+  const [showDefaultAvatarModal, setShowDefaultAvatarModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -213,6 +214,7 @@ export function CatSetupPage({
     try {
       const dataUrl = await fetchImageAsDataUrl(path);
       setAvatarDataUrl(dataUrl);
+      setShowDefaultAvatarModal(false);
     } catch {
       setError('預設頭像載入失敗，請重試');
     }
@@ -308,6 +310,35 @@ export function CatSetupPage({
           />
         )}
 
+        {showDefaultAvatarModal && (
+          <div className="default-avatar-modal-overlay" role="dialog" aria-modal="true" aria-label="選擇預設頭像">
+            <div className="default-avatar-modal">
+              <h2 className="default-avatar-modal-title">選擇預設頭像</h2>
+              <div className="default-avatar-modal-grid" role="listbox" aria-label="預設頭像選項">
+                {DEFAULT_AVATAR_PATHS.map((path, i) => (
+                  <button
+                    key={path}
+                    type="button"
+                    className="default-avatar-modal-btn"
+                    onClick={() => handleSelectDefaultAvatar(path)}
+                    title={`預設頭像 ${i + 1}`}
+                    aria-label={`選擇預設頭像 ${i + 1}`}
+                  >
+                    <img src={path} alt={`預設頭像 ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="default-avatar-modal-close"
+                onClick={() => setShowDefaultAvatarModal(false)}
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="cat-setup-form">
           <div className="form-group cat-avatar-upload">
             <span>貓咪照片</span>
@@ -323,6 +354,7 @@ export function CatSetupPage({
                 ref={fileInputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
+                capture="environment"
                 onChange={handleAvatarChange}
                 className="cat-avatar-input"
                 aria-label="選擇貓咪照片"
@@ -333,7 +365,14 @@ export function CatSetupPage({
                   className="cat-avatar-btn-secondary"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  {avatarDataUrl ? '更換圖片' : '選擇圖片'}
+                  上傳照片
+                </button>
+                <button
+                  type="button"
+                  className="cat-avatar-btn-secondary"
+                  onClick={() => setShowDefaultAvatarModal(true)}
+                >
+                  選擇預設圖
                 </button>
                 {avatarDataUrl && (
                   <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
@@ -343,23 +382,6 @@ export function CatSetupPage({
               </div>
             </div>
             <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
-            <div className="cat-avatar-defaults">
-              <span className="cat-avatar-defaults-label">或選擇預設頭像</span>
-              <div className="cat-avatar-defaults-grid" role="listbox" aria-label="預設頭像選項">
-                {DEFAULT_AVATAR_PATHS.map((path, i) => (
-                  <button
-                    key={path}
-                    type="button"
-                    className="cat-avatar-default-btn"
-                    onClick={() => handleSelectDefaultAvatar(path)}
-                    title={`預設頭像 ${i + 1}`}
-                    aria-label={`選擇預設頭像 ${i + 1}`}
-                  >
-                    <img src={path} alt="" />
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
           <label>
