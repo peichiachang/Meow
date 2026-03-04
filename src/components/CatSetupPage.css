@@ -1,13 +1,13 @@
 .cat-setup-page {
   min-height: 100vh;
-  padding: 1.5rem;
-  background: linear-gradient(180deg, #fef7ed 0%, #fff7ed 100%);
+  padding: 24px;
+  background: linear-gradient(180deg, #fef7ed 0%, #f4eee7 100%);
 }
 
 .cat-setup-card {
   max-width: 480px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
   background: #fff;
   border: none;
   border-radius: 16px;
@@ -29,19 +29,20 @@
 }
 
 .cat-setup-card h1 {
-  margin: 0 0 0.25rem;
+  margin: 0 0 4px;
   font-size: 1.5rem;
+  font-weight: 700;
   color: #1c1917;
 }
 
 .cat-setup-sub {
-  margin: 0 0 1.5rem;
+  margin: 0 0 16px;
   font-size: 0.9rem;
   color: #78716c;
 }
 
 .cat-avatar-upload {
-  margin-bottom: 1.25rem;
+  margin-bottom: 16px;
 }
 
 .cat-avatar-upload-area {
@@ -97,16 +98,16 @@
 .cat-avatar-btn-secondary {
   padding: 0.4rem 0.75rem;
   font-size: 0.9rem;
-  color: #78716c;
+  color: #1c1917;
   background: #f5f5f4;
-  border: 2px solid #e7e5e4;
-  border-radius: 0.5rem;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
 .cat-avatar-btn-secondary:hover {
-  border-color: #fed7aa;
-  color: #1c1917;
+  background: #e7e5e4;
 }
 
 .cat-avatar-hint {
@@ -284,7 +285,7 @@
 .cat-setup-form label,
 .cat-setup-form .form-group {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
 .cat-setup-form label span,
@@ -300,21 +301,29 @@
 .cat-setup-form textarea {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 2px solid #e7e5e4;
-  border-radius: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #f5f5f4;
   font-size: 0.95rem;
+  color: #1c1917;
+  transition: background 0.2s;
 }
 
 .cat-setup-form input:focus,
 .cat-setup-form textarea:focus {
   outline: none;
-  border-color: #fed7aa;
+  background: #e7e5e4;
+}
+
+.cat-setup-form input::placeholder,
+.cat-setup-form textarea::placeholder {
+  color: #78716c;
 }
 
 .personality-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
   margin-bottom: 0.5rem;
 }
 
@@ -322,22 +331,22 @@
   padding: 0.4rem 0.75rem;
   border: none;
   border-radius: 1rem;
-  background: #fff;
+  background: #93c5fd;
+  color: #fff;
   font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, opacity 0.2s;
 }
 
 .personality-btn:hover {
-  background: #f5f5f4;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  background: #60a5fa;
+  opacity: 0.9;
 }
 
 .personality-btn.active {
   background: #1c1917;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .personality-btn.active:hover {
