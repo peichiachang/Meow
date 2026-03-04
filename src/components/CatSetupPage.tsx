@@ -163,7 +163,27 @@ export function CatSetupPage({
   const [showDefaultAvatarModal, setShowDefaultAvatarModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showUploadMenu, setShowUploadMenu] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const uploadMenuRef = useRef<HTMLDivElement>(null);
+
+  // 點擊外部關閉選單
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (uploadMenuRef.current && !uploadMenuRef.current.contains(event.target as Node)) {
+        setShowUploadMenu(false);
+      }
+    };
+
+    if (showUploadMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUploadMenu]);
 
   const isEditMode = !!initialCat;
 
@@ -195,6 +215,8 @@ export function CatSetupPage({
     setError('');
     setEditorImageUrl(URL.createObjectURL(file));
     if (fileInputRef.current) fileInputRef.current.value = '';
+    if (cameraInputRef.current) cameraInputRef.current.value = '';
+    setShowUploadMenu(false);
   };
 
   const handleEditorConfirm = (dataUrl: string) => {
@@ -367,20 +389,56 @@ export function CatSetupPage({
                 ref={fileInputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
+                onChange={handleAvatarChange}
+                className="cat-avatar-input"
+                aria-label="從相簿選擇照片"
+                style={{ display: 'none' }}
+              />
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
                 capture="environment"
                 onChange={handleAvatarChange}
                 className="cat-avatar-input"
-                aria-label="選擇貓咪照片"
+                aria-label="拍照"
+                style={{ display: 'none' }}
               />
               <div className="cat-avatar-actions">
                 <div className="cat-avatar-actions-buttons">
-                  <button
-                    type="button"
-                    className="cat-avatar-btn-secondary"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    上傳照片
-                  </button>
+                  <div className="cat-avatar-upload-menu-wrapper" ref={uploadMenuRef}>
+                    <button
+                      type="button"
+                      className="cat-avatar-btn-secondary"
+                      onClick={() => setShowUploadMenu(!showUploadMenu)}
+                    >
+                      上傳照片
+                    </button>
+                    {showUploadMenu && (
+                      <div className="cat-avatar-upload-menu">
+                        <button
+                          type="button"
+                          className="cat-avatar-menu-item"
+                          onClick={() => {
+                            cameraInputRef.current?.click();
+                            setShowUploadMenu(false);
+                          }}
+                        >
+                          拍照
+                        </button>
+                        <button
+                          type="button"
+                          className="cat-avatar-menu-item"
+                          onClick={() => {
+                            fileInputRef.current?.click();
+                            setShowUploadMenu(false);
+                          }}
+                        >
+                          從相簿選擇
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <button
                     type="button"
                     className="cat-avatar-btn-secondary"
