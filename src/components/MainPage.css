@@ -68,12 +68,12 @@
   gap: 16px;
   padding: 16px;
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: none;
   border-radius: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   text-align: left;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
   position: relative;
 }
 
@@ -112,7 +112,6 @@
 
 .main-cat-card:hover {
   background: #fffbeb;
-  border-color: #fed7aa;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
 

@@ -148,14 +148,12 @@ export function CatSetupPage({
   currentCount,
 }: Props) {
   const [catName, setCatName] = useState('');
-  const [breed, setBreed] = useState('');
   const [age, setAge] = useState<number | ''>('');
   const [personality, setPersonality] = useState<string[]>([]);
   const [preferences, setPreferences] = useState('');
   const [dislikes, setDislikes] = useState('');
   const [habits, setHabits] = useState('');
   const [selfRef, setSelfRef] = useState('');
-  const [customPersonality, setCustomPersonality] = useState('');
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(null);
   const [editorImageUrl, setEditorImageUrl] = useState<string | null>(null);
   const [showDefaultAvatarModal, setShowDefaultAvatarModal] = useState(false);
@@ -168,7 +166,6 @@ export function CatSetupPage({
   useEffect(() => {
     if (initialCat) {
       setCatName(initialCat.cat_name);
-      setBreed(initialCat.breed ?? '');
       setAge(initialCat.age ?? '');
       setPersonality(initialCat.personality ?? []);
       setPreferences(initialCat.preferences ?? '');
@@ -176,7 +173,6 @@ export function CatSetupPage({
       setHabits(initialCat.habits ?? '');
       setSelfRef(initialCat.self_ref ?? '');
       setAvatarDataUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
-      setCustomPersonality('');
     }
   }, [initialCat]);
 
@@ -234,21 +230,17 @@ export function CatSetupPage({
       return;
     }
 
-    const personalityList = [
-      ...personality,
-      ...(customPersonality.trim() ? [customPersonality.trim()] : []),
-    ];
-    if (personalityList.length === 0) {
-      setError('請至少選擇或輸入一個個性');
+    if (personality.length === 0) {
+      setError('請至少選擇一個個性');
       return;
     }
 
     const ageNum = age === '' ? null : Number(age);
     const payload: CatSetupFormData = {
       cat_name: catName.trim(),
-      breed: breed.trim() || null,
+      breed: null,
       age: ageNum != null && Number.isFinite(ageNum) ? ageNum : null,
-      personality: personalityList,
+      personality: personality,
       preferences: preferences.trim() || null,
       dislikes: dislikes.trim() || null,
       habits: habits.trim() || null,
@@ -395,15 +387,6 @@ export function CatSetupPage({
           </label>
 
           <label>
-            <span>品種</span>
-            <input
-              value={breed}
-              onChange={(e) => setBreed(e.target.value)}
-              placeholder="例如：英國短毛貓"
-            />
-          </label>
-
-          <label>
             <span>年齡（歲）</span>
             <input
               type="number"
@@ -441,12 +424,6 @@ export function CatSetupPage({
                 </button>
               ))}
             </div>
-            <input
-              className="custom-personality"
-              value={customPersonality}
-              onChange={(e) => setCustomPersonality(e.target.value)}
-              placeholder="或自由輸入個性描述"
-            />
           </div>
 
           <label>
