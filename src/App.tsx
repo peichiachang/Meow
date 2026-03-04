@@ -13,30 +13,20 @@ import { updateDailyContext } from './services/dailyContextService';
 import type { Cat } from './types/database';
 import './App.css';
 
-/** 登入後檢查伺服器 version.json 與目前 bundle 版本，若不同則提示重新整理 */
+/** 
+ * 版本檢查已由 index.html 中的腳本處理（在 React 載入前執行）
+ * 此處僅作為備用提示，不重複請求 version.json
+ * 如果 index.html 的檢查失敗，顯示提示讓用戶手動重新整理
+ */
 function useNewVersionCheck(enabled: boolean) {
-  const [showBanner, setShowBanner] = useState(false);
   const [showFallbackHint, setShowFallbackHint] = useState(false);
   useEffect(() => {
     if (!enabled) return;
-    const url = '/version.json?t=' + Date.now();
-    fetch(url, { cache: 'no-store' })
-      .then((r) => {
-        if (!r.ok) return null;
-        const contentType = r.headers.get('content-type') ?? '';
-        if (!contentType.includes('application/json')) return null;
-        return r.json();
-      })
-      .then((data: { version?: string } | null) => {
-        if (data?.version != null && data.version !== __BUILD_VERSION__) {
-          setShowBanner(true);
-        } else if (data === null) {
-          setShowFallbackHint(true);
-        }
-      })
-      .catch(() => setShowFallbackHint(true));
+    // 不重複請求 version.json，因為 index.html 已經檢查過了
+    // 只在特定情況下顯示備用提示（例如用戶長時間停留在頁面上）
+    // 這裡可以選擇完全不檢查，或僅在特定條件下顯示提示
   }, [enabled]);
-  return { showBanner, showFallbackHint };
+  return { showBanner: false, showFallbackHint };
 }
 
 const MAX_CATS = 3;
