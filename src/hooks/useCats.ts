@@ -44,6 +44,7 @@ export function useCats(userId: string | undefined) {
       dislikes: insert.dislikes ?? null,
       habits: insert.habits ?? null,
       self_ref: insert.self_ref ?? null,
+      status: insert.status || 'Living',
       avatar_url: insert.avatar_url ?? null,
     };
     const { data, error } = await supabase

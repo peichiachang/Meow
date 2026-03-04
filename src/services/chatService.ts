@@ -40,6 +40,7 @@ export async function sendChatMessage(
       dislikes: cat.dislikes,
       habits: cat.habits,
       self_ref: cat.self_ref,
+      status: cat.status || 'Living',
     },
     memorySummary: memorySummary ?? null,
     history: history.map((h) => ({
@@ -86,8 +87,14 @@ export async function sendChatMessage(
     if (res.status === 401) {
       throw new Error('登入已過期，請重新登出再登入');
     }
+    // SDD v3.2：API 異常時根據狀態顯示不同訊息
     if (res.status === 502 || res.status === 503) {
-      throw new Error('AI 暫時忙碌，請稍後再試');
+      const selfRef = cat.self_ref || '我';
+      const status = cat.status || 'Living';
+      const errorMessage = status === 'Angel'
+        ? `${selfRef}去雲端抓蝴蝶了，等等再回來陪你喵... (連線異常)`
+        : `${selfRef}現在午睡中，暫時不想理你喵... (連線異常)`;
+      throw new Error(errorMessage);
     }
     throw new Error(json?.error || json?.detail || `AI 服務錯誤 (${res.status})`);
   }

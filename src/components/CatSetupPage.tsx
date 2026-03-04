@@ -9,6 +9,7 @@ import {
   DEFAULT_AVATAR_PATHS,
   fetchImageAsDataUrl,
 } from '../services/localAvatarService';
+import type { CatStatus } from '../types/database';
 
 // 預設顯示第一張貓咪預設圖
 const DEFAULT_AVATAR_URL = DEFAULT_AVATAR_PATHS[0];
@@ -156,6 +157,7 @@ export function CatSetupPage({
   const [dislikes, setDislikes] = useState('');
   const [habits, setHabits] = useState('');
   const [selfRef, setSelfRef] = useState('');
+  const [status, setStatus] = useState<CatStatus>('Living');
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(null);
   const [editorImageUrl, setEditorImageUrl] = useState<string | null>(null);
   const [showDefaultAvatarModal, setShowDefaultAvatarModal] = useState(false);
@@ -174,9 +176,11 @@ export function CatSetupPage({
       setDislikes(initialCat.dislikes ?? '');
       setHabits(initialCat.habits ?? '');
       setSelfRef(initialCat.self_ref ?? '');
+      setStatus(initialCat.status || 'Living');
       setAvatarDataUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
     } else {
       // 新增模式：預設顯示第一張預設圖
+      setStatus('Living');
       setAvatarDataUrl(DEFAULT_AVATAR_URL);
     }
   }, [initialCat]);
@@ -245,6 +249,7 @@ export function CatSetupPage({
       dislikes: dislikes.trim() || null,
       habits: habits.trim() || null,
       self_ref: selfRef.trim() || null,
+      status: status,
       avatar_url: initialCat?.avatar_url ?? null,
     };
 
@@ -422,6 +427,31 @@ export function CatSetupPage({
               placeholder="例如：朕、本宮、本王、本喵、我（留空則罐頭回覆隨機用本喵／我／本大爺）"
             />
           </label>
+
+          <div className="form-group">
+            <span>狀態</span>
+            <div className="status-selector">
+              <button
+                type="button"
+                className={`status-btn ${status === 'Living' ? 'active' : ''}`}
+                onClick={() => setStatus('Living')}
+              >
+                一般模式
+              </button>
+              <button
+                type="button"
+                className={`status-btn ${status === 'Angel' ? 'active' : ''}`}
+                onClick={() => setStatus('Angel')}
+              >
+                天使模式
+              </button>
+            </div>
+            <p className="status-hint">
+              {status === 'Angel' 
+                ? '選擇「天使模式」表示貓咪已離世，對話將轉為心靈守護模式，移除所有生理需求描述。'
+                : '「一般模式」適用於現有的貓咪，包含完整的生理需求與互動。'}
+            </p>
+          </div>
 
           <div className="form-group">
             <span>個性 *（可多選）</span>

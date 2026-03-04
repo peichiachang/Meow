@@ -94,9 +94,17 @@ Deno.serve(async (req) => {
     if (!geminiRes.ok) {
       const errText = await geminiRes.text();
       console.error('[chat] Gemini error:', geminiRes.status, errText);
+      // SDD v3.2：API 異常時根據狀態顯示不同訊息
+      const selfRef = cat?.self_ref || '我';
+      const status = cat?.status || 'Living';
+      const errorMessage = geminiRes.status === 502 || geminiRes.status === 503
+        ? status === 'Angel'
+          ? `${selfRef}去雲端抓蝴蝶了，等等再回來陪你喵... (連線異常)`
+          : `${selfRef}現在午睡中，暫時不想理你喵... (連線異常)`
+        : 'AI service error';
       return new Response(
-        JSON.stringify({ error: 'AI service error', detail: errText }),
-        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: errorMessage, detail: errText }),
+        { status: geminiRes.status >= 500 ? 502 : 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 

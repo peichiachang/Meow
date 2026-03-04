@@ -368,6 +368,45 @@
   color: #78716c;
 }
 
+.status-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.status-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #d6d0c9;
+  border-radius: 8px;
+  background: #fff;
+  color: #1c1917;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  text-align: center;
+}
+
+.status-btn:hover {
+  background: #f5f5f4;
+}
+
+.status-btn.active {
+  background: #57534e;
+  color: #fff;
+  border-color: #57534e;
+}
+
+.status-hint {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 12px;
+  color: #78716c;
+  line-height: 1.5;
+}
+
 .personality-grid {
   display: flex;
   flex-wrap: wrap;

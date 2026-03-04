@@ -9,6 +9,8 @@ export interface Profile {
   updated_at: string;
 }
 
+export type CatStatus = 'Living' | 'Angel';
+
 export interface Cat {
   id: string;
   user_id: string;
@@ -20,6 +22,7 @@ export interface Cat {
   dislikes: string | null;
   habits: string | null;
   self_ref: string | null;
+  status: CatStatus;
   avatar_url: string | null;
   memory_summary: string | null;
   memory_updated_at: string | null;
@@ -45,6 +48,7 @@ export interface CatInsert {
   dislikes?: string | null;
   habits?: string | null;
   self_ref?: string | null;
+  status?: CatStatus;
   avatar_url?: string | null;
 }
 
@@ -57,5 +61,6 @@ export interface CatUpdate {
   dislikes?: string | null;
   habits?: string | null;
   self_ref?: string | null;
+  status?: CatStatus;
   avatar_url?: string | null;
 }
