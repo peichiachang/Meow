@@ -280,19 +280,19 @@ export function CatSetupPage({
 
   return (
     <div className="cat-setup-page">
+      {onBack && (
+        <button
+          type="button"
+          className="cat-setup-back"
+          onClick={onBack}
+          title="返回主畫面"
+        >
+          ← 返回
+        </button>
+      )}
+      <h1 className="cat-setup-title">{isEditMode ? '編輯貓咪' : '設定你的貓咪'}</h1>
+      <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
       <div className="cat-setup-card">
-        {onBack && (
-          <button
-            type="button"
-            className="cat-setup-back"
-            onClick={onBack}
-            title="返回主畫面"
-          >
-            ← 返回
-          </button>
-        )}
-        <h1>{isEditMode ? '編輯貓咪' : '設定你的貓咪'}</h1>
-        <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
 
         {editorImageUrl && (
           <AvatarEditor

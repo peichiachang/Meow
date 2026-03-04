@@ -188,7 +188,7 @@ export function ChatPage({
           title="返回主畫面"
           aria-label="返回主畫面"
         >
-          ←
+          ← 返回
         </button>
         <div className="cat-selector">
           {cats.map((c) => (
