@@ -6,7 +6,6 @@ import { PERSONALITY_LABELS } from '../data/personalities';
 import {
   getCatAvatarLocal,
   saveCatAvatarLocal,
-  removeCatAvatarLocal,
   DEFAULT_AVATAR_PATHS,
   fetchImageAsDataUrl,
 } from '../services/localAvatarService';
@@ -205,11 +204,6 @@ export function CatSetupPage({
     setEditorImageUrl(null);
   };
 
-  const clearAvatar = () => {
-    setAvatarDataUrl(null);
-    if (initialCat) removeCatAvatarLocal(initialCat.id);
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
 
   const handleSelectDefaultAvatar = async (path: string) => {
     setError('');
