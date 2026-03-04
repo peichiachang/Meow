@@ -2,15 +2,14 @@
 // 由外部排程（cron）每日呼叫，需傳入 CRON_SECRET 驗證
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret',
-};
+import { getCorsHeaders } from '../_shared/cors.ts';
 
 const RETENTION_DAYS = 90;
 
 Deno.serve(async (req) => {
+  const requestOrigin = req.headers.get('Origin');
+  const corsHeaders = getCorsHeaders(requestOrigin);
+
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }

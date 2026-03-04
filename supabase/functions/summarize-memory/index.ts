@@ -2,16 +2,15 @@
 // 每 10 則對話後非同步呼叫，將歷史對話壓縮成摘要
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { getCorsHeaders } from '../_shared/cors.ts';
 
 const MESSAGES_PER_BATCH = 20; // 每 10 則對話（20 則訊息）觸發一次
 const GEMINI_MODEL = 'gemini-2.5-flash-lite';
 
 Deno.serve(async (req) => {
+  const requestOrigin = req.headers.get('Origin');
+  const corsHeaders = getCorsHeaders(requestOrigin);
+
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }

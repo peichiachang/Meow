@@ -4,6 +4,7 @@
  */
 import type { Cat } from '../types/database';
 import type { Message } from '../types/database';
+import { supabase } from '../lib/supabase';
 
 const EDGE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_URL
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`
@@ -22,6 +23,12 @@ export async function sendChatMessage(
   const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
   if (!anonKey) {
     throw new Error('缺少 VITE_SUPABASE_ANON_KEY');
+  }
+
+  // 🔒 安全性：取得使用者 session token 用於認證
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    throw new Error('未登入');
   }
 
   const history = recentMessages.slice(-10).map((m) => ({
@@ -54,6 +61,7 @@ export async function sendChatMessage(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
         apikey: anonKey,
       },
       body: JSON.stringify(body),
