@@ -313,8 +313,8 @@ export function CatSetupPage({
           ← 返回
         </button>
       )}
-      <h1 className="cat-setup-title">{isEditMode ? '編輯貓咪' : '設定你的貓咪'}</h1>
       <p className="cat-setup-sub">AI 會依照這些設定模擬牠說話</p>
+      <h1 className="cat-setup-title">{isEditMode ? '編輯貓咪' : '設定你的貓咪檔案'}</h1>
       <div className="cat-setup-card">
 
         {editorImageUrl && (
@@ -374,28 +374,21 @@ export function CatSetupPage({
                 aria-label="選擇貓咪照片"
               />
               <div className="cat-avatar-actions">
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  <button
-                    type="button"
-                    className="cat-avatar-btn-secondary"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    上傳照片
-                  </button>
-                  <button
-                    type="button"
-                    className="cat-avatar-btn-secondary"
-                    onClick={() => setShowDefaultAvatarModal(true)}
-                  >
-                    選擇預設圖
-                  </button>
-                  {avatarDataUrl && (
-                    <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
-                      移除
-                    </button>
-                  )}
-                </div>
-                <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
+                <button
+                  type="button"
+                  className="cat-avatar-btn-secondary"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  上傳照片
+                </button>
+                <button
+                  type="button"
+                  className="cat-avatar-btn-secondary"
+                  onClick={() => setShowDefaultAvatarModal(true)}
+                >
+                  選擇預設圖
+                </button>
+                <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3 MB 以內</p>
               </div>
             </div>
           </div>

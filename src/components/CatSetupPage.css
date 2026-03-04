@@ -26,7 +26,7 @@
 }
 
 .cat-setup-back {
-  margin: 0;
+  margin: 0 0 1rem 0;
   padding: 16px 0;
   background: none;
   border: none;
@@ -46,19 +46,21 @@
   color: #1c1917;
 }
 
-.cat-setup-title {
+.cat-setup-sub {
   margin: 0 0 4px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #78716c;
+  align-self: flex-start;
+}
+
+.cat-setup-title {
+  margin: 0 0 16px;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
   font-size: 24px;
   font-weight: 700;
   color: #1c1917;
-  align-self: flex-start;
-}
-
-.cat-setup-sub {
-  margin: 0 0 16px;
-  font-size: 0.9rem;
-  color: #78716c;
   align-self: flex-start;
 }
 
@@ -84,25 +86,23 @@
   align-items: flex-start;
 }
 
-.cat-avatar-actions > div {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
 .cat-avatar-hint {
   margin: 0;
-  font-size: 0.8rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: normal;
   color: #78716c;
+  width: 186px;
+  line-height: 1.4;
 }
 
 .cat-avatar-preview {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   overflow: hidden;
   background: #f5f5f4;
-  border: 2px solid #e7e5e4;
+  border: 2px solid #bebebe;
   flex-shrink: 0;
 }
 
@@ -134,31 +134,27 @@
   pointer-events: none;
 }
 
-.cat-avatar-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
 .cat-avatar-btn-secondary {
-  padding: 0.4rem 0.75rem;
-  font-size: 0.9rem;
-  color: #1c1917;
-  background: #f5f5f4;
-  border: none;
+  width: 80px;
+  height: 32px;
+  padding: 0 8px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  color: #57534e;
+  background: #fff;
+  border: 1px solid #d6d3d1;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cat-avatar-btn-secondary:hover {
   background: #e7e5e4;
-}
-
-.cat-avatar-hint {
-  margin: 0.35rem 0 0;
-  font-size: 0.8rem;
-  color: #78716c;
+  border-color: #d6d3d1;
 }
 
 .cat-avatar-defaults {
