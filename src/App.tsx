@@ -19,7 +19,7 @@ import './App.css';
  * 如果 index.html 的檢查失敗，顯示提示讓用戶手動重新整理
  */
 function useNewVersionCheck(enabled: boolean) {
-  const [showFallbackHint, setShowFallbackHint] = useState(false);
+  const [showFallbackHint] = useState(false);
   useEffect(() => {
     if (!enabled) return;
     // 不重複請求 version.json，因為 index.html 已經檢查過了

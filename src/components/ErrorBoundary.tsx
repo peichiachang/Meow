@@ -19,7 +19,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(_prevProps: Props, prevState: State) {
     // 當錯誤發生且是模組載入錯誤時，自動重新載入
     if (this.state.hasError && !prevState.hasError && !this.state.autoReloadAttempted) {
       const isModuleError = 
