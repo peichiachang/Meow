@@ -72,6 +72,13 @@ function App() {
     }
   }, [cats, view]);
 
+  // 當 cats 載入完成且有貓咪時，確保顯示 MainPage（除非正在編輯或聊天）
+  useEffect(() => {
+    if (!catsLoading && cats.length > 0 && view !== 'setup' && view !== 'chat') {
+      setView('main');
+    }
+  }, [catsLoading, cats.length, view]);
+
   const handleSignInWithGoogle = async () => {
     setAuthError(null);
     setGoogleOpenedInNewWindow(false);
@@ -137,6 +144,7 @@ function App() {
     );
   }
 
+  // 如果沒有貓咪，顯示設定頁面
   if (cats.length === 0) {
     return (
       <>
@@ -148,7 +156,12 @@ function App() {
           handleCatCreated(cat);
           return cat;
         }}
-        onBack={() => setView('main')}
+        onBack={() => {
+          // 如果已經有貓咪了，回到主頁；否則留在設定頁
+          if (cats.length > 0) {
+            setView('main');
+          }
+        }}
         maxCats={maxCats}
         currentCount={0}
       />
