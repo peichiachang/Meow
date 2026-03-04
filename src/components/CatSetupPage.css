@@ -9,7 +9,7 @@
   margin: 0 auto;
   padding: 24px;
   background: #fff;
-  border: 2px solid #fed7aa;
+  border: none;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -320,17 +320,28 @@
 
 .personality-btn {
   padding: 0.4rem 0.75rem;
-  border: 2px solid #e7e5e4;
+  border: none;
   border-radius: 1rem;
   background: #fff;
   font-size: 0.85rem;
   cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.personality-btn:hover {
+  background: #f5f5f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
 .personality-btn.active {
-  border-color: #1c1917;
   background: #1c1917;
   color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.personality-btn.active:hover {
+  background: #2f2f2f;
 }
 
 
