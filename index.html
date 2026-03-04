@@ -25,21 +25,91 @@
       var el=document.getElementById('version-check');
       var buildVer=(el&&el.getAttribute('data-version'))||'';
       var done=false;
+      var bundleLoaded=false;
+      var versionCheckTimeout;
+      
       function finish(){if(done)return;done=true;setMsg('載入中…');}
-      if(typeof caches!=='undefined'&&caches.keys){try{caches.keys().then(function(keys){keys.forEach(function(k){caches.delete(k);});});}catch(e){}}
-      setTimeout(function(){finish();},4000);
-      fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;}).then(function(d){
+      
+      function forceReload(reason){
+        if(done)return;
+        done=true;
+        setMsg('正在重新載入最新版本…');
+        // 清除所有快取後重新載入
+        if(typeof caches!=='undefined'&&caches.keys){
+          caches.keys().then(function(keys){
+            keys.forEach(function(k){caches.delete(k);});
+            setTimeout(function(){location.replace('/?v='+Date.now()+'&reason='+encodeURIComponent(reason));},500);
+          }).catch(function(){
+            setTimeout(function(){location.replace('/?v='+Date.now()+'&reason='+encodeURIComponent(reason));},500);
+          });
+        }else{
+          setTimeout(function(){location.replace('/?v='+Date.now()+'&reason='+encodeURIComponent(reason));},500);
+        }
+      }
+      
+      // 清除所有 Service Worker 和快取
+      if(typeof caches!=='undefined'&&caches.keys){
+        try{
+          caches.keys().then(function(keys){keys.forEach(function(k){caches.delete(k);});}).catch(function(){});
+        }catch(e){}
+      }
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.getRegistrations().then(function(registrations){
+          registrations.forEach(function(reg){reg.unregister();});
+        }).catch(function(){});
+      }
+      
+      // 縮短超時時間：從 4 秒改為 2 秒
+      versionCheckTimeout=setTimeout(function(){
+        if(!done&&!bundleLoaded){
+          finish();
+        }
+      },2000);
+      
+      // 版本檢查
+      fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){
+        if(versionCheckTimeout)clearTimeout(versionCheckTimeout);
+        return r.ok&&(r.headers.get('content-type')||'').includes('json')?r.json():null;
+      }).then(function(d){
         if(done)return;
         if(!d||!d.version){finish();return;}
         var serverVer=d.version;
         if(buildVer&&buildVer.indexOf('__')!==0&&serverVer!==buildVer){
-          done=true;
-          setMsg('正在更新至最新版本…');
-          location.replace('/?v='+encodeURIComponent(serverVer));
+          forceReload('version-mismatch');
           return;
         }
         finish();
-      }).catch(function(){finish();});
+      }).catch(function(){
+        if(versionCheckTimeout)clearTimeout(versionCheckTimeout);
+        finish();
+      });
+      
+      // 監控 bundle 載入失敗
+      window.addEventListener('error',function(e){
+        if(e.target&&e.target.tagName==='SCRIPT'&&e.target.src&&e.target.src.includes('/assets/')){
+          if(!bundleLoaded){
+            bundleLoaded=true;
+            console.error('[VersionCheck] Bundle load failed:',e.target.src);
+            forceReload('bundle-load-failed');
+          }
+        }
+      },true);
+      
+      // 監控 bundle 載入成功
+      var scripts=document.querySelectorAll('script[type="module"]');
+      scripts.forEach(function(script){
+        script.addEventListener('load',function(){
+          bundleLoaded=true;
+          if(versionCheckTimeout)clearTimeout(versionCheckTimeout);
+        });
+        script.addEventListener('error',function(){
+          if(!bundleLoaded){
+            bundleLoaded=true;
+            console.error('[VersionCheck] Module script load failed:',script.src);
+            forceReload('module-load-failed');
+          }
+        });
+      });
     })();</script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
