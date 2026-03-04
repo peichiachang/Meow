@@ -28,17 +28,6 @@
   align-items: center;
 }
 
-.main-user-id {
-  font-size: 10px;
-  color: #78716c;
-  padding: 4px 8px;
-  background: #f5f5f4;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: monospace;
-  margin-top: 8px;
-  display: inline-block;
-}
 
 .main-title {
   margin: 0;

@@ -234,7 +234,6 @@ function App() {
           }
         }}
         onSignOut={signOut}
-        userId={user?.id}
       />
       </>
     );

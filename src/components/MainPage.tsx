@@ -13,7 +13,6 @@ interface Props {
   onEditCat: (cat: Cat) => void;
   onDeleteCat: (cat: Cat) => void;
   onSignOut: () => void;
-  userId?: string;
 }
 
 export function MainPage({
@@ -24,7 +23,6 @@ export function MainPage({
   onEditCat,
   onDeleteCat,
   onSignOut,
-  userId,
 }: Props) {
   const canAddCat = cats.length < maxCats;
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -78,18 +76,6 @@ export function MainPage({
         </div>
         <h1 className="main-title">Meow</h1>
         <p className="main-sub">了解喵喵的內心話</p>
-        {userId && (
-          <div
-            className="main-user-id"
-            onClick={() => {
-              navigator.clipboard.writeText(userId);
-              alert('User ID 已複製到剪貼簿！');
-            }}
-            title="點擊複製 User ID"
-          >
-            ID: {userId.substring(0, 8)}...
-          </div>
-        )}
       </header>
 
       <main className="main-content">
