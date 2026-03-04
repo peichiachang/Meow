@@ -10,6 +10,9 @@ import {
   DEFAULT_AVATAR_PATHS,
   fetchImageAsDataUrl,
 } from '../services/localAvatarService';
+
+// 預設顯示第一張貓咪預設圖
+const DEFAULT_AVATAR_URL = DEFAULT_AVATAR_PATHS[0];
 import type { Cat, CatInsert } from '../types/database';
 import './CatSetupPage.css';
 
@@ -173,6 +176,9 @@ export function CatSetupPage({
       setHabits(initialCat.habits ?? '');
       setSelfRef(initialCat.self_ref ?? '');
       setAvatarDataUrl(getCatAvatarLocal(initialCat.id) ?? initialCat.avatar_url ?? null);
+    } else {
+      // 新增模式：預設顯示第一張預設圖
+      setAvatarDataUrl(DEFAULT_AVATAR_URL);
     }
   }, [initialCat]);
 
@@ -251,12 +257,29 @@ export function CatSetupPage({
     setLoading(true);
     try {
       if (isEditMode && onUpdate && initialCat) {
-        if (avatarDataUrl) saveCatAvatarLocal(initialCat.id, avatarDataUrl);
+        // 只有當 avatarDataUrl 是 data URL 時才保存到 localStorage
+        if (avatarDataUrl && avatarDataUrl.startsWith('data:')) {
+          saveCatAvatarLocal(initialCat.id, avatarDataUrl);
+        }
         await onUpdate(initialCat.id, payload);
         onBack?.();
       } else {
         const created = await onSubmit(payload);
-        if (avatarDataUrl) saveCatAvatarLocal(created.id, avatarDataUrl);
+        // 只有當 avatarDataUrl 是 data URL 時才保存到 localStorage
+        // 如果是預設圖路徑，需要轉換為 data URL
+        if (avatarDataUrl) {
+          if (avatarDataUrl.startsWith('data:')) {
+            saveCatAvatarLocal(created.id, avatarDataUrl);
+          } else if (avatarDataUrl.startsWith('/')) {
+            // 預設圖路徑，轉換為 data URL
+            try {
+              const dataUrl = await fetchImageAsDataUrl(avatarDataUrl);
+              saveCatAvatarLocal(created.id, dataUrl);
+            } catch (err) {
+              console.warn('[CatSetupPage] 預設圖轉換失敗', err);
+            }
+          }
+        }
         onBack?.();
       }
     } catch (err) {
@@ -333,7 +356,6 @@ export function CatSetupPage({
 
         <form onSubmit={handleSubmit} className="cat-setup-form">
           <div className="form-group cat-avatar-upload">
-            <span>貓咪照片</span>
             <div className="cat-avatar-upload-area">
               <div className={`cat-avatar-preview ${editorImageUrl ? 'cat-avatar-preview-hidden' : ''}`}>
                 {avatarDataUrl ? (
@@ -352,28 +374,30 @@ export function CatSetupPage({
                 aria-label="選擇貓咪照片"
               />
               <div className="cat-avatar-actions">
-                <button
-                  type="button"
-                  className="cat-avatar-btn-secondary"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  上傳照片
-                </button>
-                <button
-                  type="button"
-                  className="cat-avatar-btn-secondary"
-                  onClick={() => setShowDefaultAvatarModal(true)}
-                >
-                  選擇預設圖
-                </button>
-                {avatarDataUrl && (
-                  <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
-                    移除
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className="cat-avatar-btn-secondary"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    上傳照片
                   </button>
-                )}
+                  <button
+                    type="button"
+                    className="cat-avatar-btn-secondary"
+                    onClick={() => setShowDefaultAvatarModal(true)}
+                  >
+                    選擇預設圖
+                  </button>
+                  {avatarDataUrl && (
+                    <button type="button" className="cat-avatar-btn-secondary" onClick={clearAvatar}>
+                      移除
+                    </button>
+                  )}
+                </div>
+                <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
               </div>
             </div>
-            <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3MB 以內；選擇後可拖曳縮放調整位置</p>
           </div>
 
           <label>
