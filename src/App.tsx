@@ -8,6 +8,7 @@ import { AuthPage } from './components/AuthPage';
 import { CatSetupPage } from './components/CatSetupPage';
 import { ChatPage } from './components/ChatPage';
 import { MainPage } from './components/MainPage';
+import { EXEMPT_USER_IDS } from './config';
 import type { Cat } from './types/database';
 import './App.css';
 
@@ -38,6 +39,7 @@ function useNewVersionCheck(enabled: boolean) {
 }
 
 const MAX_CATS = 3;
+const EXEMPT_MAX_CATS = 10; // 例外帳號最多可新增的貓咪數量
 
 function App() {
   const [authError, setAuthError] = useState<string | null>(null);
@@ -45,7 +47,10 @@ function App() {
   const { user, loading: authLoading, signInWithGoogle, signOut } = useAuth();
   const { plan } = useProfile(user?.id);
   const { cats, loading: catsLoading, createCat, updateCat, deleteCat } = useCats(user?.id);
-  const maxCats = MAX_CATS;
+  
+  // 檢查是否為例外帳號，例外帳號可新增更多貓咪
+  const isExemptUser = user?.id ? EXEMPT_USER_IDS.includes(user.id) : false;
+  const maxCats = isExemptUser ? EXEMPT_MAX_CATS : MAX_CATS;
 
   const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
   const [view, setView] = useState<'main' | 'chat' | 'setup'>('main');
@@ -245,7 +250,6 @@ function App() {
       <ChatPage
       cats={cats}
       selectedCat={currentCat}
-      onSelectCat={setSelectedCat}
       onBack={() => setView('main')}
       messages={messages}
       onAddMessage={addMessage}

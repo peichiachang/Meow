@@ -52,34 +52,11 @@
   opacity: 0.8;
 }
 
-.cat-selector {
+.cat-display {
   display: flex;
   gap: 8px;
   align-items: center;
-  flex-wrap: wrap;
   flex: 1;
-}
-
-.cat-avatar-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px;
-  border: 2px solid transparent;
-  border-radius: 20px;
-  background: #f4eee7;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  height: 36px;
-}
-
-.cat-avatar-btn:hover {
-  background: #f4eee7;
-}
-
-.cat-avatar-btn.active {
-  border-color: #fed7aa;
-  background: #f4eee7;
 }
 
 .cat-avatar {

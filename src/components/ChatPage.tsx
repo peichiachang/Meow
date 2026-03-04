@@ -16,7 +16,6 @@ const LAST_OPEN_KEY = 'meow:last_open';
 interface Props {
   cats: Cat[];
   selectedCat: Cat;
-  onSelectCat: (cat: Cat) => void;
   onBack: () => void;
   messages: Message[];
   onAddMessage: (role: 'user' | 'assistant', content: string) => Promise<Message>;
@@ -28,9 +27,7 @@ interface Props {
 }
 
 export function ChatPage({
-  cats,
   selectedCat,
-  onSelectCat,
   onBack,
   messages,
   onAddMessage,
@@ -188,28 +185,18 @@ export function ChatPage({
         >
           ← 返回
         </button>
-        <div className="cat-selector">
-          {cats.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              className={`cat-avatar-btn ${c.id === selectedCat.id ? 'active' : ''}`}
-              onClick={() => onSelectCat(c)}
-              title={c.cat_name}
-            >
-              <span className="cat-avatar">
-                {(() => {
-                  const avatarUrl = getCatDisplayAvatar(c);
-                  return avatarUrl ? (
-                    <img src={avatarUrl} alt={c.cat_name} />
-                  ) : (
-                    <span className="cat-avatar-placeholder">🐱</span>
-                  );
-                })()}
-              </span>
-              <span className="cat-name">{c.cat_name}</span>
-            </button>
-          ))}
+        <div className="cat-display">
+          <span className="cat-avatar">
+            {(() => {
+              const avatarUrl = getCatDisplayAvatar(selectedCat);
+              return avatarUrl ? (
+                <img src={avatarUrl} alt={selectedCat.cat_name} />
+              ) : (
+                <span className="cat-avatar-placeholder">🐱</span>
+              );
+            })()}
+          </span>
+          <span className="cat-name">{selectedCat.cat_name}</span>
         </div>
       </header>
 
