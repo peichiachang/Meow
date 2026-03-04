@@ -25,7 +25,6 @@ interface Props {
   canSend: boolean;
   remaining: number;
   onIncrementCount: () => Promise<boolean>;
-  onSignOut: () => void;
 }
 
 export function ChatPage({
@@ -40,7 +39,6 @@ export function ChatPage({
   canSend,
   remaining,
   onIncrementCount,
-  onSignOut,
 }: Props) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

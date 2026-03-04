@@ -262,7 +262,6 @@ function App() {
       canSend={canSend}
       remaining={remaining}
       onIncrementCount={incrementCount}
-      onSignOut={signOut}
     />
     </>
   );
