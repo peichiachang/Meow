@@ -200,3 +200,41 @@
 .main-add-cat:disabled:hover {
   filter: none;
 }
+
+.main-donation-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e7e5e4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-donation-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #FFDD00 0%, #FF813F 100%);
+  color: #1c1917;
+  border-radius: 20px;
+  text-decoration: none;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(255, 129, 63, 0.2);
+}
+
+.main-donation-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 129, 63, 0.3);
+}
+
+.main-donation-btn:active {
+  transform: translateY(0);
+}
+
+.main-donation-btn svg {
+  flex-shrink: 0;
+}

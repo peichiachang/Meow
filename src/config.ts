@@ -27,4 +27,11 @@ const exemptUserIds: string[] = rawExemptUsers
 
 export const EXEMPT_USER_IDS = exemptUserIds;
 
+/** Buy Me a Coffee 用戶名（選填） */
+const buyMeACoffeeUsername = import.meta.env.VITE_BUYMEACOFFEE_USERNAME;
+export const BUYMEACOFFEE_USERNAME: string | null = 
+  buyMeACoffeeUsername && typeof buyMeACoffeeUsername === 'string' && buyMeACoffeeUsername.trim().length > 0
+    ? buyMeACoffeeUsername.trim()
+    : null;
+
 export const isMessageLimitEnabled = (): boolean => DAILY_MESSAGE_LIMIT != null;
