@@ -15,6 +15,7 @@
     "test:preference": "tsx scripts/test-preference-trigger.ts",
     "test:belly": "tsx scripts/test-belly-phrases.ts",
     "test:canned": "tsx scripts/verify-canned-dialogue.ts",
+    "test:security": "tsx scripts/test-security.ts",
     "classify:canned": "tsx scripts/classify-canned-by-taxonomy.ts"
   },
   "dependencies": {

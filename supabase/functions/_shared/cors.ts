@@ -4,7 +4,8 @@
  */
 
 // 允許的來源列表（從環境變數讀取，以逗號分隔）
-const ALLOWED_ORIGINS = Deno.env.get('ALLOWED_ORIGINS')?.split(',').map(o => o.trim()) || [];
+// 移除尾隨斜線以確保與瀏覽器的 Origin header 匹配
+const ALLOWED_ORIGINS = Deno.env.get('ALLOWED_ORIGINS')?.split(',').map(o => o.trim().replace(/\/$/, '')) || [];
 
 // 預設允許的開發環境來源
 const DEFAULT_DEV_ORIGINS = [
@@ -50,15 +51,18 @@ function isOriginAllowed(origin: string | null): boolean {
 export function getCorsHeaders(requestOrigin: string | null): Record<string, string> {
   const allowedOrigins = getAllowedOrigins();
   
+  // 移除請求來源的尾隨斜線以確保匹配
+  const normalizedRequestOrigin = requestOrigin ? requestOrigin.replace(/\/$/, '') : null;
+  
   // 如果沒有設定允許的來源，或請求來源在允許列表中，使用該來源
   // 否則使用第一個允許的來源（或 '*' 作為後備）
   let allowedOrigin: string;
   if (allowedOrigins.length === 0) {
     // 沒有設定任何限制，允許所有來源（開發環境）
     allowedOrigin = '*';
-  } else if (requestOrigin && isOriginAllowed(requestOrigin)) {
-    // 請求來源在允許列表中，使用該來源
-    allowedOrigin = requestOrigin;
+  } else if (normalizedRequestOrigin && isOriginAllowed(normalizedRequestOrigin)) {
+    // 請求來源在允許列表中，使用該來源（確保沒有尾隨斜線）
+    allowedOrigin = normalizedRequestOrigin;
   } else {
     // 請求來源不在允許列表中，使用第一個允許的來源
     allowedOrigin = allowedOrigins[0];
