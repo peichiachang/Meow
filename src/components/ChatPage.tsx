@@ -213,14 +213,6 @@ export function ChatPage({
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          className="sign-out-btn"
-          onClick={onSignOut}
-          title="登出"
-        >
-          登出
-        </button>
       </header>
 
       <main className="chat-main">
@@ -232,9 +224,18 @@ export function ChatPage({
           <div className="chat-messages">
             {displayMessages.map((m) => (
               <div key={m.id} className={`chat-msg ${m.role}`}>
-                <span className="chat-msg-avatar">
-                  {m.role === 'user' ? '👤' : '🐱'}
-                </span>
+                {m.role === 'assistant' && (
+                  <span className="chat-msg-avatar">
+                    {(() => {
+                      const avatarUrl = getCatDisplayAvatar(selectedCat);
+                      return avatarUrl ? (
+                        <img src={avatarUrl} alt={selectedCat.cat_name} />
+                      ) : (
+                        <span className="cat-avatar-placeholder">🐱</span>
+                      );
+                    })()}
+                  </span>
+                )}
                 <div className="chat-msg-bubble">
                   <p>{m.content}</p>
                 </div>
@@ -242,7 +243,16 @@ export function ChatPage({
             ))}
             {loading && (
               <div className="chat-msg assistant">
-                <span className="chat-msg-avatar">🐱</span>
+                <span className="chat-msg-avatar">
+                  {(() => {
+                    const avatarUrl = getCatDisplayAvatar(selectedCat);
+                    return avatarUrl ? (
+                      <img src={avatarUrl} alt={selectedCat.cat_name} />
+                    ) : (
+                      <span className="cat-avatar-placeholder">🐱</span>
+                    );
+                  })()}
+                </span>
                 <div className="chat-msg-bubble typing">
                   <span></span>
                   <span></span>
