@@ -169,6 +169,7 @@ function App() {
           handleCatCreated(cat);
           return cat;
         }}
+        onBack={() => setView('main')}
         maxCats={maxCats}
         currentCount={0}
       />

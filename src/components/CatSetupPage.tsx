@@ -368,20 +368,22 @@ export function CatSetupPage({
                 aria-label="選擇貓咪照片"
               />
               <div className="cat-avatar-actions">
-                <button
-                  type="button"
-                  className="cat-avatar-btn-secondary"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  上傳照片
-                </button>
-                <button
-                  type="button"
-                  className="cat-avatar-btn-secondary"
-                  onClick={() => setShowDefaultAvatarModal(true)}
-                >
-                  選擇預設圖
-                </button>
+                <div className="cat-avatar-actions-buttons">
+                  <button
+                    type="button"
+                    className="cat-avatar-btn-secondary"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    上傳照片
+                  </button>
+                  <button
+                    type="button"
+                    className="cat-avatar-btn-secondary"
+                    onClick={() => setShowDefaultAvatarModal(true)}
+                  >
+                    選擇預設圖
+                  </button>
+                </div>
                 <p className="cat-avatar-hint">建議 JPG、PNG、WebP 或 GIF，單檔 3 MB 以內</p>
               </div>
             </div>
