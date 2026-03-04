@@ -12,9 +12,19 @@
 
 .main-header {
   flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   padding: 32px 0 24px;
-  text-align: center;
-  position: relative;
+  align-items: center;
+}
+
+.main-header-bar {
+  width: 100%;
+  padding: 0 0 8px 0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .main-title {
@@ -23,6 +33,7 @@
   font-size: 32px;
   font-weight: 700;
   color: #1c1917;
+  text-align: center;
 }
 
 .main-sub {
@@ -34,9 +45,6 @@
 }
 
 .main-sign-out {
-  position: absolute;
-  top: 0;
-  right: 8px;
   padding: 6px 12px;
   background: none;
   border: 1px solid #d6d3d1;
@@ -91,15 +99,17 @@
 }
 
 .main-cat-btn {
-  min-width: 32px;
+  width: 32px;
+  height: 32px;
   padding: 6px 0;
-  font-size: 0.8rem;
   border-radius: 8px;
   border: 1px solid transparent;
   background: #fff;
-  color: #57534e;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-cat-btn:hover {
@@ -108,12 +118,18 @@
 
 .main-cat-btn-edit:hover {
   border-color: #fed7aa;
-  color: #c2410c;
+}
+
+.main-cat-btn-edit:hover svg path {
+  fill: #c2410c;
 }
 
 .main-cat-btn-delete:hover {
   border-color: #fecaca;
-  color: #b91c1c;
+}
+
+.main-cat-btn-delete:hover svg path {
+  fill: #b91c1c;
 }
 
 .main-cat-card:hover {

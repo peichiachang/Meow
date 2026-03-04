@@ -43,7 +43,7 @@ const PAID_MAX_CATS = 5;
 function App() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [googleOpenedInNewWindow, setGoogleOpenedInNewWindow] = useState(false);
-  const { user, loading: authLoading, signInWithEmail, signUpWithEmail, signInWithGoogle, signOut } = useAuth();
+  const { user, loading: authLoading, signInWithGoogle, signOut } = useAuth();
   const { plan } = useProfile(user?.id);
   const { cats, loading: catsLoading, createCat, updateCat, deleteCat } = useCats(user?.id);
   const maxCats = plan === 'paid' ? PAID_MAX_CATS : FREE_MAX_CATS;
@@ -72,25 +72,6 @@ function App() {
     }
   }, [cats, view]);
 
-  const handleSignIn = async (email: string, password: string) => {
-    setAuthError(null);
-    try {
-      await signInWithEmail(email, password);
-    } catch (err) {
-      setAuthError(err instanceof Error ? err.message : '登入失敗');
-    }
-  };
-
-  const handleSignUp = async (email: string, password: string) => {
-    setAuthError(null);
-    try {
-      await signUpWithEmail(email, password);
-      setAuthError('請至信箱確認驗證信後登入');
-    } catch (err) {
-      setAuthError(err instanceof Error ? err.message : '註冊失敗');
-    }
-  };
-
   const handleSignInWithGoogle = async () => {
     setAuthError(null);
     setGoogleOpenedInNewWindow(false);
@@ -118,8 +99,6 @@ function App() {
   if (!user) {
     return (
       <AuthPage
-        onSignIn={handleSignIn}
-        onSignUp={handleSignUp}
         onSignInWithGoogle={handleSignInWithGoogle}
         error={authError}
         clearError={() => setAuthError(null)}

@@ -49,16 +49,18 @@ export function MainPage({
   return (
     <div className="main-page">
       <header className="main-header">
+        <div className="main-header-bar">
+          <button
+            type="button"
+            className="main-sign-out"
+            onClick={onSignOut}
+            title="登出"
+          >
+            登出
+          </button>
+        </div>
         <h1 className="main-title">Meow</h1>
         <p className="main-sub">了解喵喵的內心話</p>
-        <button
-          type="button"
-          className="main-sign-out"
-          onClick={onSignOut}
-          title="登出"
-        >
-          登出
-        </button>
       </header>
 
       <main className="main-content">
@@ -99,7 +101,9 @@ export function MainPage({
                   }}
                   title="編輯"
                 >
-                  編輯
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#78716c"/>
+                  </svg>
                 </button>
                 <button
                   type="button"
@@ -107,7 +111,9 @@ export function MainPage({
                   onClick={(e) => handleDelete(e, cat)}
                   title="刪除"
                 >
-                  刪除
+                  <svg width="16" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#f24545"/>
+                  </svg>
                 </button>
               </div>
             </div>
