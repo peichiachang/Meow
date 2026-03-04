@@ -88,6 +88,48 @@ Deno.serve(async (req) => {
       );
     }
 
+    // 🔒 後端訊息限制檢查（防止繞過前端檢查）
+    const dailyLimitRaw = Deno.env.get('DAILY_MESSAGE_LIMIT');
+    const dailyLimit = dailyLimitRaw ? parseInt(dailyLimitRaw, 10) : 20; // 預設 20
+    const exemptUserIdsRaw = Deno.env.get('EXEMPT_USER_IDS');
+    const exemptUserIds = exemptUserIdsRaw
+      ? exemptUserIdsRaw.split(',').map((id) => id.trim()).filter((id) => id.length > 0)
+      : [];
+    const isExempt = exemptUserIds.includes(user.id);
+
+    // 只有在有限制且不是例外帳號時才檢查
+    if (dailyLimit > 0 && !isExempt) {
+      // 取得台灣時間今天的日期（YYYY-MM-DD）
+      const now = new Date();
+      const taiwanOffset = 8 * 60; // UTC+8
+      const taiwanTime = new Date(now.getTime() + (taiwanOffset - now.getTimezoneOffset()) * 60000);
+      const todayDate = taiwanTime.toISOString().split('T')[0]; // YYYY-MM-DD 格式
+
+      // 查詢今天的訊息數量
+      const { data: dailyCount, error: countError } = await supabase
+        .from('daily_message_counts')
+        .select('count')
+        .eq('user_id', user.id)
+        .eq('date', todayDate)
+        .maybeSingle();
+
+      if (countError && countError.code !== 'PGRST116') {
+        console.error('[chat] Error checking daily message count:', countError);
+        // 查詢錯誤時不阻擋，但記錄錯誤
+      } else {
+        const currentCount = dailyCount?.count ?? 0;
+        if (currentCount >= dailyLimit) {
+          return new Response(
+            JSON.stringify({
+              error: '今日訊息已達上限',
+              detail: `每日限制 ${dailyLimit} 則訊息，請明天再試或升級方案`,
+            }),
+            { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+    }
+
     // 可選：若有設定 shared secret，才要求請求帶 x-meow-secret
     // 目的：避免公開端點被濫用（不設定則不影響現有前端）
     const sharedSecret = Deno.env.get('MEOW_CHAT_SHARED_SECRET');
@@ -271,6 +313,24 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: errorMessage }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
+    }
+
+    // 🔒 成功處理訊息後，遞增每日訊息計數（原子操作）
+    if (dailyLimit > 0 && !isExempt) {
+      const now = new Date();
+      const taiwanOffset = 8 * 60; // UTC+8
+      const taiwanTime = new Date(now.getTime() + (taiwanOffset - now.getTimezoneOffset()) * 60000);
+      const todayDate = taiwanTime.toISOString().split('T')[0]; // YYYY-MM-DD 格式
+
+      const { error: incrementError } = await supabase.rpc(
+        'increment_daily_message_count',
+        { p_user_id: user.id, p_date: todayDate }
+      );
+
+      if (incrementError) {
+        console.error('[chat] Error incrementing daily message count:', incrementError);
+        // 遞增失敗不影響回應，但記錄錯誤
+      }
     }
 
     return new Response(

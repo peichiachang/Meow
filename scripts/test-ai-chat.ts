@@ -1,12 +1,15 @@
 /**
  * Meow AI 對話自動化測試（開發測試使用 Gemini 2.5 Flash-Lite 免費版）
- * 測試不同個性貓咪的 AI 回應是否符合 SDD 2.3 說話規則
+ * 測試不同個性貓咪的 AI 回應是否符合 SDD v2.1 說話規則
  *
  * 執行方式：
  *   GEMINI_API_KEY=your_key npm run test:ai
  * 或在 .env 加入 GEMINI_API_KEY=your_key 後執行 npm run test:ai
  *
  * API Key 取得：https://aistudio.google.com/apikey
+ * 
+ * 注意：此測試直接呼叫 Gemini API，不經過 Edge Function
+ * 如需測試 Edge Function 完整流程（含狀態注入），請使用：npm run test:chat-complete
  */
 import 'dotenv/config';
 import { buildSystemPrompt } from '../src/lib/promptBuilder';
@@ -86,6 +89,7 @@ const TEST_MESSAGES = [
 ];
 
 const SDD_CHECKS = {
+  // 基本規範
   no主人: (text: string) => !text.includes('主人'),
   noAI: (text: string) =>
     !text.includes('AI') && !text.includes('語言模型') && !text.includes('人工智慧'),
@@ -96,6 +100,32 @@ const SDD_CHECKS = {
   traditionalChinese: (text: string) => {
     const simplifiedChars = ['说', '个', '这', '时', '过', '会', '发', '国', '来'];
     return !simplifiedChars.some((c) => text.includes(c));
+  },
+  
+  // SDD v2.1 語法框架檢查
+  hasSelfRef: (text: string, selfRef: string) => text.includes(selfRef),
+  hasConnector: (text: string) => 
+    text.includes('覺得') || text.includes('既然') || text.includes('所以'),
+  hasActionBracket: (text: string) => /\([^)]{1,8}\)/.test(text),
+  singleBracket: (text: string) => {
+    const matches = text.match(/\([^)]+\)/g);
+    return matches ? matches.length === 1 : false;
+  },
+  bracketAtEnd: (text: string) => {
+    const trimmed = text.trim();
+    return trimmed.endsWith(')') && /\([^)]{1,8}\)$/.test(trimmed);
+  },
+  noForbiddenWords: (text: string) => 
+    !text.includes('哈氣') && !text.includes('嘶'),
+  noMultipleBrackets: (text: string) => {
+    const matches = text.match(/\([^)]+\)/g);
+    return matches ? matches.length <= 1 : true;
+  },
+  bracketLength: (text: string) => {
+    const match = text.match(/\(([^)]+)\)/);
+    if (!match) return false;
+    const content = match[1];
+    return content.length >= 1 && content.length <= 8;
   },
 };
 
@@ -124,10 +154,21 @@ async function runTest(
   const reply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
 
   const checks = {
+    // 基本規範
     no主人: SDD_CHECKS.no主人(reply),
     noAI: SDD_CHECKS.noAI(reply),
     sentenceCount: SDD_CHECKS.sentenceCount(reply),
     traditionalChinese: SDD_CHECKS.traditionalChinese(reply),
+    
+    // SDD v2.1 語法框架
+    hasSelfRef: SDD_CHECKS.hasSelfRef(reply, cat.self_ref || '我'),
+    hasConnector: SDD_CHECKS.hasConnector(reply),
+    hasActionBracket: SDD_CHECKS.hasActionBracket(reply),
+    singleBracket: SDD_CHECKS.singleBracket(reply),
+    bracketAtEnd: SDD_CHECKS.bracketAtEnd(reply),
+    noForbiddenWords: SDD_CHECKS.noForbiddenWords(reply),
+    noMultipleBrackets: SDD_CHECKS.noMultipleBrackets(reply),
+    bracketLength: SDD_CHECKS.bracketLength(reply),
   };
 
   return { reply, checks };
@@ -167,8 +208,10 @@ async function main() {
   }
 
   console.log('\n' + '='.repeat(60));
-  console.log(`\n📊 結果：${passCount}/${totalCount} 則回應通過 SDD 檢查`);
-  console.log('  檢查項目：不稱「主人」、不提及 AI、2~4 句、繁體中文\n');
+  console.log(`\n📊 結果：${passCount}/${totalCount} 則回應通過 SDD v2.1 檢查`);
+  console.log('  基本檢查：不稱「主人」、不提及 AI、2~4 句、繁體中文');
+  console.log('  語法框架：包含自稱、連結詞、動作括號（句末單一括號，1-8字）');
+  console.log('  禁止詞彙：無「哈氣」、「嘶」等攻擊性詞彙\n');
 }
 
 main().catch((err) => {

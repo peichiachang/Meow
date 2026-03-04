@@ -77,6 +77,7 @@ function App() {
   }, [user, authLoading]);
 
   // 初始化：當 cats 載入完成後，根據是否有貓咪來設定初始 view
+  // 重要：只在 view 為 null（初始狀態）時才設定，避免重新整理時覆蓋用戶操作
   useEffect(() => {
     if (!catsLoading && view === null) {
       if (cats.length > 0) {
@@ -88,24 +89,31 @@ function App() {
     }
   }, [catsLoading, cats.length, view]);
 
+  // 確保 selectedCat 與 cats 同步
   useEffect(() => {
     if (cats.length > 0 && !selectedCat) {
       setSelectedCat(cats[0]);
     }
   }, [cats, selectedCat]);
 
+  // 當 view 為 main 時，確保有選中的貓咪
   useEffect(() => {
-    if (cats.length > 0 && view === 'main') {
-      setSelectedCat((prev) => prev ?? cats[0]);
+    if (cats.length > 0 && view === 'main' && !selectedCat) {
+      setSelectedCat(cats[0]);
     }
-  }, [cats, view]);
+  }, [cats, view, selectedCat]);
 
-  // 當 cats 載入完成且有貓咪時，確保顯示 MainPage（除非正在編輯或聊天）
+  // 🔧 修正重新整理問題：當 cats 載入完成且有貓咪時，如果 view 是 setup 且不是編輯模式，強制改為 main
+  // 這可以修正重新整理時可能出現的競態條件
   useEffect(() => {
-    if (!catsLoading && cats.length > 0 && view !== 'setup' && view !== 'chat' && view !== null) {
+    if (!catsLoading && cats.length > 0 && view === 'setup' && !editingCatId) {
+      // 只有在不是編輯模式時才強制改為 main
       setView('main');
+      if (!selectedCat) {
+        setSelectedCat(cats[0]);
+      }
     }
-  }, [catsLoading, cats.length, view]);
+  }, [catsLoading, cats.length, view, editingCatId, selectedCat, cats]);
 
   const handleSignInWithGoogle = async () => {
     setAuthError(null);
@@ -186,6 +194,7 @@ function App() {
   }
 
   // 如果沒有貓咪，顯示設定頁面
+  // 注意：必須確保 catsLoading 為 false，避免載入中時誤判
   if (!catsLoading && cats.length === 0) {
     return (
       <>

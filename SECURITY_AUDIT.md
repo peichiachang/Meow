@@ -18,6 +18,7 @@
 - ✅ 可選的 `MEOW_CHAT_SHARED_SECRET` 機制可防止公開端點被濫用
 - ✅ 輸入驗證：檢查 `message` 是否為字串
 - ✅ 錯誤處理：不會洩露敏感資訊
+- ✅ 後端訊息限制檢查：Edge Function 會檢查每日訊息數量，防止繞過前端限制
 
 ### 4. 前端安全性
 - ✅ 使用 React，自動防止 XSS（React 會自動轉義）
@@ -110,11 +111,26 @@ const corsHeaders = {
 
 ## 📋 發布前檢查清單
 
-- [ ] 確認 `.env` 檔案未提交到 git
-- [ ] 確認 Edge Function 的 `GEMINI_API_KEY` 已在 Supabase Secrets 中設定
-- [ ] 確認 CORS 設定為生產域名
-- [ ] 確認 Edge Function 有認證檢查
-- [ ] 確認所有 RLS policies 正確運作
-- [ ] 確認輸入驗證和長度限制
-- [ ] 確認錯誤處理不會洩露敏感資訊
-- [ ] 確認 HTTPS 已啟用（Vercel 預設啟用）
+### ✅ 已完成項目
+- [x] 確認 `.env` 檔案未提交到 git
+- [x] 確認 Edge Function 的 `GEMINI_API_KEY` 已在 Supabase Secrets 中設定
+- [x] 確認 CORS 設定為生產域名（ALLOWED_ORIGINS）
+- [x] 確認 Edge Function 有認證檢查（JWT token）
+- [x] 確認所有 RLS policies 正確運作
+- [x] 確認錯誤處理不會洩露敏感資訊
+- [x] 確認 HTTPS 已啟用（Vercel 預設啟用）
+- [x] 確認所有 Migration 已執行（包含 004_daily_context.sql）
+- [x] 確認所有 Edge Functions 已部署（chat, summarize-memory, cleanup-old-messages, update-daily-context）
+- [x] 確認情境狀態系統已實作（daily_context 表、狀態計算）
+
+### ⚠️ 發布前必須確認項目
+- [ ] **GEMINI_API_KEY 使用付費版**（正式發布必須使用付費版，避免對話內容被用於訓練）
+- [ ] **ALLOWED_ORIGINS 已設定生產域名**（例如：`https://meow-tawny-six.vercel.app`）
+- [ ] **生產環境手動測試**（登入、發送訊息、檢查 AI 回應、檢查狀態注入）
+- [ ] **前端已部署到生產環境**（Vercel 或其他平台）
+- [ ] **環境變數已設定**（VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY）
+
+### 📝 建議後續優化（非必須）
+- [ ] 輸入長度限制（前端和後端）
+- [ ] Rate Limiting（防止濫用）
+- [ ] 圖片上傳後端驗證

@@ -17,6 +17,7 @@
     "test:canned": "tsx scripts/verify-canned-dialogue.ts",
     "test:security": "tsx scripts/test-security.ts",
     "test:daily-context": "tsx scripts/test-daily-context.ts",
+    "test:chat-complete": "tsx scripts/test-chat-complete.ts",
     "classify:canned": "tsx scripts/classify-canned-by-taxonomy.ts"
   },
   "dependencies": {
